@@ -10,7 +10,7 @@ namespace NoxiumMod.Items.Armor.Oculum
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("+10 minion damage");
+            Tooltip.SetDefault("+4 minion damage");
         }
 
         public override void SetDefaults()
