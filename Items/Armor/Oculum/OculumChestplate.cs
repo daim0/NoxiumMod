@@ -23,7 +23,7 @@ namespace NoxiumMod.Items.Armor.Oculum
         }
         public override void UpdateEquip(Player player)
         {
-            player.minionDamage += 0.1;
+            player.minionDamage += 0.1f;
         }
     }
 }
