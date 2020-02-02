@@ -33,7 +33,7 @@ namespace NoxiumMod.NPCs
 					}
 					Main.NewText("You sense visionary essence from below", 70, 140, 80, false);
 					
-					for (int j = 0; j < (int)(Main.rockLayer * (double)Main.maxTilesY * 0.0016); j++)
+					for (int j = 0; j < (int)(Main.rockLayer * (double)Main.maxTilesY * 0.0015); j++) //the 0.0015 number basically changes how much of the ore spawns
 					{
 						int num3 = Main.rand.Next(0, Main.maxTilesX);
 						int num4 = Main.rand.Next((int)Main.rockLayer, Main.maxTilesY - 200);
