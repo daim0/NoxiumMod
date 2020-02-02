@@ -21,7 +21,7 @@ namespace NoxiumMod.NPCs
 
 		public override void NPCLoot(NPC npc)
 		{
-			if (NPCID.EyeofCthulhu)
+			if (npc.type == NPCID.EyeofCthulhu)
 			{
 				if (!NoxiumWorld.oculumOreSpawn)
 				{
