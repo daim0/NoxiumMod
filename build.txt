@@ -1,0 +1,3 @@
+displayName = Noxium
+author = Daim
+version = 0.1
