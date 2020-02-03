@@ -2,6 +2,8 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
+using NoxiumMod.Items.Placeable;
+
 namespace NoxiumMod.Items.Armor.Oculum
 {
     [AutoloadEquip(EquipType.Head)]
@@ -32,6 +34,14 @@ namespace NoxiumMod.Items.Armor.Oculum
         public override void UpdateEquip(Player player)
         {
             player.maxMinions += 1;
+        }
+        public override void AddRecipes()
+        {
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddTile(TileID.Anvils);
+            recipe.AddIngredient(ItemType<OculumSlate>(), 15);
+            recipe.SetResult(this);
+            recipe.AddRecipe();
         }
     }
 }
