@@ -15,8 +15,8 @@ namespace NoxiumMod.Projectiles
     {
         public override void SetDefaults()
         {
-            projectile.width = 10;
-            projectile.height = 32;
+            projectile.width = 32;
+            projectile.height = 10;
             projectile.friendly = true;
             projectile.melee = true;
             projectile.penetrate = 2;
