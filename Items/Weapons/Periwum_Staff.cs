@@ -1,5 +1,5 @@
-
-using Noxium.Projectiles;
+using System;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -7,14 +7,18 @@ using static Terraria.ModLoader.ModContent;
 
 namespace NoxiumMod.Items.Weapons
 {
+	
 	public class Periwum_Staff : ModItem
 	{
+		
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("SlaveStaff.");
+			DisplayName.SetDefault("Periwum Staff");
+			Tooltip.SetDefault("SlaveStaff xd");
 			Item.staff[item.type] = true; //this makes the useStyle animate as a staff instead of as a gun
 		}
 
+		
 		public override void SetDefaults()
 		{
 			item.damage = 20;
@@ -31,14 +35,10 @@ namespace NoxiumMod.Items.Weapons
 			item.rare = 2;
 			item.UseSound = SoundID.Item20;
 			item.autoReuse = true;
-			item.shoot = ProjectileType<SparklingBall>();
 			item.shootSpeed = 16f;
+			item.shoot = mod.ProjectileType("PeriwumProjectile");
 		}
-
-		public override bool CanUseItem(Player player)
-		{
-			return player.ownedProjectileCounts[item.shoot] < 5;
-		}
+		
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
 			int numberProjectiles = 5; 
@@ -51,9 +51,10 @@ namespace NoxiumMod.Items.Weapons
 			}
 			return false;
 		}
-		
 
-
-
+		public override bool CanUseItem(Player player)
+		{
+			return player.ownedProjectileCounts[item.shoot] < 5;
+		}
 	}
 }
