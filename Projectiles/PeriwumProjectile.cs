@@ -28,8 +28,16 @@ namespace NoxiumMod.Projectiles
 
 		public override void AI()
         {
-			Vector2 offset = 3; /* whatever you want the relative position to be */
-			projectile.position = Main.player[projectile.owner].Center + offset;
+			Player player = Main.player[projectile.owner];
+
+			double distance = 110; //how far the projectile circle is from the player
+			double degree = (double)projectile.ai[1] + (72 * projectile.ai[0]);
+			double radius = degree * (Math.PI / 180);
+			
+			projectile.position.X = player.Center.X - (int)(Math.Cos(radius) * distance) - projectile.width / 2;
+			projectile.position.Y = player.Center.Y - (int)(Math.Sin(radius) * distance) - projectile.height / 2;
+			projectile.ai[1] += 4f; // Changes how fast the projectile circles the player
+			
 			if (++projectile.frameCounter >= 4)
 			{
 				projectile.frameCounter = 0;
