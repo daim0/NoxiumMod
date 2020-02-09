@@ -2,9 +2,11 @@
   "ExpandedNodes": [
     "",
     "\\Items",
-    "\\Items\\Weapons",
+    "\\Items\\Armor",
+    "\\Items\\Armor\\Chartreum",
+    "\\Items\\Armor\\Oculum",
     "\\Projectiles"
   ],
-  "SelectedNode": "\\Items\\Weapons\\GelKnife.png",
+  "SelectedNode": "\\Items\\Armor\\Chartreum\\ChartreumHelmet.cs",
   "PreviewInSolutionExplorer": false
 }

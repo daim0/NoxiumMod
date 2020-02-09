@@ -16,7 +16,17 @@ namespace NoxiumMod.Items.Armor.Chartreum
 			item.width = 34;
 			item.height = 26;
 			item.defense = 8;
-			item.value = 20000;
+			item.value = 10000;// will add later 
+		}
+
+		public override void UpdateArmorSet(Player player)
+        {
+			player.setBonus = "10% More speed and ranged damage";
+			player.rangedDamage += 0.1f;			
+			{
+				if (!(player.HeldItem.modItem?.item?.type == mod.ItemType("ChartreumSniper")))
+					return;
+			}
 		}
 			
 
