@@ -35,16 +35,17 @@ namespace NoxiumMod.Projectiles
 				Dust.NewDust(projectile.position, projectile.width, projectile.height, 69, 0f, 0f, 0, default(Color), 1f);
 			}
 		}
-
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			Projectile.NewProjectile(target.Center.X + 50f, target.Center.Y - 40f, 0, 0, mod.ProjectileType("CrystalCannonHitProj"), projectile.damage, projectile.knockBack, Main.myPlayer, 0f, 0f); // top right
+            int distance = 20 + Math.Max(target.width, target.height);
+
+            Projectile.NewProjectile(target.Center.X + distance, target.Center.Y - distance, 0, 0, mod.ProjectileType("CrystalCannonHitProj"), projectile.damage, projectile.knockBack, Main.myPlayer, 0f, 0f); // top right
 			
-			Projectile.NewProjectile(target.Center.X + 50f, target.Center.Y + 40f, 0, 0, mod.ProjectileType("CrystalCannonHitProj"), projectile.damage, projectile.knockBack, Main.myPlayer, 0f, 0f); // bottom right
+			Projectile.NewProjectile(target.Center.X + distance, target.Center.Y + distance, 0, 0, mod.ProjectileType("CrystalCannonHitProj"), projectile.damage, projectile.knockBack, Main.myPlayer, 0f, 0f); // bottom right
 			
-			Projectile.NewProjectile(target.Center.X - 40f, target.Center.Y + 40f, 0, 0, mod.ProjectileType("CrystalCannonHitProj"), projectile.damage, projectile.knockBack, Main.myPlayer, 0f, 0f); // bottom left
+			Projectile.NewProjectile(target.Center.X - distance, target.Center.Y + distance, 0, 0, mod.ProjectileType("CrystalCannonHitProj"), projectile.damage, projectile.knockBack, Main.myPlayer, 0f, 0f); // bottom left
 			
-			Projectile.NewProjectile(target.Center.X - 40f, target.Center.Y - 40f, 0, 0, mod.ProjectileType("CrystalCannonHitProj"), projectile.damage, projectile.knockBack, Main.myPlayer, 0f, 0f); // top left
+			Projectile.NewProjectile(target.Center.X - distance, target.Center.Y - distance, 0, 0, mod.ProjectileType("CrystalCannonHitProj"), projectile.damage, projectile.knockBack, Main.myPlayer, 0f, 0f); // top left
 		}
 	}
 }
