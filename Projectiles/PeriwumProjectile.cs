@@ -7,7 +7,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace NoxiumMod.Projectiles
 {
-	public class PeriwumProjectile : ModProjectile
+	public class PeriwumProjectile_Small : ModProjectile
 	{
 		public override void SetStaticDefaults()
 		{
@@ -44,7 +44,7 @@ namespace NoxiumMod.Projectiles
 			
 			projectile.position.X = player.Center.X - (int)(Math.Cos(radius) * distance) - projectile.width / 2;
 			projectile.position.Y = player.Center.Y - (int)(Math.Sin(radius) * distance) - projectile.height / 2;
-			projectile.ai[1] += 4f; // How fast it circles the player
+			projectile.ai[1] += 4f; // How fast it circles the player			
 	    }
 	}
 }
