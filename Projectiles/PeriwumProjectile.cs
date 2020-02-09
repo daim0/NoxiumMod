@@ -1,10 +1,9 @@
-
+using System;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
-using System;
 
 namespace NoxiumMod.Projectiles
 {
@@ -13,36 +12,39 @@ namespace NoxiumMod.Projectiles
 		public override void SetStaticDefaults()
 		{
 			Main.projFrames[projectile.type] = 4;
-			Main.projPet[projectile.type] = true;
 			DisplayName.SetDefault("PeriwumProjectile");
 		}
 
 		public override void SetDefaults()
 		{
-			projectile.width = 30;
-			projectile.height = 30;
-			projectile.penetrate = -1;
+			projectile.scale = 1f;
+			projectile.extraUpdates = 0;
+			projectile.width = 14;
+			projectile.height = 14;
 			projectile.friendly = true;
-			projectile.magic = true;
+			projectile.penetrate = -1;
 			projectile.tileCollide = false;
-			projectile.ignoreWater = true;
+			projectile.magic = true;
 		}
-		     				
+
 		public override void AI() 
 		{
 			projectile.frameCounter++;
 			if (projectile.frameCounter >= 8) 
-				{
-		        projectile.frameCounter = 0;
-		        projectile.frame = (projectile.frame + 1) % 3;
-	        }
+			{
+				projectile.frameCounter = 0;
+				projectile.frame = (projectile.frame + 1) % 3;
+			}
+
 			Player player = Main.player[projectile.owner];
-			int distance = 120;
-			float angle = projectile.ai[1] + 72 * projectile.ai[0];
-			Vector2 offset = Vector2.UnitX * distance;
-			offset = offset.RotatedBy(MathHelper.ToRadians(angle)) - projectile.Size;
-			projectile.position = player.Center + offset;
-			projectile.ai[1] += 4f;
-        }
-	}	
+
+			double distance = 110; //how far the projectile circle is from the player
+			double degree = (double)projectile.ai[1] + (72 * projectile.ai[0]);
+			double radius = degree * (Math.PI / 180);
+			
+			projectile.position.X = player.Center.X - (int)(Math.Cos(radius) * distance) - projectile.width / 2;
+			projectile.position.Y = player.Center.Y - (int)(Math.Sin(radius) * distance) - projectile.height / 2;
+			projectile.ai[1] += 4f; // How fast it circles the player
+	    }
+	}
 }
