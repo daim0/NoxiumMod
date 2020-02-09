@@ -17,14 +17,14 @@ namespace NoxiumMod.Projectiles
 
 		public override void SetDefaults()
 		{
-			base.projectile.scale = 1f;
-			base.projectile.extraUpdates = 0;
-			base.projectile.width = 14;
-			base.projectile.height = 14;
-			base.projectile.friendly = true;
-			base.projectile.penetrate = -1;
-			base.projectile.tileCollide = false;
-			base.projectile.magic = true;
+			projectile.scale = 1f;
+			projectile.extraUpdates = 0;
+			projectile.width = 14;
+			projectile.height = 14;
+			projectile.friendly = true;
+			projectile.penetrate = -1;
+			projectile.tileCollide = false;
+			projectile.magic = true;
 		}
 
 		public override void AI() 
