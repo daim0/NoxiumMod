@@ -7,7 +7,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace NoxiumMod.Projectiles
 {
-	public class PeriwumProjectile_Small : ModProjectile
+	public class PeriwumProjectile : ModProjectile
 	{
 		public override void SetStaticDefaults()
 		{

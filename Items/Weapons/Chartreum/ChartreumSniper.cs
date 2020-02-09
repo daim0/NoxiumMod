@@ -3,7 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
-namespace NoxiumMod.Items.Weapons.Charyreum
+namespace NoxiumMod.Items.Weapons.Chartreum
 {
 	public class ChartreumSniper : ModItem
 	{
