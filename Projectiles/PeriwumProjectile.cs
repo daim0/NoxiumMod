@@ -1,4 +1,4 @@
-
+using System;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -11,23 +11,31 @@ namespace NoxiumMod.Projectiles
 	{
 		public override void SetStaticDefaults()
 		{
+			Main.projFrames[projectile.type] = 4;
 			DisplayName.SetDefault("PeriwumProjectile");
 		}
 
 		public override void SetDefaults()
 		{
-			projectile.width = 30;
-			projectile.height = 30;
-			projectile.timeLeft = 600;
-			projectile.penetrate = -1;
-			projectile.friendly = true;
-			projectile.magic = true;
-			projectile.tileCollide = false;
-			projectile.ignoreWater = true;
+			base.projectile.scale = 1f;
+			base.projectile.extraUpdates = 0;
+			base.projectile.width = 14;
+			base.projectile.height = 14;
+			base.projectile.friendly = true;
+			base.projectile.penetrate = -1;
+			base.projectile.tileCollide = false;
+			base.projectile.magic = true;
 		}
 
-		public override void AI()
-        {
+		public override void AI() 
+		{
+			projectile.frameCounter++;
+			if (projectile.frameCounter >= 8) 
+			{
+				projectile.frameCounter = 0;
+				projectile.frame = (projectile.frame + 1) % 3;
+			}
+
 			Player player = Main.player[projectile.owner];
 
 			double distance = 110; //how far the projectile circle is from the player
@@ -36,18 +44,7 @@ namespace NoxiumMod.Projectiles
 			
 			projectile.position.X = player.Center.X - (int)(Math.Cos(radius) * distance) - projectile.width / 2;
 			projectile.position.Y = player.Center.Y - (int)(Math.Sin(radius) * distance) - projectile.height / 2;
-			projectile.ai[1] += 4f; // Changes how fast the projectile circles the player
-			
-			if (++projectile.frameCounter >= 4)
-			{
-				projectile.frameCounter = 0;
-				if (++projectile.frame >= 4)
-				{
-					projectile.frame = 0;
-				}
-			}
-		}
-		
-
+			projectile.ai[1] += 4f; // How fast it circles the player
+	    }
 	}
 }
