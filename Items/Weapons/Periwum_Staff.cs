@@ -40,11 +40,16 @@ namespace NoxiumMod.Items.Weapons
 			return player.ownedProjectileCounts[item.shoot] < 5;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-        {
-			int numberProjectiles = 4;
-			for (int i = 0; i < numberProjectiles; i++);
-			Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(45));
-			Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
+		{
+			int numberProjectiles = 5; 
+			float rotation = MathHelper.ToRadians(72);
+			position += Vector2.Normalize(new Vector2(speedX, speedY)) * 72f;
+			for (int i = 0; i < numberProjectiles; i++)
+			{
+				Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * .2f;
+				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI, i);
+			}
+			return false;
 		}
 		
 
