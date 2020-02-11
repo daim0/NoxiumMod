@@ -27,10 +27,10 @@ namespace NoxiumMod.Items.Weapons.Crystal
 			item.useStyle = 5;
 			item.noMelee = true;
 			item.knockBack = 5f;
-			item.value = Item.buyPrice(0, 1, 69, 0);
+			item.value = Item.buyPrice(0, 1, 69, 0); //nice
 			item.rare = 5;
 			item.UseSound = SoundID.Item38;
-			item.autoReuse = false;
+			item.autoReuse = true;
 			item.shoot = mod.ProjectileType("CrystalCannonProj");
 			item.shootSpeed = 15f;
 		}
