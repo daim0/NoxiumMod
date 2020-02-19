@@ -31,7 +31,7 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
             npc.boss = true;
             npc.lavaImmune = true;
             npc.noGravity = true;
-            npc.noTileCollide = true;
+            npc.noTileCollide = false;
             //npc.HitSound = SoundID.NPCHit1;
             npc.DeathSound = SoundID.NPCDeath1;
             npc.buffImmune[24] = true;
@@ -83,11 +83,11 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
                         }
                         if (choice == 1)
                         {
-                            State = State_LaserShot;
+                            State = State_Spin;
                         }
                         if (choice == 2)
                         {
-                            State = State_LaserShot;
+                            State = State_Dash;
                         }
                     }
 
@@ -99,7 +99,7 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
                     float x = player.position.X + player.width / 2 - (npc.position.X + npc.width / 2);
                     float y = player.position.Y + player.height / 2 - (npc.position.Y + npc.height / 2) - 200;
                     npc.velocity += new Vector2(x, y) * (0.1f / (float)Math.Sqrt(x * x + y * y));
-                    if (Main.player[npc.target].Distance(npc.Center) < 350f)
+                    if (Main.player[npc.target].Distance(npc.Center) < 200f)
                     {
                         State = State_Idle;
                     }
@@ -127,7 +127,7 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 						TimerShoot = 80;
 					}
                     Timer++;
-                    if(Timer > 900)
+                    if(Timer > 300)
                     {
                         Timer = 0;
                         State = State_Idle;
