@@ -44,7 +44,16 @@ namespace NoxiumMod.Projectiles
 			
 			projectile.position.X = player.Center.X - (int)(Math.Cos(radius) * distance) - projectile.width / 2;
 			projectile.position.Y = player.Center.Y - (int)(Math.Sin(radius) * distance) - projectile.height / 2;
-			projectile.ai[1] += 4f; // How fast it circles the player			
+			projectile.ai[1] += 4f; // How fast it circles the player
+			for (int i = 0; i < 200; i++)
+			{
+				float shootToX = Main.npc[i].position.X + (float)Main.npc[i].width * 0.5f - projectile.Center.X;
+				float shootToY = Main.npc[i].position.Y + (float)Main.npc[i].height * 0.5f - projectile.Center.Y;				
+				Projectile.NewProjectile(projectile.position.X, projectile.position.Y, shootToX, shootToY, ModContent.ProjectileType<PeriwumProjectile_Small>(), 31, projectile.knockBack, Main.myPlayer);
+				
+			}
 	    }
+
+		
 	}
 }

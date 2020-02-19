@@ -15,8 +15,14 @@ namespace NoxiumMod.Items.Armor.Chartreum
 		{
 			item.width = 34;
 			item.height = 26;
-			item.defense = 8;
+			item.defense = 9;
 			item.value = 10000;
+		}
+
+		public override void UpdateArmorSet(Player player)
+		{
+			player.rangedDamage += 0.05f;
+			player.rangedCrit += 5;
 		}
 	}
 }

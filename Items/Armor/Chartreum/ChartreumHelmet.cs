@@ -15,7 +15,7 @@ namespace NoxiumMod.Items.Armor.Chartreum
 		{
 			item.width = 34;
 			item.height = 26;
-			item.defense = 8;
+			item.defense = 5;
 			item.value = 10000;// will add later 
 		}
 
