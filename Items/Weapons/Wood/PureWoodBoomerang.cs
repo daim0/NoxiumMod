@@ -34,5 +34,14 @@ namespace NoxiumMod.Items.Weapons.Wood
         {
             return player.ownedProjectileCounts[item.shoot] < 1;
         }
+
+        public override void AddRecipes()
+        {
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ItemID.Wood, 6);
+            recipe.AddTile(TileID.WorkBenches);
+            recipe.SetResult(this, 1);
+            recipe.AddRecipe();
+        }
     }
 }
