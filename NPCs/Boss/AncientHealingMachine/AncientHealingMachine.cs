@@ -32,7 +32,6 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
             npc.lavaImmune = true;
             npc.noGravity = true;
             npc.noTileCollide = false;
-            //npc.HitSound = SoundID.NPCHit1;
             npc.DeathSound = SoundID.NPCDeath1;
             npc.buffImmune[24] = true;
             music = MusicID.Boss2;
@@ -44,7 +43,10 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
         private const int State_Dash = 3;
         private const int State_Spin = 4;
 		
+		private const int State_Transform = 5;
+		
 		private int TimerShoot = 120;
+		private float transformHP;
 
         private float State
         {
@@ -65,6 +67,12 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
             {
                 if (State == State_Idle)
                 {
+					if (transformHP == 0 && (float)npc.life <= (float)npc.lifeMax * 0.7f)
+					{
+						State = State_Transform;
+						Timer = 0;
+					}
+					
                     npc.velocity *= 0.065f;
                     npc.velocity.Y += (float)Math.Sin(Math.PI * (Timer / 18));
                     if (Main.player[npc.target].Distance(npc.Center) > 350f)
@@ -94,6 +102,12 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
                 }
                 else if (State == State_Moving)
                 {
+					if (transformHP == 0 && (float)npc.life <= (float)npc.lifeMax * 0.7f)
+					{
+						npc.immortal = true;
+						npc.dontTakeDamage = true;
+					}
+					
                     Timer++;
                     Player player = Main.player[npc.target];
                     float x = player.position.X + player.width / 2 - (npc.position.X + npc.width / 2);
@@ -105,7 +119,13 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
                     }
                 }
                 else if (State == State_LaserShot)
-                {				
+                {		
+					if (transformHP == 0 && (float)npc.life <= (float)npc.lifeMax * 0.7f)
+					{
+						npc.immortal = true;
+						npc.dontTakeDamage = true;
+					}
+					
 					npc.velocity *= 0.055f;
                     npc.velocity.Y += (float)Math.Sin(Math.PI * (Timer / 22));
 					TimerShoot--;
@@ -135,6 +155,12 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
                 }
                 else if (State == State_Dash)
                 {
+					if (transformHP == 0 && (float)npc.life <= (float)npc.lifeMax * 0.7f)
+					{
+						npc.immortal = true;
+						npc.dontTakeDamage = true;
+					}
+					
                     if (Timer % 60 == 0)
                     {
                         Player player = Main.player[npc.target];
@@ -154,6 +180,12 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
                 }
                 else if (State == State_Spin)
                 {
+					if (transformHP == 0 && (float)npc.life <= (float)npc.lifeMax * 0.7f)
+					{
+						npc.immortal = true;
+						npc.dontTakeDamage = true;
+					}
+					
                     Player player = Main.player[npc.target];
                     npc.rotation += (float)Math.PI / 10f;
                     float x = player.position.X + player.width / 2 - (npc.position.X + npc.width / 2);
@@ -167,33 +199,28 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
                         npc.rotation = 0f;
                     }
                 }
+				else if (State == State_Transform)
+				{
+					npc.velocity.X = 0f;
+					npc.velocity.Y = 0f;
+					Timer++;
+					if(Timer >= 40)
+					{
+						NPC.NewNPC((int)(npc.Center.X), (int)npc.Center.Y + 54, mod.NPCType("AncientHealingCore"), 0, 0f, 0f, 0f, 0f, 255); //Right Crystal
+						
+						NPC.NewNPC((int)(npc.Center.X + 82f), (int)npc.Center.Y + 40, mod.NPCType("AncientHealingCrystalLeft"), 0, 0f, 0f, 0f, 0f, 255); //Left Crystal
+						NPC.NewNPC((int)(npc.Center.X - 82f), (int)npc.Center.Y + 40, mod.NPCType("AncientHealingCrystalRight"), 0, 0f, 0f, 0f, 0f, 255); //Right Crystal
+					
+						Vector2 leftpos = new Vector2(npc.Center.X - 40, npc.Center.Y + 15);
+						Vector2 rightpos = new Vector2(npc.Center.X + 40, npc.Center.Y + 15);
+						Gore.NewGore(leftpos, npc.velocity, mod.GetGoreSlot("Gores/PipeLeft"), 1f);
+						Gore.NewGore(rightpos, npc.velocity, mod.GetGoreSlot("Gores/PipeRight"), 1f);
+						
+						npc.active = false;
+						npc.life = 0;
+					}					
+				}	
             }
         }
     }
 }
-   
-					/*npc.velocity.X = npc.velocity.X * 0.48f;
-					NPC npc2 = npc;
-					npc2.velocity.Y = npc2.velocity.Y * 0.48f;
-					Vector2 vector = new Vector2(npc.position.X + (float)npc.width * 0.5f, npc.position.Y + (float)npc.height * 0.5f);
-					float num = (float)Math.Atan2((double)(vector.Y - (Main.player[npc.target].position.Y + (float)Main.player[npc.target].height * 0.5f)), (double)(vector.X - (Main.player[npc.target].position.X + (float)Main.player[npc.target].width * 0.5f)));
-					npc.velocity.X = (float)(Math.Cos((double)num) * 16.0) * -1f;
-					npc.velocity.Y = (float)(Math.Sin((double)num) * 16.0) * -1f;
-					npc.ai[0] %= 6.28318548f;
-					new Vector2((float)Math.Cos((double)npc.ai[0]), (float)Math.Sin((double)npc.ai[0]));
-					Main.PlaySound(2, (int)npc.position.X, (int)npc.position.Y, 20, 1f, 0f);
-					npc.ai[2] = -300f;
-					new Rectangle((int)npc.position.X, (int)(npc.position.Y + (float)((npc.height - npc.width) / 2)), npc.width, npc.width);
-					int num2 = 30;
-					for (int i = 1; i <= num2; i++)
-					{
-						int num3 = Dust.NewDust(npc.position, npc.width, npc.height, 69, 0f, 0f, 0, default(Color), 1f);
-						Main.dust[num3].noGravity = false;
-					}
-					
-					if (Timer > 80)
-                    {
-                        Timer = 0;
-                        State = State_Idle;
-                        npc.rotation = 0f;
-                    }*/
