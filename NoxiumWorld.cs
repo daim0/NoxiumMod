@@ -18,31 +18,43 @@ namespace NoxiumMod
     class NoxiumWorld : ModWorld
     {
 		public static bool oculumOreSpawn;
+		public static bool downedAHM;
 		
 		public override void Initialize()
 		{
 			NoxiumWorld.oculumOreSpawn = false;
+			NoxiumWorld.downedAHM = false;
 		}
 		
 		public override TagCompound Save()
 		{
 			List<string> list = new List<string>();
+			List<string> list2 = new List<string>();
 			
 			if(NoxiumWorld.oculumOreSpawn)
 			{
 				list.Add("oculumOreSpawn");
 			}
 			
+			if(NoxiumWorld.downedAHM)
+			{
+				list.Add("downedAHM");
+			}
+			
 			TagCompound tagCompound = new TagCompound();
 			tagCompound.Add("spawned", list);
+			tagCompound.Add("downed", list2);
 			return tagCompound;
 		}
 		
 		public override void Load(TagCompound tag)
 		{
 			IList<string> list = tag.GetList<string>("spawned");
+			IList<string> list2 = tag.GetList<string>("downed");
 			
 			NoxiumWorld.oculumOreSpawn = list.Contains("oculumOreSpawn");
+			
+			NoxiumWorld.downedAHM = list2.Contains("downedAHM");
 		}
 		
 		public override void LoadLegacy(BinaryReader reader)
@@ -54,6 +66,7 @@ namespace NoxiumMod
 				BitsByte flag = reader.ReadByte();
 				
 				NoxiumWorld.oculumOreSpawn = flag[0];
+				NoxiumWorld.downedAHM = flag[1];
 			}
 		}
 		
@@ -63,6 +76,8 @@ namespace NoxiumMod
 			
 			flag[0] = NoxiumWorld.oculumOreSpawn;
 			
+			flag[1] = NoxiumWorld.downedAHM;
+			
 			writer.Write(flag);
 		}
 		
@@ -71,6 +86,7 @@ namespace NoxiumMod
 			BitsByte flag = reader.ReadByte();
 			
 			NoxiumWorld.oculumOreSpawn = flag[0];
+			NoxiumWorld.downedAHM = flag[1];
 		}
 	}
 }
