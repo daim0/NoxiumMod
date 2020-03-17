@@ -42,7 +42,7 @@ namespace NoxiumMod.Projectiles.Throwing
                 projectile.velocity.Y += velYmult;
             }
 
-            projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90f);
+            projectile.rotation = projectile.velocity.ToRotation() + (MathHelper.Pi/2);
 
             if (Main.rand.NextBool(3))
             {
