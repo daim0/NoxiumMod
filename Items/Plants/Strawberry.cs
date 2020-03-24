@@ -42,18 +42,41 @@ namespace NoxiumMod.Items.Plants
 
 			Player player = Main.player[item.owner]; //the player using this item
 
-			//spriteBatch.Draw(Main.magicPixel, inventoryItemRect, null, Color.White); //Used for debugging purposes to draw the rectangle
+			spriteBatch.Draw(Main.magicPixel, inventoryItemRect, null, Color.White); //Used for debugging purposes to draw the rectangle
 
-			//a quick variable to make our code look cleaner
+			//a quick 2 variables to make our code look cleaner
 			Point mousePoint = new Point(Main.mouseX, Main.mouseY);
+			NoxiumPlayer noxiumPlayer = player.GetModPlayer<NoxiumPlayer>();
 
-			//Cop vanillas way of holding a button to pick things up - NOT DONE YET
-			if (inventoryItemRect.Contains(mousePoint) && player.GetModPlayer<NoxiumPlayer>().SeedKeyDown)
+			//Copy vanillas way of holding a button to pick things up
+			if (noxiumPlayer.SeedStackSplit <= 1 && inventoryItemRect.Contains(mousePoint) && noxiumPlayer.SeedKeyDown)
 			{
-				//remove the strawberry item from the inventory
-				ItemUtils.RemoveItem(item);
-				//put the seeds in the inventory
-				ItemUtils.PutItemInInventory(player, ModContent.ItemType<StrawberrySeeds>());
+				if ((Main.mouseItem.type == ModContent.ItemType<StrawberrySeeds>() && Main.mouseItem.stack < Main.mouseItem.maxStack) || Main.mouseItem.type == 0)
+				{
+					if (Main.mouseItem.type == 0)
+					{
+						Item newItem = new Item();
+						newItem.SetDefaults(ModContent.ItemType<StrawberrySeeds>());
+
+						Main.mouseItem = newItem;
+						Main.mouseItem.stack = 0;
+						Main.mouseItem.favorited = item.favorited;
+					}
+					
+					Main.mouseItem.stack++;
+					item.stack--;
+
+					if (item.stack <= 0)
+						item.TurnToAir();
+
+					Recipe.FindRecipes();
+
+					Main.soundInstanceMenuTick.Stop();
+					Main.soundInstanceMenuTick = Main.soundMenuTick.CreateInstance();
+					Main.PlaySound(12);
+
+					noxiumPlayer.SeedStackSplit = noxiumPlayer.SeedStackSplit == 0 ? 15 : noxiumPlayer.SeedStackDelay;
+				}
 			}
 		}
 	}

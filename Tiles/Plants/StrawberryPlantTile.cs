@@ -22,6 +22,7 @@ namespace NoxiumMod.Tiles.Plants
 
             //Sets the appropriate TileObjectData for a 2x2 multitile.
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
+
             TileObjectData.newTile.Width = 2; //width in tiles
 			TileObjectData.newTile.Height = 2; //height in tiles
 			TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16 }; //height of each tile frame in the multitile complex in pixels
@@ -107,9 +108,6 @@ namespace NoxiumMod.Tiles.Plants
 			return false;
 		}
 
-		public override void KillMultiTile(int i, int j, int frameX, int frameY)
-		{
-			Main.PlaySound(SoundID.Grass, i * 16, j * 16); //play grass sound at tile pos converted to pixel pos
-		}
+		public override void KillMultiTile(int i, int j, int frameX, int frameY) => Main.PlaySound(SoundID.Grass, i * 16, j * 16); //play grass sound at tile pos converted to pixel pos
 	}
 }

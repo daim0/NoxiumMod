@@ -17,6 +17,11 @@ namespace NoxiumMod
 
 		public bool SeedKeyDown { get; private set; }
 
+		public int SeedStackSplit { get; set; }
+		public int SeedStackCounter { get; private set; }
+		public int SeedStackDelay { get; private set; }
+		public int SeedSuperFastStack { get; private set; }
+
 		public override void ResetEffects()
 		{
 			fireMinion = false;
@@ -24,8 +29,63 @@ namespace NoxiumMod
 
 		public override void ProcessTriggers(TriggersSet triggersSet)
 		{
+			SetSeedStackDelays();
+
 			SeedKeyJustPressed = NoxiumMod.SeedHotkey.JustPressed;
 			SeedKeyDown = NoxiumMod.SeedHotkey.Current;
+		}
+
+		private void SetSeedStackDelays()
+		{
+			if (!SeedKeyDown)
+				SeedStackSplit = 0;
+
+			if (SeedStackSplit > 0)
+				SeedStackSplit--;
+
+			if (SeedStackSplit == 0)
+			{
+				SeedStackCounter = 0;
+				SeedStackDelay = 7;
+				SeedSuperFastStack = 0;
+			}
+			else
+			{
+				SeedStackCounter++;
+
+				int num;
+				switch (SeedStackDelay)
+				{
+					case 6:
+						num = 25;
+						break;
+					case 5:
+						num = 20;
+						break;
+					case 4:
+						num = 15;
+						break;
+					case 3:
+						num = 10;
+						break;
+					default:
+						num = 5;
+						break;
+				}
+
+				if (SeedStackCounter >= num)
+				{
+					SeedStackDelay--;
+
+					if (SeedStackDelay < 2)
+					{
+						SeedStackDelay = 2;
+						SeedSuperFastStack++;
+					}
+
+					SeedStackCounter = 0;
+				}
+			}
 		}
 
 		public override void PostUpdateMiscEffects()
