@@ -8,28 +8,26 @@
     ".NETFramework,Version=v4.5": []
   },
   "packageFolders": {
-    "C:\\Users\\sarty\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\BRA0007\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\sarty\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\NoxiumMod\\NoxiumMod.csproj",
+      "projectUniqueName": "C:\\Users\\BRA0007\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\NoxiumMod\\NoxiumMod.csproj",
       "projectName": "NoxiumMod",
-      "projectPath": "C:\\Users\\sarty\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\NoxiumMod\\NoxiumMod.csproj",
-      "packagesPath": "C:\\Users\\sarty\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\sarty\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\NoxiumMod\\obj\\",
+      "projectPath": "C:\\Users\\BRA0007\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\NoxiumMod\\NoxiumMod.csproj",
+      "packagesPath": "C:\\Users\\BRA0007\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\BRA0007\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\NoxiumMod\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\sarty\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\BRA0007\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net45"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -45,7 +43,7 @@
     },
     "frameworks": {
       "net45": {
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
       }
     }
   }

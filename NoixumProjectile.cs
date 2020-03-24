@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+﻿using NoxiumMod.Utilities;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -16,9 +14,7 @@ namespace NoxiumMod
                 if (projectile.minion)
                 {
                     if (Main.player[projectile.owner].GetModPlayer<NoxiumPlayer>().fireMinion)
-                    {
-                        target.AddBuff(BuffID.OnFire, 110, false);
-                    }
+                        target.AddBuff(BuffID.OnFire, new Time(2).Ticks);
                 }
             }
         }

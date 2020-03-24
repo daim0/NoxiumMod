@@ -1,16 +1,15 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Terraria.ModLoader.ModContent;
 
 namespace NoxiumMod.Projectiles
 {
 	public class CrystalCannonHitProj : ModProjectile
 	{
 		public int Timer = 50;
-		
+
 		public override void SetDefaults()
 		{
 			projectile.width = 20;
@@ -24,8 +23,8 @@ namespace NoxiumMod.Projectiles
 			projectile.tileCollide = false;
 			projectile.extraUpdates = 1;
 		}
-		
-		public virtual bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
 		{
 			return true;
 		}
@@ -34,11 +33,11 @@ namespace NoxiumMod.Projectiles
 		{
 			Main.PlaySound(SoundID.Item10, projectile.position);
 		}
-		
+
 		public override void AI()
-		{	
-			if (!projectile.tileCollide && Collision.SolidCollision(projectile.position, projectile.width, projectile.height)) 
-			{	
+		{
+			if (!projectile.tileCollide && Collision.SolidCollision(projectile.position, projectile.width, projectile.height))
+			{
 				projectile.tileCollide = true;
 				projectile.Kill();
 			}
@@ -46,7 +45,7 @@ namespace NoxiumMod.Projectiles
 			if (this.Timer <= 10)
 			{
 				projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) + 1.57f;
-				 
+
 				float num2 = projectile.Center.X;
 				float num3 = projectile.Center.Y;
 				float num4 = 350f;

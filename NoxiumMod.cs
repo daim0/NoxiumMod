@@ -5,6 +5,18 @@ namespace NoxiumMod
 {
     public class NoxiumMod : Mod
     {
+        public static ModHotKey SeedHotkey;
+
+        public override void Load()
+        {
+            SeedHotkey = RegisterHotKey("Seed Fruit", "C");
+        }
+
+        public override void Unload()
+        {
+            SeedHotkey = null;
+        }
+
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(this);
