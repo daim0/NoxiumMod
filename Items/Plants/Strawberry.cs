@@ -47,8 +47,8 @@ namespace NoxiumMod.Items.Plants
 			//a quick variable to make our code look cleaner
 			Point mousePoint = new Point(Main.mouseX, Main.mouseY);
 
-			//Check if the seed key is pressed and if the mouse is hovering over the rectangle of the item
-			if (inventoryItemRect.Contains(mousePoint) && player.GetModPlayer<NoxiumPlayer>().SeedKeyJustPressed)
+			//Cop vanillas way of holding a button to pick things up - NOT DONE YET
+			if (inventoryItemRect.Contains(mousePoint) && player.GetModPlayer<NoxiumPlayer>().SeedKeyDown)
 			{
 				//remove the strawberry item from the inventory
 				ItemUtils.RemoveItem(item);

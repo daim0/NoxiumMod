@@ -27,7 +27,7 @@ namespace NoxiumMod.Tiles.Plants
 			TileObjectData.newTile.UsesCustomCanPlace = true; //Tells the game that this tile is placed as a multitile for the purpose of createTile in items.
 			TileObjectData.newTile.CoordinateWidth = 16; //width of each tile frame in the multitile complex in pixels
 			TileObjectData.newTile.CoordinatePadding = 2; //spacing between each frame in pixels
-			TileObjectData.newTile.Origin = new Point16(0, 0); //where the tile is placed from for the purpose of createTile in items. (1, 1) would make the tile place from the top left of the bottom right tile instead
+			TileObjectData.newTile.Origin = new Point16(0, 1); //where the tile is placed from for the purpose of createTile in items. (1, 1) would make the tile place from the top left of the bottom right tile instead
 
 			TileObjectData.newTile.AnchorValidTiles = new int[]
 			{

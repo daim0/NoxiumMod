@@ -15,6 +15,8 @@ namespace NoxiumMod
 
 		public bool SeedKeyJustPressed = false;
 
+		public bool SeedKeyDown { get; private set; }
+
 		public override void ResetEffects()
 		{
 			fireMinion = false;
@@ -23,6 +25,7 @@ namespace NoxiumMod
 		public override void ProcessTriggers(TriggersSet triggersSet)
 		{
 			SeedKeyJustPressed = NoxiumMod.SeedHotkey.JustPressed;
+			SeedKeyDown = NoxiumMod.SeedHotkey.Current;
 		}
 
 		public override void PostUpdateMiscEffects()
