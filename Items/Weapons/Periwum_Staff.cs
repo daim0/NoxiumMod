@@ -1,16 +1,14 @@
-using System;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Terraria.ModLoader.ModContent;
 
 namespace NoxiumMod.Items.Weapons
 {
-	
+
 	public class Periwum_Staff : ModItem
 	{
-		
+
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Periwum Staff");
@@ -18,7 +16,7 @@ namespace NoxiumMod.Items.Weapons
 			Item.staff[item.type] = true; //this makes the useStyle animate as a staff instead of as a gun
 		}
 
-		
+
 		public override void SetDefaults()
 		{
 			item.damage = 20;
@@ -38,10 +36,10 @@ namespace NoxiumMod.Items.Weapons
 			item.shootSpeed = 16f;
 			item.shoot = mod.ProjectileType("PeriwumProjectile");
 		}
-		
+
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			int numberProjectiles = 5; 
+			int numberProjectiles = 5;
 			float rotation = MathHelper.ToRadians(72);
 			position += Vector2.Normalize(new Vector2(speedX, speedY)) * 72f;
 			for (int i = 0; i < numberProjectiles; i++)

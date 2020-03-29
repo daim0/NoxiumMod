@@ -1,9 +1,7 @@
-﻿using Terraria;
+﻿using NoxiumMod.Items.Buffs;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using NoxiumMod.Items.Buffs;
-using Microsoft.Xna.Framework;
-using System;
 
 namespace NoxiumMod.Projectiles
 {

@@ -32,7 +32,7 @@ namespace NoxiumMod
 			//Note to everyone from goodpro - I spent like a week trying to figure out why seed stacking wasen't working and then jopojelly 
 			//saved my life telling me to not call the setting method in here, but in a new interface layer
 			//SetSeedStackDelays();
-			
+
 			SeedKeyJustPressed = NoxiumMod.SeedHotkey.JustPressed;
 			SeedKeyDown = NoxiumMod.SeedHotkey.Current;
 		}

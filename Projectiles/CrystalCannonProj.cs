@@ -1,9 +1,8 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Terraria.ModLoader.ModContent;
 
 namespace NoxiumMod.Projectiles
 {
@@ -46,14 +45,14 @@ namespace NoxiumMod.Projectiles
 
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-            int distance = Math.Max(target.width, target.height) / 2;
+			int distance = Math.Max(target.width, target.height) / 2;
 
-            Projectile.NewProjectile(target.Center.X + distance + 20, target.Center.Y - distance - 20, 0, 0, mod.ProjectileType("CrystalCannonHitProj"), projectile.damage, projectile.knockBack, Main.myPlayer, 0f, 0f); // top right
-			
+			Projectile.NewProjectile(target.Center.X + distance + 20, target.Center.Y - distance - 20, 0, 0, mod.ProjectileType("CrystalCannonHitProj"), projectile.damage, projectile.knockBack, Main.myPlayer, 0f, 0f); // top right
+
 			Projectile.NewProjectile(target.Center.X + distance + 20, target.Center.Y + distance + 20, 0, 0, mod.ProjectileType("CrystalCannonHitProj"), projectile.damage, projectile.knockBack, Main.myPlayer, 0f, 0f); // bottom right
-			
+
 			Projectile.NewProjectile(target.Center.X - distance - 10, target.Center.Y + distance + 20, 0, 0, mod.ProjectileType("CrystalCannonHitProj"), projectile.damage, projectile.knockBack, Main.myPlayer, 0f, 0f); // bottom left
-			
+
 			Projectile.NewProjectile(target.Center.X - distance - 10, target.Center.Y - distance - 20, 0, 0, mod.ProjectileType("CrystalCannonHitProj"), projectile.damage, projectile.knockBack, Main.myPlayer, 0f, 0f); // top left
 		}
 	}

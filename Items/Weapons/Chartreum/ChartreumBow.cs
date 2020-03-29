@@ -1,7 +1,7 @@
-﻿using Terraria;
+﻿using Microsoft.Xna.Framework;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
 namespace NoxiumMod.Items.Weapons.Chartreum
 {
 	public class ChartreumBow : ModItem

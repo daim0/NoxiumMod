@@ -20,15 +20,15 @@ namespace NoxiumMod.Items.Armor.Chartreum
 		}
 
 		public override void UpdateArmorSet(Player player)
-        {
+		{
 			player.setBonus = "10% More speed and ranged damage";
-			player.rangedDamage += 0.1f;			
+			player.rangedDamage += 0.1f;
 			{
 				if (!(player.HeldItem.modItem?.item?.type == mod.ItemType("ChartreumSniper")))
-				return;
+					return;
 			}
 		}
-	
+
 
 		public override bool IsArmorSet(Item head, Item body, Item legs)
 		{

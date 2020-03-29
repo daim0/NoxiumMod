@@ -20,10 +20,10 @@ namespace NoxiumMod.Tiles.Plants
 
 			Main.tileFrameImportant[Type] = true; //Tells the game that the frame of this tile cannot be randomized
 
-            //Sets the appropriate TileObjectData for a 2x2 multitile.
-            TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
+			//Sets the appropriate TileObjectData for a 2x2 multitile.
+			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
 
-            TileObjectData.newTile.Width = 2; //width in tiles
+			TileObjectData.newTile.Width = 2; //width in tiles
 			TileObjectData.newTile.Height = 2; //height in tiles
 			TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16 }; //height of each tile frame in the multitile complex in pixels
 			TileObjectData.newTile.UsesCustomCanPlace = true; //Tells the game that this tile is placed as a multitile for the purpose of createTile in items.

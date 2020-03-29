@@ -1,7 +1,6 @@
 
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Terraria.ModLoader.ModContent;
 
 namespace NoxiumMod.Items.Weapons.Chartreum
 {
@@ -21,7 +20,7 @@ namespace NoxiumMod.Items.Weapons.Chartreum
 			item.useTime = 36;
 			item.useAnimation = 36;
 			item.useStyle = 5;
-			item.noMelee = true; 
+			item.noMelee = true;
 			item.knockBack = 8;
 			item.value = 10000;
 			item.rare = 2;

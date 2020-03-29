@@ -1,10 +1,8 @@
 ﻿
-using Terraria.ID;
-using Terraria.ModLoader;
-using static Terraria.ModLoader.ModContent;
 using Microsoft.Xna.Framework;
 using Terraria;
-using IL.Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace NoxiumMod.Items.Weapons.Beetle
 {
@@ -41,10 +39,10 @@ namespace NoxiumMod.Items.Weapons.Beetle
 			int numberProjectiles = 2;
 			for (int i = 0; i < numberProjectiles; i++)
 			{
-				Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(15)); 
+				Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(15));
 				Terraria.Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
 			}
-			return false; 
+			return false;
 		}
 	}
 }

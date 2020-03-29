@@ -1,8 +1,8 @@
-using Terraria.ModLoader;
-using Terraria.ID;
 using System.Collections.Generic;
-using Terraria.UI;
 using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+using Terraria.UI;
 
 namespace NoxiumMod
 {

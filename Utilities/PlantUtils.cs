@@ -14,7 +14,7 @@ namespace NoxiumMod.Utilities
 			int fullFrameWidth = data.Width * (data.CoordinateWidth + data.CoordinatePadding); //the width of a full frame of our multitile in pixels. We get this by multiplying the size of 1 full frame with padding by the width of our tile in tiles.
 
 			return (Stage)(tile.frameX / (fullFrameWidth)); //return the x frame / the full frame width * the amount of stages cast to the Stage enum
-		} 
+		}
 
 	}
 

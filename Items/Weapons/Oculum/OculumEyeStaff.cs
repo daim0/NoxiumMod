@@ -1,9 +1,9 @@
-﻿using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using NoxiumMod.Items.Buffs;
 using NoxiumMod.Projectiles;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace NoxiumMod.Items.Weapons.Oculum
 {
@@ -38,7 +38,7 @@ namespace NoxiumMod.Items.Weapons.Oculum
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			if(Collision.SolidCollision(Main.MouseWorld - new Vector2(24, 48) / 2f, 24, 48))
+			if (Collision.SolidCollision(Main.MouseWorld - new Vector2(24, 48) / 2f, 24, 48))
 			{
 				player.ClearBuff(ModContent.BuffType<OculumsVisionBuff>());
 			}

@@ -1,8 +1,8 @@
-﻿using Terraria;
+﻿using NoxiumMod.Projectiles;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
-using NoxiumMod.Projectiles;
 
 namespace NoxiumMod.Items.Weapons
 {

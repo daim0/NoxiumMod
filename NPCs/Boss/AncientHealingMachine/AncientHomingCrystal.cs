@@ -1,9 +1,8 @@
-using System;
 using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Terraria.ModLoader.ModContent;
 
 namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 {
@@ -25,7 +24,7 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 			projectile.timeLeft = 110;
 		}
 
-		
+
 		public override void AI()
 		{
 			projectile.ai[1] += 1f;
@@ -41,7 +40,7 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 			{
 				projectile.alpha = 0;
 			}
-			
+
 			int num3 = (int)projectile.ai[0];
 			if (num3 >= 0 && Main.player[num3].active && !Main.player[num3].dead)
 			{
@@ -70,7 +69,7 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 				}
 			}
 		}
-		
+
 		public override void Kill(int timeLeft)
 		{
 			Collision.HitTiles(projectile.position, projectile.velocity, projectile.width, projectile.height);
@@ -80,8 +79,8 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 				Dust.NewDust(projectile.position + projectile.velocity, projectile.width, projectile.height, 61, projectile.oldVelocity.X * 1.1f, projectile.oldVelocity.Y * 1.1f, 0, default(Color), 1f);
 				Dust.NewDust(projectile.position + projectile.velocity, projectile.width, projectile.height, 60, projectile.oldVelocity.X * 1.1f, projectile.oldVelocity.Y * 1.1f, 0, default(Color), 1f);
 			}
-			
-			
+
+
 		}
 	}
 }

@@ -1,15 +1,13 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Terraria.ModLoader.ModContent;
 
 namespace NoxiumMod.Projectiles
 {
 	public class ChartreumBladeSideProj : ModProjectile
 	{
-		
+
 		public override void SetDefaults()
 		{
 			projectile.width = 12;
@@ -25,7 +23,7 @@ namespace NoxiumMod.Projectiles
 			projectile.extraUpdates = 1;
 			this.aiType = 14;
 		}
-		
+
 		public override void AI()
 		{
 			int greenDust = Dust.NewDust(projectile.position, projectile.width, projectile.height, 61, 0f, 0f, 0, default(Color), 1f);

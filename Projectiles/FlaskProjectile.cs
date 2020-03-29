@@ -1,10 +1,7 @@
 ﻿
 using Microsoft.Xna.Framework;
-using System;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.ID;
-using System.Collections.Generic;
 
 namespace NoxiumMod.Projectiles
 {
@@ -34,9 +31,9 @@ namespace NoxiumMod.Projectiles
 			}
 		}
 
-		
 
-		
+
+
 	}
 }
 

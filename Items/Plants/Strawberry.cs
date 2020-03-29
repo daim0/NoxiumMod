@@ -62,7 +62,7 @@ namespace NoxiumMod.Items.Plants
 						Main.mouseItem.stack = 0;
 						Main.mouseItem.favorited = item.favorited;
 					}
-					
+
 					Main.mouseItem.stack++;
 					item.stack--;
 

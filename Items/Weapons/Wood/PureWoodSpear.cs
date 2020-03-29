@@ -1,17 +1,17 @@
-﻿using Terraria;
+﻿using NoxiumMod.Projectiles.Wooden;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
-using NoxiumMod.Projectiles.Wooden;
 
 namespace NoxiumMod.Items.Weapons.Wood
 {
-    class PureWoodSpear : ModItem
-    {
+	class PureWoodSpear : ModItem
+	{
 
-        public override void SetDefaults()
-        {
-            item.damage = 7;
+		public override void SetDefaults()
+		{
+			item.damage = 7;
 			item.useStyle = 5;
 			item.useAnimation = 31;
 			item.useTime = 31;
@@ -25,20 +25,20 @@ namespace NoxiumMod.Items.Weapons.Wood
 
 			item.melee = true;
 			item.noMelee = true;
-			item.noUseGraphic = true; 
-			item.autoReuse = false; 
+			item.noUseGraphic = true;
+			item.autoReuse = false;
 
 			item.UseSound = SoundID.Item1;
 			item.shoot = ProjectileType<PureWoodSpearP>();
 		}
 
-        public override void AddRecipes()
-        {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.Wood, 8);
-            recipe.AddTile(TileID.WorkBenches);
-            recipe.SetResult(this, 1);
-            recipe.AddRecipe();
-        }
-    }
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ItemID.Wood, 8);
+			recipe.AddTile(TileID.WorkBenches);
+			recipe.SetResult(this, 1);
+			recipe.AddRecipe();
+		}
+	}
 }
