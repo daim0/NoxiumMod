@@ -15,7 +15,7 @@ namespace NoxiumMod.Projectiles
 			projectile.friendly = true;
 			projectile.melee = true;
 			projectile.penetrate = 1;
-			projectile.tileCollide = false;
+			projectile.tileCollide = true;
 			projectile.aiStyle = 1;
 		}
 
