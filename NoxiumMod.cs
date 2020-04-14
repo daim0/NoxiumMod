@@ -1,8 +1,24 @@
+
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using NoxiumMod;
 using Terraria;
 using Terraria.ID;
+using Terraria.Graphics.Effects;
+using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
+using System.IO;
+using Terraria.DataStructures;
+using Terraria.GameInput;
 using Terraria.UI;
+using Terraria.GameContent.UI;
+using System.Linq;
+using NoxiumMod.UI;
 
 namespace NoxiumMod
 {
@@ -10,17 +26,29 @@ namespace NoxiumMod
 	{
 		public static ModHotKey SeedHotkey;
 
-		public override void Load()
-		{
-			SeedHotkey = RegisterHotKey("Seed Fruit", "C");
-		}
+        private ahmBar AhmUI;
+        internal UserInterface AHMUiInterface;
+
+        public override void Load()
+        {
+            SeedHotkey = RegisterHotKey("Seed Fruit", "C");
+            if (!Main.dedServ)
+            {
+                AhmUI = new ahmBar();
+                AHMUiInterface = new UserInterface();
+                AHMUiInterface.SetState(AhmUI);
+            }
+        }
 
 		public override void Unload()
 		{
 			SeedHotkey = null;
 		}
-
-		public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
+        public override void UpdateUI(GameTime gameTime)
+        {
+            AHMUiInterface?.Update(gameTime);
+        }
+        public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
 		{
 			int mouseTextIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
 			if (mouseTextIndex != -1)
@@ -34,7 +62,19 @@ namespace NoxiumMod
 					},
 					InterfaceScaleType.UI)
 				);
-			}
+                int resourceBarIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Resource Bars"));
+                if (resourceBarIndex != -1)
+                {
+                    layers.Insert(resourceBarIndex, new LegacyGameInterfaceLayer(
+                        "NoxiumMod: AHM Bar",
+                        delegate {
+                            AHMUiInterface.Draw(Main.spriteBatch, new GameTime());
+                            return true;
+                        },
+                        InterfaceScaleType.UI)
+                    );
+                }
+            }
 		}
 		public override void AddRecipes()
 		{
