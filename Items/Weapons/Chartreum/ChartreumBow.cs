@@ -10,8 +10,8 @@ namespace NoxiumMod.Items.Weapons.Chartreum
 		{
 			item.damage = 25;
 			item.ranged = true;
-			item.width = 35;
-			item.height = 60;
+			item.width = 50;
+			item.height = 82;
 			item.useTime = 15;
 			item.useAnimation = 15;
 			item.useStyle = 5;
