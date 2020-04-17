@@ -14,7 +14,7 @@ namespace NoxiumMod.Items.Weapons.Periwum
 			item.damage = 50;
 			item.melee = true;
 			item.width = 58;
-			item.height = 60;
+			item.height = 62;
 			item.useTime = 20;
 			item.useAnimation = 20;
 			item.useStyle = 1;
