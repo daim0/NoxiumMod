@@ -56,10 +56,10 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 			set => npc.ai[1] = value;
 		}
 
-
 		public override void AI()
 		{
-			npc.TargetClosest(true);
+            NoxiumWorld.ahmSpawned = true;
+            npc.TargetClosest(true);
 			if (npc.HasValidTarget)
 			{
 				if (State == State_Idle)
@@ -99,11 +99,6 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 				}
 				else if (State == State_Moving)
 				{
-					if (transformHP == 0 && (float)npc.life <= (float)npc.lifeMax * 0.7f)
-					{
-						npc.immortal = true;
-						npc.dontTakeDamage = true;
-					}
 
 					Timer++;
 					Player player = Main.player[npc.target];
@@ -117,11 +112,6 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 				}
 				else if (State == State_LaserShot)
 				{
-					if (transformHP == 0 && (float)npc.life <= (float)npc.lifeMax * 0.7f)
-					{
-						npc.immortal = true;
-						npc.dontTakeDamage = true;
-					}
 
 					npc.velocity *= 0.055f;
 					npc.velocity.Y += (float)Math.Sin(Math.PI * (Timer / 22));
@@ -152,11 +142,6 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 				}
 				else if (State == State_Dash)
 				{
-					if (transformHP == 0 && (float)npc.life <= (float)npc.lifeMax * 0.7f)
-					{
-						npc.immortal = true;
-						npc.dontTakeDamage = true;
-					}
 
 					if (Timer % 60 == 0)
 					{
@@ -177,11 +162,6 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 				}
 				else if (State == State_Spin)
 				{
-					if (transformHP == 0 && (float)npc.life <= (float)npc.lifeMax * 0.7f)
-					{
-						npc.immortal = true;
-						npc.dontTakeDamage = true;
-					}
 
 					Player player = Main.player[npc.target];
 					npc.rotation += (float)Math.PI / 10f;
