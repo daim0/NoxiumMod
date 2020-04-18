@@ -19,6 +19,8 @@ using Terraria.UI;
 using Terraria.GameContent.UI;
 using System.Linq;
 using NoxiumMod.UI;
+using Terraria.Graphics;
+
 
 namespace NoxiumMod
 {
@@ -28,6 +30,10 @@ namespace NoxiumMod
 
         private ahmBar AhmUI;
         internal UserInterface AHMUiInterface;
+
+        //shake
+        public static float shakeAmount = 0;
+        public static int ShakeTimer;
 
         public override void Load()
         {
@@ -76,7 +82,26 @@ namespace NoxiumMod
                 }
             }
 		}
-		public override void AddRecipes()
+        public static void ShakeScreen(float AmountOfShake, int TimeSeconds)
+        {
+            ShakeTimer = TimeSeconds * Main.frameRate;
+            shakeAmount = AmountOfShake;
+        }
+        public override void ModifyTransformMatrix(ref SpriteViewMatrix Transform)
+        {
+            Player player = Main.LocalPlayer;
+            //Cant shake main menu, :widepeeposad:
+            if (!Main.gameMenu)
+            {
+                if (shakeAmount != 0 && ShakeTimer != 0)
+                {
+                    ShakeTimer--;
+                    Vector2 Shakey = new Vector2(player.Center.X + Main.rand.NextFloat(shakeAmount), player.Center.Y + Main.rand.NextFloat(shakeAmount)) - new Vector2(Main.screenWidth / 2, Main.screenHeight / 2);
+                    Main.screenPosition = Shakey;
+                }
+            }
+        }
+        public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(this);
 			recipe.AddIngredient(ItemID.StrangePlant3, 1);
