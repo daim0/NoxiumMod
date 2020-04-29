@@ -31,5 +31,13 @@ namespace NoxiumMod.Items.Weapons.Chartreum
 			item.useAmmo = AmmoID.Bullet;
 			item.crit = 30;
 		}
-	}
+        public override void AddRecipes()
+        {
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ModContent.ItemType<Materials.Chartreum>(), 10);
+            recipe.SetResult(this);
+            recipe.AddRecipe();
+
+        }
+    }
 }

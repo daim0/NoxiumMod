@@ -39,5 +39,13 @@ namespace NoxiumMod.Items.Weapons.Chartreum
 			}
 			return base.UseTimeMultiplier(player);
 		}
-	}
+        public override void AddRecipes()
+        {
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ModContent.ItemType<Materials.Chartreum>(), 8);
+            recipe.SetResult(this);
+            recipe.AddRecipe();
+
+        }
+    }
 }

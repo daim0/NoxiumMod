@@ -3,7 +3,6 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-
 namespace NoxiumMod.Items.Weapons.Chartreum
 {
 	class ChartreumBlade : ModItem
@@ -41,5 +40,13 @@ namespace NoxiumMod.Items.Weapons.Chartreum
 			Projectile.NewProjectile(position.X, position.Y, speedX / 2, speedY / 2, type, damage, knockBack, player.whoAmI);
 			return false;
 		}
-	}
+        public override void AddRecipes()
+        {
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ModContent.ItemType<Materials.Chartreum>(), 10);
+            recipe.SetResult(this);
+            recipe.AddRecipe();
+
+        }
+    }
 }
