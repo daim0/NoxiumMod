@@ -16,7 +16,7 @@ namespace NoxiumMod
         static public bool ahmBarShown = false;
 
         public static int ahmTimer = 0;
-        public static int ahmTimerCap = 60 * 60;
+        public static int ahmTimerCap = 12 * 60 * 60;
         public override void Initialize()
 		{
 			oculumOreSpawn = false;
@@ -158,13 +158,18 @@ namespace NoxiumMod
             {
                 ahmTimer++;
                 ahmBarShown = true;
-                if(ahmTimer >= ahmTimerCap)
+                if(ahmTimer > ahmTimerCap)
+                {
+                    ahmTimer = ahmTimerCap;
+                }
+                if(ahmTimer == ahmTimerCap && !ahmSpawned)
                 {
                     NPC.SpawnOnPlayer(player.whoAmI, mod.NPCType("AncientHealingMachine"));
                     Main.PlaySound(SoundID.Roar, player.position, 0);
-                    ahmBarShown = false;
-                    ahmTimer = ahmTimerCap;
                 }
+            }else
+            {
+                ahmBarShown = false;
             }
         }
     }

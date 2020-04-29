@@ -44,6 +44,17 @@ namespace NoxiumMod
                 AHMUiInterface = new UserInterface();
                 AHMUiInterface.SetState(AhmUI);
             }
+            Mod yabhb = ModLoader.GetMod("FKBossHealthBar");
+            if (yabhb != null)
+            {
+		yabhb.Call("hbStart");
+                yabhb.Call("hbSetTexture",
+    GetTexture("UI/AhmHealthStart"),
+    GetTexture("UI/AhmHealthMid"),
+    GetTexture("UI/AhmHealthEnd"),
+    GetTexture("UI/AhmHealthFill"));
+                yabhb.Call("hbFinishSingle", NPCType("AncientHealingMachine"));
+            }
         }
 
 		public override void Unload()
