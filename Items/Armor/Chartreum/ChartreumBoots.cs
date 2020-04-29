@@ -25,5 +25,13 @@ namespace NoxiumMod.Items.Armor.Chartreum
 			player.rangedDamage += 0.05f;
 			player.moveSpeed += 0.05f;
 		}
-	}
+        public override void AddRecipes()
+        {
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ModContent.ItemType<Materials.Chartreum>(), 10);
+            recipe.SetResult(this);
+            recipe.AddRecipe();
+
+        }
+    }
 }

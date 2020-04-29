@@ -34,6 +34,14 @@ namespace NoxiumMod.Items.Armor.Chartreum
 		{
 			return body.type == mod.ItemType("ChartreumChestplate") && legs.type == mod.ItemType("ChartreumBoots");
 		}
-	}
+        public override void AddRecipes()
+        {
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ModContent.ItemType<Materials.Chartreum>(), 10);
+            recipe.SetResult(this);
+            recipe.AddRecipe();
+
+        }
+    }
 }
 
