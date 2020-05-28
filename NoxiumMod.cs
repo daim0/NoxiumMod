@@ -36,8 +36,10 @@ namespace NoxiumMod
 				);
 			}
 		}
+
 		public override void AddRecipes()
 		{
+			//ew. i hope 1.4 oops this shit
 			ModRecipe recipe = new ModRecipe(this);
 			recipe.AddIngredient(ItemID.StrangePlant3, 1);
 			recipe.AddIngredient(ItemID.BottledWater, 1);
@@ -135,7 +137,6 @@ namespace NoxiumMod
 			recipe.AddTile(TileID.DyeVat);
 			recipe.SetResult(ItemID.ShadowDye, 1);
 			recipe.AddRecipe();
-
 		}
 	}
 }
