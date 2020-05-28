@@ -41,7 +41,7 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 			{
 				npc.timeLeft = 269;
 			}
-			int flyAwaylol = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 61, 0f, 0f, 100, default(Color), 1f);
+			int flyAwaylol = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 61, 0f, 0f, 100, default, 1f);
 			Main.dust[flyAwaylol].noGravity = true;
 			Main.dust[flyAwaylol].scale = 1.15f;
         }

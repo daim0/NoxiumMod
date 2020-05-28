@@ -77,8 +77,8 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 			Main.PlaySound(SoundID.Item38, projectile.position);
 			for (int i = 0; i < 8; i++)
 			{
-				Dust.NewDust(projectile.position + projectile.velocity, projectile.width, projectile.height, 61, projectile.oldVelocity.X * 1.1f, projectile.oldVelocity.Y * 1.1f, 0, default(Color), 1f);
-				Dust.NewDust(projectile.position + projectile.velocity, projectile.width, projectile.height, 60, projectile.oldVelocity.X * 1.1f, projectile.oldVelocity.Y * 1.1f, 0, default(Color), 1f);
+				Dust.NewDust(projectile.position + projectile.velocity, projectile.width, projectile.height, 61, projectile.oldVelocity.X * 1.1f, projectile.oldVelocity.Y * 1.1f, 0, default, 1f);
+				Dust.NewDust(projectile.position + projectile.velocity, projectile.width, projectile.height, 60, projectile.oldVelocity.X * 1.1f, projectile.oldVelocity.Y * 1.1f, 0, default, 1f);
 			}
 			
 			

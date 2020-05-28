@@ -61,7 +61,7 @@ namespace NoxiumMod.Projectiles.Throwing
 					{
 
 						Lighting.AddLight(projectile.Center, 0.3f, 0.56f, 1.21f);
-						int waterWorks = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 252, projectile.velocity.X, projectile.velocity.Y, 115, default(Color), 1f);
+						int waterWorks = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 252, projectile.velocity.X, projectile.velocity.Y, 115, default, 1f);
 						switch (i)
 						{
 							case 0:

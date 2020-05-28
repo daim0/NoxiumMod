@@ -164,12 +164,12 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 						int num2 = 25;
 						for (int i = 1; i <= num2; i++)
 						{
-							int num3 = Dust.NewDust(npc.position, npc.width, npc.height, 219, 0f, 0f, 0, default(Color), 1f);
+							int num3 = Dust.NewDust(npc.position, npc.width, npc.height, 219, 0f, 0f, 0, default, 1f);
 							Main.dust[num3].noGravity = false;
 							Main.dust[num3].scale = 0.8f;
 							if (Main.rand.Next(1) == 0)
 							{
-								int num9 = Dust.NewDust(npc.position, npc.width, npc.height, 74, 0f, 0f, 0, default(Color), 1f);
+								int num9 = Dust.NewDust(npc.position, npc.width, npc.height, 74, 0f, 0f, 0, default, 1f);
 								Main.dust[num9].noGravity = true;
 								Main.dust[num9].scale = 0.95f;
 							}

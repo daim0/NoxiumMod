@@ -102,7 +102,7 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 			if (Main.rand.Next(3) == 0)
 			{
 				Vector2 value43 = projectile.velocity.RotatedBy(1.5707963705062866) * ((float)Main.rand.NextDouble() - 0.5f) * projectile.width;
-						int num813 = Dust.NewDust(value43 - Vector2.One * 4f, 8, 8, 219, 0f, 0f, 100, default(Color), 1.5f);
+						int num813 = Dust.NewDust(value43 - Vector2.One * 4f, 8, 8, 219, 0f, 0f, 100, default, 1.5f);
 						Dust dust3 = Main.dust[num813];
 						dust3.velocity *= 0.5f;
 						Main.dust[num813].velocity.Y = 0f - Math.Abs(Main.dust[num813].velocity.Y);

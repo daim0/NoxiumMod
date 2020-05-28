@@ -101,7 +101,7 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 			{
 				float num7 = projectile.velocity.ToRotation() + ((Main.rand.Next(2) == 1) ? -1f : 1f) * 1.57079637f;
 				float num8 = (float)Main.rand.NextDouble() * 2f + 2f;	
-				int num9 = Dust.NewDust(projectile.Center, 0, 0, 219, projectile.velocity.X, projectile.velocity.Y, 0, default(Color), 1f);
+				int num9 = Dust.NewDust(projectile.Center, 0, 0, 219, projectile.velocity.X, projectile.velocity.Y, 0, default, 1f);
 				Main.dust[num9].noGravity = true;
 				Main.dust[num9].scale = 1.15f;
 			}

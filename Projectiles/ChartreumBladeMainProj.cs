@@ -25,7 +25,7 @@ namespace NoxiumMod.Projectiles
 
 		public override void AI()
 		{
-			int greenDust = Dust.NewDust(projectile.position, projectile.width, projectile.height, 61, 0f, 0f, 0, default(Color), 1f);
+			int greenDust = Dust.NewDust(projectile.position, projectile.width, projectile.height, 61, 0f, 0f, 0, default, 1f);
 			Main.dust[greenDust].noGravity = true;
 			Main.dust[greenDust].scale = 0.5f;
 		}
@@ -36,7 +36,7 @@ namespace NoxiumMod.Projectiles
 			Collision.HitTiles(projectile.position, projectile.velocity, projectile.width, projectile.height);
 			for (int i = 0; i < 5; i++)
 			{
-				int greenDust = Dust.NewDust(projectile.position, projectile.width, projectile.height, 61, 0f, 0f, 0, default(Color), 1f);
+				int greenDust = Dust.NewDust(projectile.position, projectile.width, projectile.height, 61, 0f, 0f, 0, default, 1f);
 				Main.dust[greenDust].noGravity = true;
 			}
 		}
