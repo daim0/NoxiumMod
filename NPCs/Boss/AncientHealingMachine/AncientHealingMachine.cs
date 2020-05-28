@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Terraria;
 using Terraria.ID;
@@ -45,7 +46,9 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 		private const int State_Transform = 5;
 		
 		private int TimerShoot = 120;
-		private float transformHP;
+
+        [SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "<Pending>")]
+        private float transformHP = 0; //TODO why is this never assigned to?
 
         private float State
         {
