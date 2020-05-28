@@ -21,7 +21,7 @@ namespace NoxiumMod.Projectiles.Wooden
 			projectile.tileCollide = false;
 			projectile.friendly = true;
 		}
-		public float movementFactor
+		public float MovementFactor
 		{
 			get => projectile.ai[0];
 			set => projectile.ai[0] = value;
@@ -39,21 +39,21 @@ namespace NoxiumMod.Projectiles.Wooden
 
 			if (!projOwner.frozen)
 			{
-				if (movementFactor == 0f)
+				if (MovementFactor == 0f)
 				{
-					movementFactor = 3f;
+					MovementFactor = 3f;
 					projectile.netUpdate = true;
 				}
 				if (projOwner.itemAnimation < projOwner.itemAnimationMax / 2)
 				{
-					movementFactor -= 2.4f;
+					MovementFactor -= 2.4f;
 				}
 				else
 				{
-					movementFactor += 2.1f;
+					MovementFactor += 2.1f;
 				}
 			}
-			projectile.position += projectile.velocity * movementFactor;
+			projectile.position += projectile.velocity * MovementFactor;
 
 			if (projOwner.itemAnimation == 0)
 			{
