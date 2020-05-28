@@ -42,7 +42,7 @@ namespace NoxiumMod.Items.Plants
 
 			Player player = Main.player[item.owner]; //the player using this item
 
-			spriteBatch.Draw(Main.magicPixel, inventoryItemRect, null, Color.White); //Used for debugging purposes to draw the rectangle
+			//spriteBatch.Draw(Main.magicPixel, inventoryItemRect, null, Color.White); //Used for debugging purposes to draw the rectangle
 
 			//a quick 2 variables to make our code look cleaner
 			Point mousePoint = new Point(Main.mouseX, Main.mouseY);

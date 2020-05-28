@@ -2,10 +2,6 @@
 
 namespace NoxiumMod.Utilities
 {
-	public static class TimeUtils
-	{
-	}
-
 	public struct Time
 	{
 		/// <summary>

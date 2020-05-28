@@ -23,9 +23,9 @@ namespace NoxiumMod.Items.Plants.Seeds
 			item.autoReuse = true; //Make this item able to hold and re use.
 			item.maxStack = 99; //make the max stack this item can stack up to 99
 			item.useStyle = ItemUseStyleID.SwingThrow; //set the use style to the swing throw use style to match vanilla and look better
-			item.createTile = ModContent.TileType<StrawberryPlantTile>();
+			item.createTile = ModContent.TileType<StrawberryPlant>();
 
-			//CHANGE LATER
+			// TODO CHANGE LATER
 			item.value = Item.sellPrice(1); //the sell price in copper coins for this item
 			item.rare = ItemRarityID.LightRed; //the rarity
 		}
