@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace NoxiumMod.Items.Weapons.Wood
 {
-	class PureWoodBoomerang : ModItem
+	internal class PureWoodBoomerang : ModItem
 	{
 		public override void SetDefaults()
 		{
@@ -29,6 +29,7 @@ namespace NoxiumMod.Items.Weapons.Wood
 			item.UseSound = SoundID.Item1;
 			item.shoot = mod.ProjectileType("WoodenBoomer");
 		}
+
 		public override bool CanUseItem(Player player)
 		{
 			return player.ownedProjectileCounts[item.shoot] < 1;

@@ -4,13 +4,14 @@ using Terraria.ModLoader;
 
 namespace NoxiumMod.Items.Weapons.Throwing
 {
-	class TinyStar : ModItem
+	internal class TinyStar : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Tiny Star");
 			Tooltip.SetDefault("Andrew is a boomer");
 		}
+
 		public override void SetDefaults()
 		{
 			item.maxStack = 999;
@@ -20,6 +21,7 @@ namespace NoxiumMod.Items.Weapons.Throwing
 			item.rare = ItemRarityID.Blue;
 			item.scale = 1.3f;
 		}
+
 		public override bool OnPickup(Player player)
 		{
 			NoxiumPlayer modPlayer = player.GetModPlayer<NoxiumPlayer>();
@@ -29,6 +31,7 @@ namespace NoxiumMod.Items.Weapons.Throwing
 			p.ManaEffect(2);
 			return false;
 		}
+
 		public override bool ItemSpace(Player player)
 		{
 			return true;

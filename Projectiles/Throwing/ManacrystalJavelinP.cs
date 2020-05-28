@@ -6,8 +6,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace NoxiumMod.Projectiles.Throwing
 {
-	class ManacrystalJavelinP : ModProjectile
+	internal class ManacrystalJavelinP : ModProjectile
 	{
+		private int timer;
+
 		public override void SetDefaults()
 		{
 			projectile.width = 18;
@@ -16,6 +18,7 @@ namespace NoxiumMod.Projectiles.Throwing
 			projectile.thrown = true;
 			projectile.scale = 0.92f;
 		}
+
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
 			if (Main.rand.NextBool(4))
@@ -24,7 +27,7 @@ namespace NoxiumMod.Projectiles.Throwing
 			}
 			return true;
 		}
-		int timer;
+
 		public override void AI()
 		{
 			Lighting.AddLight(projectile.Center, Main.DiscoColor.ToVector3());
@@ -62,6 +65,7 @@ namespace NoxiumMod.Projectiles.Throwing
 				}
 			}
 		}
+
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
 			if (Main.rand.NextBool(4))

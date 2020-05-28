@@ -16,7 +16,7 @@ namespace NoxiumMod.Items.Armor.Chartreum
 			item.width = 34;
 			item.height = 26;
 			item.defense = 5;
-			item.value = 10000;// will add later 
+			item.value = 10000;// will add later
 		}
 
 		public override void UpdateArmorSet(Player player)
@@ -29,19 +29,17 @@ namespace NoxiumMod.Items.Armor.Chartreum
 			}
 		}
 
-
 		public override bool IsArmorSet(Item head, Item body, Item legs)
 		{
 			return body.type == mod.ItemType("ChartreumChestplate") && legs.type == mod.ItemType("ChartreumBoots");
 		}
-        public override void AddRecipes()
-        {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<Materials.Chartreum>(), 10);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
 
-        }
-    }
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ModContent.ItemType<Materials.Chartreum>(), 10);
+			recipe.SetResult(this);
+			recipe.AddRecipe();
+		}
+	}
 }
-

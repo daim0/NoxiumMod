@@ -3,11 +3,11 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-
 namespace NoxiumMod.Items.Weapons.Periwum
 {
-	class PeriwumKatana : ModItem
+	internal class PeriwumKatana : ModItem
 	{
+		private int timesHit = 0;
 
 		public override void SetDefaults()
 		{
@@ -25,7 +25,6 @@ namespace NoxiumMod.Items.Weapons.Periwum
 			item.autoReuse = true;
 		}
 
-		int timesHit = 0;
 		public override bool AltFunctionUse(Player player)
 		{
 			if (timesHit == 3)
@@ -34,6 +33,7 @@ namespace NoxiumMod.Items.Weapons.Periwum
 			}
 			else return false;
 		}
+
 		public override bool CanUseItem(Player player)
 		{
 			//code basically from ea, modified to better fit the mechanics.
@@ -66,6 +66,7 @@ namespace NoxiumMod.Items.Weapons.Periwum
 
 			return base.CanUseItem(player);
 		}
+
 		public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
 		{
 			timesHit++;
@@ -96,13 +97,13 @@ namespace NoxiumMod.Items.Weapons.Periwum
 				}
 			}
 		}
-        public override void AddRecipes()
-        {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<Materials.Periwum>(), 10);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
 
-        }
-    }
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ModContent.ItemType<Materials.Periwum>(), 10);
+			recipe.SetResult(this);
+			recipe.AddRecipe();
+		}
+	}
 }

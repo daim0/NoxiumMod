@@ -1,11 +1,10 @@
-﻿
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace NoxiumMod.Items.Consumable
 {
-	class Apple : ModItem
+	internal class Apple : ModItem
 	{
 		public override void SetDefaults()
 		{

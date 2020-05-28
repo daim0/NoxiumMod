@@ -6,8 +6,14 @@ using static Terraria.ModLoader.ModContent;
 
 namespace NoxiumMod.Items.Weapons.Plasma
 {
-	class BeetleYoyo : ModItem
+	internal class BeetleYoyo : ModItem
 	{
+		public static bool ShootProjectiles = false;
+
+		private static readonly int[] unwantedPrefixes = new int[] { PrefixID.Terrible, PrefixID.Dull, PrefixID.Shameful, PrefixID.Annoying, PrefixID.Broken, PrefixID.Damaged, PrefixID.Shoddy };
+
+		private int Timer;
+
 		public override void SetStaticDefaults()
 		{
 			ItemID.Sets.Yoyo[item.type] = true;
@@ -15,8 +21,6 @@ namespace NoxiumMod.Items.Weapons.Plasma
 			ItemID.Sets.GamepadSmartQuickReach[item.type] = true;
 		}
 
-		int Timer;
-		public static bool ShootProjectiles = false;
 		public override bool AltFunctionUse(Player player)
 		{
 			if (Timer >= 120)
@@ -26,6 +30,7 @@ namespace NoxiumMod.Items.Weapons.Plasma
 			}
 			else return false;
 		}
+
 		public override void SetDefaults()
 		{
 			item.useStyle = ItemUseStyleID.HoldingOut;
@@ -47,7 +52,7 @@ namespace NoxiumMod.Items.Weapons.Plasma
 			item.value = Item.sellPrice(silver: 1);
 			item.shoot = ProjectileType<BeetleEyePro>();
 		}
-		private static readonly int[] unwantedPrefixes = new int[] { PrefixID.Terrible, PrefixID.Dull, PrefixID.Shameful, PrefixID.Annoying, PrefixID.Broken, PrefixID.Damaged, PrefixID.Shoddy };
+
 		public override bool CanUseItem(Player player)
 		{
 			if (player.altFunctionUse == 2)
@@ -59,6 +64,7 @@ namespace NoxiumMod.Items.Weapons.Plasma
 			else ShootProjectiles = false;
 			return base.CanUseItem(player);
 		}
+
 		public override void Update(ref float gravity, ref float maxFallSpeed)
 		{
 			Timer++;

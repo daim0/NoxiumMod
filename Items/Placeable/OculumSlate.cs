@@ -1,11 +1,10 @@
-﻿
-using Terraria.ID;
+﻿using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace NoxiumMod.Items.Placeable
 {
-	class OculumSlate : ModItem
+	internal class OculumSlate : ModItem
 	{
 		public override void SetStaticDefaults()
 		{

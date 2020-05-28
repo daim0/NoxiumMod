@@ -6,12 +6,13 @@ using static Terraria.ModLoader.ModContent;
 
 namespace NoxiumMod.Items.Weapons
 {
-	class GelKnife : ModItem
+	internal class GelKnife : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Pink Gel Throwing Knife");
 		}
+
 		public override void SetDefaults()
 		{
 			item.shootSpeed = 9f;
@@ -35,6 +36,7 @@ namespace NoxiumMod.Items.Weapons
 			item.value = Item.sellPrice(silver: 2);
 			item.shoot = ProjectileType<GelKnifeProjectile>();
 		}
+
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);

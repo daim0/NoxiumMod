@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -41,7 +40,6 @@ namespace NoxiumMod.Projectiles
 				Main.dust[greenDust].noGravity = true;
 			}
 		}
-
 
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{

@@ -7,7 +7,7 @@ using static Terraria.ModLoader.ModContent;
 namespace NoxiumMod.Items.Armor.Oculum
 {
 	[AutoloadEquip(EquipType.Body)]
-	class OculumChestplate : ModItem
+	internal class OculumChestplate : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -22,6 +22,7 @@ namespace NoxiumMod.Items.Armor.Oculum
 			item.rare = ItemRarityID.Green;
 			item.defense = 5;
 		}
+
 		public override void UpdateEquip(Player player)
 		{
 			player.minionDamage += 0.1f;
@@ -37,4 +38,3 @@ namespace NoxiumMod.Items.Armor.Oculum
 		}
 	}
 }
-

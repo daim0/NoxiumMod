@@ -7,7 +7,7 @@ using static Terraria.ModLoader.ModContent;
 namespace NoxiumMod.Items.Armor.Oculum
 {
 	[AutoloadEquip(EquipType.Head)]
-	class OculumHelmet : ModItem
+	internal class OculumHelmet : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -22,19 +22,23 @@ namespace NoxiumMod.Items.Armor.Oculum
 			item.rare = ItemRarityID.Green;
 			item.defense = 2;
 		}
+
 		public override bool IsArmorSet(Item head, Item body, Item legs)
 		{
 			return body.type == ItemType<OculumChestplate>() && legs.type == ItemType<OculumBoots>();
 		}
+
 		public override void UpdateArmorSet(Player player)
 		{
 			player.setBonus = "Minions cause the On Fire debuff";
 			player.GetModPlayer<NoxiumPlayer>().fireMinion = true;
 		}
+
 		public override void UpdateEquip(Player player)
 		{
 			player.maxMinions += 1;
 		}
+
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);

@@ -15,7 +15,6 @@ namespace NoxiumMod.Utilities
 
 			return (Stage)(tile.frameX / (fullFrameWidth)); //return the x frame / the full frame width * the amount of stages cast to the Stage enum
 		}
-
 	}
 
 	public enum Stage

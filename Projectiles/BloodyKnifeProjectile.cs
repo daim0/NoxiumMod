@@ -1,12 +1,18 @@
 ﻿using Terraria;
-using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace NoxiumMod.Projectiles
 {
 	public class BloodyKnifeProjectile : ModProjectile
 	{
+		private int timer;
 
+		public float Timer
+		{
+			get => projectile.ai[0];
+			set => projectile.ai[0] = value;
+		}
 
 		public override void SetDefaults()
 		{
@@ -19,13 +25,6 @@ namespace NoxiumMod.Projectiles
 			projectile.aiStyle = 1;
 		}
 
-		public float Timer
-		{
-			get => projectile.ai[0];
-			set => projectile.ai[0] = value;
-		}
-
-		int timer;
 		public override void AI()
 		{
 			timer++;
@@ -40,9 +39,5 @@ namespace NoxiumMod.Projectiles
 				}
 			}
 		}
-
-
-
 	}
-
 }

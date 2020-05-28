@@ -6,9 +6,8 @@ using static Terraria.ModLoader.ModContent;
 
 namespace NoxiumMod.Items.Weapons.Wood
 {
-	class PureWoodSpear : ModItem
+	internal class PureWoodSpear : ModItem
 	{
-
 		public override void SetDefaults()
 		{
 			item.damage = 7;

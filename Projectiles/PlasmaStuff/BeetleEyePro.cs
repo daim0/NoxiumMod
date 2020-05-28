@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace NoxiumMod.Projectiles.PlasmaStuff
 {
-	class BeetleEyePro : ModProjectile
+	internal class BeetleEyePro : ModProjectile
 	{
 		public override void SetStaticDefaults()
 		{
@@ -26,6 +26,7 @@ namespace NoxiumMod.Projectiles.PlasmaStuff
 			projectile.melee = true;
 			projectile.scale = 1f;
 		}
+
 		public override void AI()
 		{
 			if (BeetleYoyo.ShootProjectiles == true)

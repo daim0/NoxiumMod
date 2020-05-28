@@ -1,7 +1,5 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -9,89 +7,90 @@ using static Terraria.ModLoader.ModContent;
 
 namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 {
-    class AncientHealingCrystalRight : ModNPC
-    {
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Ancient Healing Crystal");
-            Main.npcFrameCount[npc.type] = 1;
-        }
-        public override void SetDefaults()
-        {
-            npc.aiStyle = -1;
-            npc.lifeMax = 800;
-            npc.damage = 20;
-            npc.defense = 12;
-            npc.knockBackResist = 0f;
-            npc.width = 36;
-            npc.height = 80;
-            npc.value = Item.buyPrice(0, 4, 0, 0);
-            npc.lavaImmune = true;
-            npc.noGravity = true;
-            npc.noTileCollide = true;
-            npc.HitSound = SoundID.NPCHit1;
-            npc.DeathSound = SoundID.NPCDeath1;
-            npc.buffImmune[24] = true;
+	internal class AncientHealingCrystalRight : ModNPC
+	{
+		private const int State_Idle = 0;
+
+		private const int State_Circle = 1;
+
+		private float TimerBangBang = 130;
+
+		private float TimerBang = 220;
+
+		private float State
+		{
+			get => npc.ai[0];
+			set => npc.ai[0] = value;
+		}
+
+		private float Timer
+		{
+			get => npc.ai[1];
+			set => npc.ai[1] = value;
+		}
+
+		public override void SetStaticDefaults()
+		{
+			DisplayName.SetDefault("Ancient Healing Crystal");
+			Main.npcFrameCount[npc.type] = 1;
+		}
+
+		public override void SetDefaults()
+		{
+			npc.aiStyle = -1;
+			npc.lifeMax = 800;
+			npc.damage = 20;
+			npc.defense = 12;
+			npc.knockBackResist = 0f;
+			npc.width = 36;
+			npc.height = 80;
+			npc.value = Item.buyPrice(0, 4, 0, 0);
+			npc.lavaImmune = true;
+			npc.noGravity = true;
+			npc.noTileCollide = true;
+			npc.HitSound = SoundID.NPCHit1;
+			npc.DeathSound = SoundID.NPCDeath1;
+			npc.buffImmune[24] = true;
 			bossBag = ItemType<AncientHealingBossBag>();
 			npc.boss = true;
 			if (!NPC.AnyNPCs(mod.NPCType("AncientHealingCrystalLeft")))
 			{
 				music = MusicID.Boss2;
 			}
-        }
+		}
 
-        private const int State_Idle = 0;
-        private const int State_Circle = 1;
-
-        private float State
-        {
-            get => npc.ai[0];
-            set => npc.ai[0] = value;
-        }
-        private float Timer
-        {
-            get => npc.ai[1];
-            set => npc.ai[1] = value;
-        }
-		
-		private float TimerBangBang = 130;
-		private float TimerBang = 220;
-		
 		public override void NPCLoot()
 		{
-			
-			
 			if (!NPC.AnyNPCs(mod.NPCType("AncientHealingCrystalLeft")))
 			{
-				if(Main.expertMode)
+				if (Main.expertMode)
 				{
 					npc.DropBossBags();
 				}
 				else
 				{
-					
 				}
-				
-				if (!NoxiumWorld.downedAHM) {
+
+				if (!NoxiumWorld.downedAHM)
+				{
 					NoxiumWorld.downedAHM = true;
-					if (Main.netMode == NetmodeID.Server) {
+					if (Main.netMode == NetmodeID.Server)
+					{
 						NetMessage.SendData(MessageID.WorldData); // Tells code stuff that the boss has been killed in this world
 					}
 				}
 			}
 		}
-		
-        public override void AI()
-        {
+
+		public override void AI()
+		{
 			Player player = Main.player[npc.target];
-            npc.TargetClosest(true);
-			
-			
-			
-            if (npc.HasValidTarget)
-            {
-                if (State == State_Idle)
-                {		
+			npc.TargetClosest(true);
+
+			if (npc.HasValidTarget)
+			{
+				if (State == State_Idle)
+				{
 					if (npc.position.Y > player.position.Y - 220f)
 					{
 						if (npc.velocity.Y > 0f)
@@ -141,12 +140,12 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 						}
 					}
 					TimerBang--;
-					if(TimerBang <= 10)
+					if (TimerBang <= 10)
 					{
 						Projectile.NewProjectile(npc.Center, new Vector2(3.5f), mod.ProjectileType("AncientHomingCrystal"), 50, 2.5f, 255, 0f, 0f);
 						TimerBang = 220;
 					}
-					
+
 					TimerBangBang--;
 					if (TimerBangBang <= 30)
 					{
@@ -157,49 +156,45 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 						Main.PlaySound(SoundID.Item8); //Idk what kind of sound effect should there be tbh
 						float rotation = (float)Math.Atan2(vector.Y - (player.position.Y + (player.height * 0.5f)), vector.X - (player.position.X + (player.width * 0.5f)));
 						Projectile.NewProjectile(vector.X, vector.Y, (float)((Math.Cos(rotation) * Speed) * -2), (float)((Math.Sin(rotation) * Speed) * -1), type, damage, 0f, 0);
-						
+
 						TimerBangBang = 85;
 					}
 
-                    Timer++;
-                    if (Timer >= 460)
-                    {
-                        Timer = 0;
-                        State = State_Circle;
+					Timer++;
+					if (Timer >= 460)
+					{
+						Timer = 0;
+						State = State_Circle;
 						TimerBangBang = 140;
 						TimerBang = 220;
-                    }
-
-                }
-                else if (State == State_Circle)
-                {	
+					}
+				}
+				else if (State == State_Circle)
+				{
 					Timer++;
 					if (Timer <= 270)
 					{
 						double distance = 250; //how far the npc circle is from the player
 						double degree = (double)npc.ai[1] + (180 * npc.ai[0]);
 						double radius = degree * (Math.PI / 180);
-						
+
 						npc.position.X = player.Center.X - (int)(Math.Cos(radius) * distance) - npc.width / 2;
 						npc.position.Y = player.Center.Y - (int)(Math.Sin(radius) * distance) - npc.height / 2;
 						npc.ai[1] += 4f; // How fast it circles the player
 					}
 					if (Timer >= 270)
 					{
-						
 						float x = player.position.X + player.width / 2 - (npc.position.X + npc.width / 2);
 						float y = player.position.Y + player.height / 2 - (npc.position.Y + npc.height / 2);
 						npc.velocity = new Vector2(x, y) * (14 / (float)Math.Sqrt(x * x + y * y));
-
-						
 					}
 					if (Timer >= 280)
 					{
 						Timer = 0;
 						State = State_Idle;
 					}
-                }
-            }
+				}
+			}
 			else
 			{
 				npc.velocity = new Vector2(-8f, -12f);
@@ -208,6 +203,6 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 					npc.timeLeft = 80;
 				}
 			}
-        }
-    }
+		}
+	}
 }

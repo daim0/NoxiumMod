@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace NoxiumMod.Items.Weapons.Crystal
 {
-	class CrystalShuriken : ModItem
+	internal class CrystalShuriken : ModItem
 	{
 		public override void SetDefaults()
 		{
@@ -35,4 +35,3 @@ namespace NoxiumMod.Items.Weapons.Crystal
 		}
 	}
 }
-

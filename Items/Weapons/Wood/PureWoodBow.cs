@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace NoxiumMod.Items.Weapons.Wood
 {
-	class PureWoodBow : ModItem
+	internal class PureWoodBow : ModItem
 	{
 		public override void SetDefaults()
 		{
@@ -25,10 +25,12 @@ namespace NoxiumMod.Items.Weapons.Wood
 			item.shootSpeed = 6f;
 			item.useAmmo = AmmoID.Arrow;
 		}
+
 		public override Vector2? HoldoutOffset()
 		{
 			return new Vector2(1, 1);
 		}
+
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);

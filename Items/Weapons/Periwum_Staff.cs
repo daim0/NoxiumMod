@@ -5,17 +5,14 @@ using Terraria.ModLoader;
 
 namespace NoxiumMod.Items.Weapons
 {
-
 	public class Periwum_Staff : ModItem
 	{
-
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Periwum Staff");
 			Tooltip.SetDefault("SlaveStaff xd");
 			Item.staff[item.type] = true; //this makes the useStyle animate as a staff instead of as a gun
 		}
-
 
 		public override void SetDefaults()
 		{

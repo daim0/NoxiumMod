@@ -5,8 +5,14 @@ using Terraria.ModLoader;
 
 namespace NoxiumMod.Projectiles.Throwing
 {
-	class KnifeEP : ModProjectile
+	internal class KnifeEP : ModProjectile
 	{
+		private int Timer;
+
+		private int Timer2;
+
+		private Vector2 position;
+
 		public override void SetDefaults()
 		{
 			projectile.width = 12;
@@ -18,12 +24,8 @@ namespace NoxiumMod.Projectiles.Throwing
 			projectile.penetrate = 1;
 		}
 
-		int Timer;
-		int Timer2;
-		Vector2 position;
 		public override void AI()
 		{
-
 			Timer++;
 			if (Timer <= 35)
 			{

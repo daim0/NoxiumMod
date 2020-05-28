@@ -6,8 +6,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace NoxiumMod.Items.Weapons.Throwing
 {
-	class KnifeExperiment : ModItem
+	internal class KnifeExperiment : ModItem
 	{
+		public static bool ActShoot = false;
+
 		public override void SetDefaults()
 		{
 			item.shootSpeed = 10f;
@@ -31,12 +33,11 @@ namespace NoxiumMod.Items.Weapons.Throwing
 			item.shoot = ProjectileType<KnifeEP>();
 		}
 
-		public static bool ActShoot = false;
 		public override bool AltFunctionUse(Player player)
 		{
-
 			return true;
 		}
+
 		public override bool CanUseItem(Player player)
 		{
 			//code basically from ea, modified to better fit the mechanics.

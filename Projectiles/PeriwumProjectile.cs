@@ -47,10 +47,7 @@ namespace NoxiumMod.Projectiles
 				float shootToX = Main.npc[i].position.X + (float)Main.npc[i].width * 0.5f - projectile.Center.X;
 				float shootToY = Main.npc[i].position.Y + (float)Main.npc[i].height * 0.5f - projectile.Center.Y;
 				Projectile.NewProjectile(projectile.position.X, projectile.position.Y, shootToX, shootToY, ModContent.ProjectileType<PeriwumProjectile_Small>(), 31, projectile.knockBack, Main.myPlayer);
-
 			}
 		}
-
-
 	}
 }

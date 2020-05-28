@@ -6,7 +6,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace NoxiumMod.Tiles
 {
-	class OculumOre : ModTile
+	internal class OculumOre : ModTile
 	{
 		public override void SetDefaults()
 		{

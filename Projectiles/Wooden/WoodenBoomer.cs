@@ -2,7 +2,7 @@
 
 namespace NoxiumMod.Projectiles.Wooden
 {
-	class WoodenBoomer : ModProjectile
+	internal class WoodenBoomer : ModProjectile
 	{
 		public override void SetDefaults()
 		{

@@ -4,7 +4,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace NoxiumMod.Items.Placeable
 {
-	class OculumOreItem : ModItem
+	internal class OculumOreItem : ModItem
 	{
 		public override void SetStaticDefaults()
 		{

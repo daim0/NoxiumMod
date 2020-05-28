@@ -1,10 +1,9 @@
-﻿
-using Terraria;
+﻿using Terraria;
 using Terraria.ModLoader;
 
 namespace NoxiumMod.Dusts
 {
-	class PureWoodStaffD : ModDust
+	internal class PureWoodStaffD : ModDust
 	{
 		public override void OnSpawn(Dust dust)
 		{
@@ -13,6 +12,7 @@ namespace NoxiumMod.Dusts
 			dust.noLight = true;
 			dust.scale *= 1.2f;
 		}
+
 		public override bool Update(Dust dust)
 		{
 			dust.position += dust.velocity;

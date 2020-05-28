@@ -4,13 +4,14 @@ using Terraria.ModLoader;
 
 namespace NoxiumMod.Items.Weapons.Throwing
 {
-	class TinyHeart : ModItem
+	internal class TinyHeart : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Tiny Heart");
 			Tooltip.SetDefault("You shouldn't be able to read this");
 		}
+
 		public override void SetDefaults()
 		{
 			item.maxStack = 999;
@@ -20,6 +21,7 @@ namespace NoxiumMod.Items.Weapons.Throwing
 			item.rare = ItemRarityID.Blue;
 			item.scale = 2f;
 		}
+
 		public override bool OnPickup(Player player)
 		{
 			NoxiumPlayer modPlayer = player.GetModPlayer<NoxiumPlayer>();
@@ -29,6 +31,7 @@ namespace NoxiumMod.Items.Weapons.Throwing
 			p.HealEffect(2, true);
 			return false;
 		}
+
 		public override bool ItemSpace(Player player)
 		{
 			return true;

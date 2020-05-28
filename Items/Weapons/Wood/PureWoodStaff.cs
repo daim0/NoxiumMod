@@ -5,7 +5,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace NoxiumMod.Items.Weapons.Wood
 {
-	class PureWoodStaff : ModItem
+	internal class PureWoodStaff : ModItem
 	{
 		public override void SetDefaults()
 		{
@@ -26,6 +26,7 @@ namespace NoxiumMod.Items.Weapons.Wood
 			item.shoot = ProjectileType<PureWoodStaffP>();
 			item.shootSpeed = 6f;
 		}
+
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);

@@ -7,7 +7,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace NoxiumMod.Projectiles.Wooden
 {
-	class PureWoodStaffP : ModProjectile
+	internal class PureWoodStaffP : ModProjectile
 	{
 		public override void SetDefaults()
 		{
@@ -18,6 +18,7 @@ namespace NoxiumMod.Projectiles.Wooden
 			projectile.penetrate = 1;
 			projectile.timeLeft = 600;
 		}
+
 		public override void AI()
 		{
 			projectile.velocity.Y += projectile.ai[0];
@@ -28,11 +29,13 @@ namespace NoxiumMod.Projectiles.Wooden
 			float rotationsPerSecond = 6f;
 			projectile.rotation += MathHelper.ToRadians(rotationsPerSecond * 6f);
 		}
+
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
 			projectile.Kill();
 			return false;
 		}
+
 		public override void Kill(int timeLeft)
 		{
 			for (int k = 0; k < 5; k++)

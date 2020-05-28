@@ -43,7 +43,6 @@ namespace NoxiumMod.Projectiles
 			if (projectile.velocity.Y == 0)
 			{
 				projectile.velocity.X *= 0.97f;
-
 			}
 			if (projectile.velocity.X != oldVelocity.X && Math.Abs(oldVelocity.X) > 1f)
 			{
@@ -55,6 +54,7 @@ namespace NoxiumMod.Projectiles
 			}
 			return false;
 		}
+
 		public override void Kill(int timeLeft)
 		{
 			if (projectile.ai[1] == 0)

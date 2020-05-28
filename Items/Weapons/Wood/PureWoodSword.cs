@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace NoxiumMod.Items.Weapons.Wood
 {
-	class PureWoodSword : ModItem
+	internal class PureWoodSword : ModItem
 	{
 		public override void SetDefaults()
 		{

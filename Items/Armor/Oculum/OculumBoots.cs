@@ -7,7 +7,7 @@ using static Terraria.ModLoader.ModContent;
 namespace NoxiumMod.Items.Armor.Oculum
 {
 	[AutoloadEquip(EquipType.Legs)]
-	class OculumBoots : ModItem
+	internal class OculumBoots : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -22,10 +22,12 @@ namespace NoxiumMod.Items.Armor.Oculum
 			item.rare = ItemRarityID.Green;
 			item.defense = 4;
 		}
+
 		public override void UpdateEquip(Player player)
 		{
 			player.statManaMax2 += 20;
 		}
+
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);

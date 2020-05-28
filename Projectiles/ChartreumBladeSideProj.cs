@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -7,7 +6,6 @@ namespace NoxiumMod.Projectiles
 {
 	public class ChartreumBladeSideProj : ModProjectile
 	{
-
 		public override void SetDefaults()
 		{
 			projectile.width = 12;

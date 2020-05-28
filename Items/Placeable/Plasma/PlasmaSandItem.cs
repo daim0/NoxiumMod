@@ -1,11 +1,10 @@
-﻿
-using NoxiumMod.Tiles.Plasma;
-using Terraria.ModLoader;
+﻿using NoxiumMod.Tiles.Plasma;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace NoxiumMod.Items.Placeable.Plasma
 {
-	class PlasmaSandItem : ModItem
+	internal class PlasmaSandItem : ModItem
 	{
 		public override void SetDefaults()
 		{

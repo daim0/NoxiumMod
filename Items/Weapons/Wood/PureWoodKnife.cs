@@ -4,10 +4,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
-
 namespace NoxiumMod.Items.Weapons.Wood
 {
-	class PureWoodKnife : ModItem
+	internal class PureWoodKnife : ModItem
 	{
 		public override void SetDefaults()
 		{
@@ -32,6 +31,7 @@ namespace NoxiumMod.Items.Weapons.Wood
 			item.value = Item.sellPrice(silver: 2);
 			item.shoot = ProjectileType<PureWoodKnifeP>();
 		}
+
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);

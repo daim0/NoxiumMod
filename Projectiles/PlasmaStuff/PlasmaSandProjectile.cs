@@ -5,11 +5,12 @@ using Terraria.ModLoader;
 
 namespace NoxiumMod.Projectiles.PlasmaStuff
 {
-	class PlasmaSandProjectile : ModProjectile
+	internal class PlasmaSandProjectile : ModProjectile
 	{
 		protected bool falling = true;
 		protected int tileType;
 		protected int dustType;
+
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Plasma Sand Ball");
@@ -26,6 +27,7 @@ namespace NoxiumMod.Projectiles.PlasmaStuff
 			projectile.penetrate = -1;
 			tileType = ModContent.TileType<PlasmaSand>();
 		}
+
 		public override void AI()
 		{
 			//Change the 5 to determine how much dust will spawn. lower for more, higher for less
@@ -121,4 +123,3 @@ namespace NoxiumMod.Projectiles.PlasmaStuff
 		public override bool CanDamage() => projectile.localAI[1] != -1f;
 	}
 }
-

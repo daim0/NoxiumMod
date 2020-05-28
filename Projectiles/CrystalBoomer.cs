@@ -2,7 +2,7 @@
 
 namespace NoxiumMod.Projectiles
 {
-	class CrystalBoomer : ModProjectile
+	internal class CrystalBoomer : ModProjectile
 	{
 		public override void SetDefaults()
 		{

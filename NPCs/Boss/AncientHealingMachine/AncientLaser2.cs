@@ -1,15 +1,19 @@
-using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.Enums;
-using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 {
 	public class AncientLaser2 : ModProjectile
 	{
+		private int Timer = 0;
+
+		private int desiredFrame = 0;
+
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Ancient Laser");
@@ -25,23 +29,20 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 			projectile.timeLeft = 410;
 			this.cooldownSlot = 1;
 		}
-		
-		private int Timer = 0;
-		private int desiredFrame = 0;
 
 		public override void AI()
 		{
 			Timer++;
-			if(Timer >= 8)
+			if (Timer >= 8)
 			{
 				Timer = 0;
 				desiredFrame++;
 			}
-			if(desiredFrame >= 3)
+			if (desiredFrame >= 3)
 			{
 				desiredFrame = 0;
 			}
-			
+
 			Vector2? vector = null;
 			if (projectile.velocity.HasNaNs() || projectile.velocity == Vector2.Zero)
 			{
@@ -100,12 +101,12 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 			if (Main.rand.Next(4) == 0)
 			{
 				float num7 = projectile.velocity.ToRotation() + ((Main.rand.Next(2) == 1) ? -1f : 1f) * 1.57079637f;
-				float num8 = (float)Main.rand.NextDouble() * 2f + 2f;	
+				float num8 = (float)Main.rand.NextDouble() * 2f + 2f;
 				int num9 = Dust.NewDust(projectile.Center, 0, 0, 219, projectile.velocity.X, projectile.velocity.Y, 0, default, 1f);
 				Main.dust[num9].noGravity = true;
 				Main.dust[num9].scale = 1.15f;
 			}
-			
+
 			DelegateMethods.v3_1 = new Vector3(0.3f, 0.65f, 0.7f);
 			Utils.PlotTileLine(projectile.Center, projectile.Center + projectile.velocity * projectile.localAI[1], (float)projectile.width * projectile.scale, new Utils.PerLinePoint(DelegateMethods.CastLight));
 		}
@@ -119,27 +120,26 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 			Texture2D texture2D = mod.GetTexture("NPCs/Boss/AncientHealingMachine/AncientLaserAss");
 			Texture2D texture = mod.GetTexture("NPCs/Boss/AncientHealingMachine/AncientLaserBody");
 			Texture2D texture2 = mod.GetTexture("NPCs/Boss/AncientHealingMachine/AncientLaserAss");
-			
-			if(desiredFrame == 0)
+
+			if (desiredFrame == 0)
 			{
 				texture = mod.GetTexture("NPCs/Boss/AncientHealingMachine/AncientLaserBody");
 				texture2 = mod.GetTexture("NPCs/Boss/AncientHealingMachine/AncientLaserAss");
 				texture2D = mod.GetTexture("NPCs/Boss/AncientHealingMachine/AncientLaserAss");
 			}
-			if(desiredFrame == 1)
+			if (desiredFrame == 1)
 			{
 				texture = mod.GetTexture("NPCs/Boss/AncientHealingMachine/AncientLaserBody2");
 				texture2 = mod.GetTexture("NPCs/Boss/AncientHealingMachine/AncientLaserAss2");
 				texture2D = mod.GetTexture("NPCs/Boss/AncientHealingMachine/AncientLaserAss2");
 			}
-			if(desiredFrame == 2)
+			if (desiredFrame == 2)
 			{
 				texture = mod.GetTexture("NPCs/Boss/AncientHealingMachine/AncientLaserBody3");
 				texture2 = mod.GetTexture("NPCs/Boss/AncientHealingMachine/AncientLaserAss3");
 				texture2D = mod.GetTexture("NPCs/Boss/AncientHealingMachine/AncientLaserAss3");
 			}
-			
-			
+
 			float num = projectile.localAI[1];
 			Color color = new Color(255, 255, 255, 0) * 0.9f;
 			SpriteBatch spriteBatch2 = Main.spriteBatch;

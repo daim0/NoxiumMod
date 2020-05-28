@@ -16,6 +16,7 @@ namespace NoxiumMod.Projectiles
 			ProjectileID.Sets.Homing[projectile.type] = true;
 			drawOriginOffsetY = 2;
 		}
+
 		public sealed override void SetDefaults()
 		{
 			projectile.width = 24;
@@ -26,14 +27,17 @@ namespace NoxiumMod.Projectiles
 			projectile.minionSlots = 1f;
 			projectile.penetrate = -1;
 		}
+
 		public override bool? CanCutTiles()
 		{
 			return true;
 		}
+
 		public override bool MinionContactDamage()
 		{
 			return true;
 		}
+
 		public override void AI()
 		{
 			Player player = Main.player[projectile.owner];

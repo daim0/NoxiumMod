@@ -6,12 +6,13 @@ using Terraria.ModLoader;
 
 namespace NoxiumMod.Items.Weapons.Throwing
 {
-	class UndyneItem : ModItem
+	internal class UndyneItem : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Spear of Justice");
 		}
+
 		public override void SetDefaults()
 		{
 			item.shootSpeed = 10f;
@@ -37,7 +38,6 @@ namespace NoxiumMod.Items.Weapons.Throwing
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-
 			float Angle = MathHelper.ToRadians(Main.rand.NextFloat(0, 360));
 			float distance = 190;
 			float pX = distance * (float)Math.Cos(Angle) + Main.MouseWorld.X;
@@ -46,7 +46,6 @@ namespace NoxiumMod.Items.Weapons.Throwing
 
 			Projectile.NewProjectile(pX, pY, 0f, 0f, mod.ProjectileType("UndyneP"), damage, 1f, player.whoAmI);
 			return false;
-
 		}
 	}
 }

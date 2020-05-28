@@ -4,8 +4,12 @@ using Terraria.ModLoader;
 
 namespace NoxiumMod.Projectiles.Throwing
 {
-	class UndyneP : ModProjectile
+	internal class UndyneP : ModProjectile
 	{
+		private int Timer;
+
+		private Vector2 position;
+
 		public override void SetDefaults()
 		{
 			projectile.width = 38;
@@ -18,9 +22,7 @@ namespace NoxiumMod.Projectiles.Throwing
 			projectile.penetrate = -1;
 			projectile.alpha = 0;
 		}
-		int Timer;
 
-		Vector2 position;
 		public override void AI()
 		{
 			projectile.alpha++;
@@ -35,7 +37,6 @@ namespace NoxiumMod.Projectiles.Throwing
 			else if (Timer <= 70)
 			{
 				projectile.rotation = projectile.DirectionTo(position).ToRotation() + MathHelper.PiOver2;
-
 			}
 			else if (Timer <= 71)
 			{
@@ -50,7 +51,6 @@ namespace NoxiumMod.Projectiles.Throwing
 					sWW.velocity *= 0.85f;
 					num = i;
 				}
-
 			}
 			else if (Timer >= 72)
 			{
@@ -59,7 +59,6 @@ namespace NoxiumMod.Projectiles.Throwing
 					int num;
 					for (int i = 0; i < 2; i = num + 1)
 					{
-
 						Lighting.AddLight(projectile.Center, 0.3f, 0.56f, 1.21f);
 						int waterWorks = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 252, projectile.velocity.X, projectile.velocity.Y, 115, default, 1f);
 						switch (i)
@@ -67,6 +66,7 @@ namespace NoxiumMod.Projectiles.Throwing
 							case 0:
 								Main.dust[waterWorks].position = (Main.dust[waterWorks].position + projectile.Center * 5f) / 6f;
 								break;
+
 							case 1:
 								Main.dust[waterWorks].position = (Main.dust[waterWorks].position + (projectile.Center + projectile.velocity / 2f) * 5f) / 6f;
 								break;
@@ -79,7 +79,6 @@ namespace NoxiumMod.Projectiles.Throwing
 						num = i;
 					}
 				}
-
 			}
 		}
 	}

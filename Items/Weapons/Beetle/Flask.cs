@@ -1,5 +1,4 @@
-﻿
-using NoxiumMod.Projectiles;
+﻿using NoxiumMod.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

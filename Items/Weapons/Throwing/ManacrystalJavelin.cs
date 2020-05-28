@@ -4,16 +4,16 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
-
 namespace NoxiumMod.Items.Weapons.Throwing
 {
-	class ManacrystalJavelin : ModItem
+	internal class ManacrystalJavelin : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-            DisplayName.SetDefault("Mana Healing Javelin");
+			DisplayName.SetDefault("Mana Healing Javelin");
 			Tooltip.SetDefault("Shoots a Manacrystal Javelin." + "\nHas a chance to summon a tiny mana star on the highest peak of its trajectory." + "\nHas a chance to summon a tiny heart once it hits an enemy or tile.");
 		}
+
 		public override void SetDefaults()
 		{
 			item.shootSpeed = 10f;
@@ -36,14 +36,15 @@ namespace NoxiumMod.Items.Weapons.Throwing
 			item.value = Item.sellPrice(silver: 30);
 			item.shoot = ProjectileType<ManacrystalJavelinP>();
 		}
-        public override void AddRecipes()
-        {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.ManaCrystal, 3);
-            recipe.AddIngredient(ItemID.LifeCrystal, 3);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this, 1);
-            recipe.AddRecipe();
-        }
-    }
+
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ItemID.ManaCrystal, 3);
+			recipe.AddIngredient(ItemID.LifeCrystal, 3);
+			recipe.AddTile(TileID.Anvils);
+			recipe.SetResult(this, 1);
+			recipe.AddRecipe();
+		}
+	}
 }

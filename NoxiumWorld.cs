@@ -1,10 +1,9 @@
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using Terraria.ID;
-
 
 namespace NoxiumMod
 {
@@ -12,55 +11,56 @@ namespace NoxiumMod
 	{
 		public static bool oculumOreSpawn;
 		public static bool downedAHM;
-        public static bool ahmSpawned = false;
-        static public bool ahmBarShown = false;
+		public static bool ahmSpawned = false;
+		static public bool ahmBarShown = false;
 
-        public static int ahmTimer = 0;
-        public static int ahmTimerCap = 12 * 60 * 60;
-        public override void Initialize()
+		public static int ahmTimer = 0;
+		public static int ahmTimerCap = 12 * 60 * 60;
+
+		public override void Initialize()
 		{
 			oculumOreSpawn = false;
 			downedAHM = false;
-            ahmBarShown = false;
+			ahmBarShown = false;
 		}
 
 		public override TagCompound Save()
 		{
 			List<string> list = new List<string>();
 
-            if (oculumOreSpawn)
+			if (oculumOreSpawn)
 				list.Add("oculumOreSpawn");
-            if(ahmSpawned)
-                list.Add("ahmSpawned");
-            if (downedAHM)
+			if (ahmSpawned)
+				list.Add("ahmSpawned");
+			if (downedAHM)
 				list.Add("downedAHM");
-            if (ahmBarShown)
-                list.Add("ahmBarShown");
+			if (ahmBarShown)
+				list.Add("ahmBarShown");
 
 			TagCompound tagCompound = new TagCompound
 			{
 				{ "spawned", list },
-                { "ahmSpawned", list },
-                { "downed", list },
-                { "shown", list }
+				{ "ahmSpawned", list },
+				{ "downed", list },
+				{ "shown", list }
 			};
 			return tagCompound;
 		}
 
 		public override void Load(TagCompound tag)
 		{
-		    var spawned = tag.GetList<string>("spawned");
-            var ahmSpawnedV = tag.GetList<string>("ahmSpawned");
-            var downed = tag.GetList<string>("downed");
-            var shown = tag.GetList<string>("shown");
+			var spawned = tag.GetList<string>("spawned");
+			var ahmSpawnedV = tag.GetList<string>("ahmSpawned");
+			var downed = tag.GetList<string>("downed");
+			var shown = tag.GetList<string>("shown");
 
-            oculumOreSpawn = spawned.Contains("oculumOreSpawn");
+			oculumOreSpawn = spawned.Contains("oculumOreSpawn");
 
 			downedAHM = downed.Contains("downedAHM");
 
-            ahmSpawned = ahmSpawnedV.Contains("spawned");
+			ahmSpawned = ahmSpawnedV.Contains("spawned");
 
-            ahmBarShown = shown.Contains("shown");
+			ahmBarShown = shown.Contains("shown");
 		}
 
 		public override void LoadLegacy(BinaryReader reader)
@@ -73,8 +73,8 @@ namespace NoxiumMod
 
 				oculumOreSpawn = flag[0];
 				downedAHM = flag[1];
-                ahmSpawned = flag[2];
-                ahmBarShown = flag[3]; 
+				ahmSpawned = flag[2];
+				ahmBarShown = flag[3];
 			}
 		}
 
@@ -84,8 +84,8 @@ namespace NoxiumMod
 
 			flag[0] = oculumOreSpawn;
 			flag[1] = downedAHM;
-            flag[2] = ahmSpawned;
-            flag[3] = ahmBarShown;
+			flag[2] = ahmSpawned;
+			flag[3] = ahmBarShown;
 
 			writer.Write(flag);
 		}
@@ -96,8 +96,8 @@ namespace NoxiumMod
 
 			oculumOreSpawn = flag[0];
 			downedAHM = flag[1];
-            ahmSpawned = flag[2];
-            ahmBarShown = flag[3];
+			ahmSpawned = flag[2];
+			ahmBarShown = flag[3];
 		}
 
 		public override void PreUpdate()
@@ -151,26 +151,28 @@ namespace NoxiumMod
 				}
 			}*/
 		}
-        public override void PostUpdate()
-        {
-            Player player = Main.LocalPlayer;
-            if (Main.hardMode && !ahmSpawned)
-            {
-                ahmTimer++;
-                ahmBarShown = true;
-                if(ahmTimer > ahmTimerCap)
-                {
-                    ahmTimer = ahmTimerCap;
-                }
-                if(ahmTimer == ahmTimerCap && !ahmSpawned)
-                {
-                    NPC.SpawnOnPlayer(player.whoAmI, mod.NPCType("AncientHealingMachine"));
-                    Main.PlaySound(SoundID.Roar, player.position, 0);
-                }
-            }else
-            {
-                ahmBarShown = false;
-            }
-        }
-    }
+
+		public override void PostUpdate()
+		{
+			Player player = Main.LocalPlayer;
+			if (Main.hardMode && !ahmSpawned)
+			{
+				ahmTimer++;
+				ahmBarShown = true;
+				if (ahmTimer > ahmTimerCap)
+				{
+					ahmTimer = ahmTimerCap;
+				}
+				if (ahmTimer == ahmTimerCap && !ahmSpawned)
+				{
+					NPC.SpawnOnPlayer(player.whoAmI, mod.NPCType("AncientHealingMachine"));
+					Main.PlaySound(SoundID.Roar, player.position, 0);
+				}
+			}
+			else
+			{
+				ahmBarShown = false;
+			}
+		}
+	}
 }

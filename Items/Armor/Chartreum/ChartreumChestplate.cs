@@ -24,13 +24,13 @@ namespace NoxiumMod.Items.Armor.Chartreum
 			player.rangedDamage += 0.05f;
 			player.rangedCrit += 5;
 		}
-        public override void AddRecipes()
-        {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<Materials.Chartreum>(), 14);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
 
-        }
-    }
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ModContent.ItemType<Materials.Chartreum>(), 14);
+			recipe.SetResult(this);
+			recipe.AddRecipe();
+		}
+	}
 }

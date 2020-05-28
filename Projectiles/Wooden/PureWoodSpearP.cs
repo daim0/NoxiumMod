@@ -4,8 +4,14 @@ using Terraria.ModLoader;
 
 namespace NoxiumMod.Projectiles.Wooden
 {
-	class PureWoodSpearP : ModProjectile
+	internal class PureWoodSpearP : ModProjectile
 	{
+		public float movementFactor
+		{
+			get => projectile.ai[0];
+			set => projectile.ai[0] = value;
+		}
+
 		public override void SetDefaults()
 		{
 			projectile.width = 18;
@@ -21,11 +27,7 @@ namespace NoxiumMod.Projectiles.Wooden
 			projectile.tileCollide = false;
 			projectile.friendly = true;
 		}
-		public float movementFactor
-		{
-			get => projectile.ai[0];
-			set => projectile.ai[0] = value;
-		}
+
 		public override void AI()
 		{
 			Player projOwner = Main.player[projectile.owner];
@@ -68,4 +70,3 @@ namespace NoxiumMod.Projectiles.Wooden
 		}
 	}
 }
-

@@ -1,15 +1,19 @@
-using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.Enums;
-using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 {
 	public class AncientLaser : ModProjectile
 	{
+		private int Timer = 0;
+
+		private int desiredFrame = 0;
+
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Ancient Laser");
@@ -25,29 +29,26 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 			projectile.tileCollide = false;
 			this.cooldownSlot = 1;
 		}
-		
-		private int Timer = 0;
-		private int desiredFrame = 0;
 
 		public override void AI()
 		{
 			Timer++;
-			if(Timer >= 8)
+			if (Timer >= 8)
 			{
 				Timer = 0;
 				desiredFrame++;
 			}
-			if(desiredFrame >= 3)
+			if (desiredFrame >= 3)
 			{
 				desiredFrame = 0;
 			}
-			
+
 			Vector2? vector = null;
 			if (projectile.velocity.HasNaNs() || projectile.velocity == Vector2.Zero)
 			{
 				projectile.velocity = -Vector2.UnitY;
 			}
-			
+
 			if (Main.npc[(int)projectile.ai[1]].active && Main.npc[(int)projectile.ai[1]].type == mod.NPCType("AncientHealingMachine")) //This thing makes it... spawn on the right NPC and in the right position on the NPC?
 			{
 				Vector2 bsSpawning = new Vector2(-75f, 32f);
@@ -55,7 +56,7 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 				Vector2 bsSpawningSucks = Utils.Vector2FromElipse(Main.npc[(int)projectile.ai[1]].localAI[0].ToRotationVector2(), bsSpawning * Main.npc[(int)projectile.ai[1]].localAI[1]);
 				projectile.position = bsSpawningBoo + bsSpawningSucks - new Vector2((float)projectile.width, (float)projectile.height) / 2f;
 			}
-			
+
 			if (projectile.velocity.HasNaNs() || projectile.velocity == Vector2.Zero)
 			{
 				projectile.velocity = -Vector2.UnitY;
@@ -102,10 +103,10 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 			if (Main.rand.Next(3) == 0)
 			{
 				Vector2 value43 = projectile.velocity.RotatedBy(1.5707963705062866) * ((float)Main.rand.NextDouble() - 0.5f) * projectile.width;
-						int num813 = Dust.NewDust(value43 - Vector2.One * 4f, 8, 8, 219, 0f, 0f, 100, default, 1.5f);
-						Dust dust3 = Main.dust[num813];
-						dust3.velocity *= 0.5f;
-						Main.dust[num813].velocity.Y = 0f - Math.Abs(Main.dust[num813].velocity.Y);
+				int num813 = Dust.NewDust(value43 - Vector2.One * 4f, 8, 8, 219, 0f, 0f, 100, default, 1.5f);
+				Dust dust3 = Main.dust[num813];
+				dust3.velocity *= 0.5f;
+				Main.dust[num813].velocity.Y = 0f - Math.Abs(Main.dust[num813].velocity.Y);
 			}
 			DelegateMethods.v3_1 = new Vector3(0.3f, 0.65f, 0.7f);
 			Utils.PlotTileLine(projectile.Center, projectile.Center + projectile.velocity * projectile.localAI[1], (float)projectile.width * projectile.scale, new Utils.PerLinePoint(DelegateMethods.CastLight));
@@ -120,23 +121,23 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 			Texture2D texture2D = mod.GetTexture("NPCs/Boss/AncientHealingMachine/AncientLaser");
 			Texture2D texture = mod.GetTexture("NPCs/Boss/AncientHealingMachine/AncientLaserBody");
 			Texture2D texture2 = mod.GetTexture("NPCs/Boss/AncientHealingMachine/AncientLaserAss");
-			
-			if(desiredFrame == 0) // weirdchamp "animation" 
+
+			if (desiredFrame == 0) // weirdchamp "animation"
 			{
 				texture = mod.GetTexture("NPCs/Boss/AncientHealingMachine/AncientLaserBody");
 				texture2 = mod.GetTexture("NPCs/Boss/AncientHealingMachine/AncientLaserAss");
 			}
-			if(desiredFrame == 1)
+			if (desiredFrame == 1)
 			{
 				texture = mod.GetTexture("NPCs/Boss/AncientHealingMachine/AncientLaserBody2");
 				texture2 = mod.GetTexture("NPCs/Boss/AncientHealingMachine/AncientLaserAss2");
 			}
-			if(desiredFrame == 2)
+			if (desiredFrame == 2)
 			{
 				texture = mod.GetTexture("NPCs/Boss/AncientHealingMachine/AncientLaserBody3");
 				texture2 = mod.GetTexture("NPCs/Boss/AncientHealingMachine/AncientLaserAss3");
 			}
-			
+
 			Color color = new Color(210, 255, 230, 0);
 			float num = projectile.localAI[1];
 			SpriteBatch spriteBatch2 = Main.spriteBatch;

@@ -2,6 +2,7 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+
 namespace NoxiumMod.Items.Weapons.Chartreum
 {
 	public class ChartreumBow : ModItem
@@ -35,17 +36,16 @@ namespace NoxiumMod.Items.Weapons.Chartreum
 		{
 			for (int i = 15; i < 20; i++)
 			{
-
 			}
 			return base.UseTimeMultiplier(player);
 		}
-        public override void AddRecipes()
-        {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<Materials.Chartreum>(), 8);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
 
-        }
-    }
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ModContent.ItemType<Materials.Chartreum>(), 8);
+			recipe.SetResult(this);
+			recipe.AddRecipe();
+		}
+	}
 }

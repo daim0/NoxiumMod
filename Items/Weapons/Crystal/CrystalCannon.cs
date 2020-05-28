@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 
 namespace NoxiumMod.Items.Weapons.Crystal
 {
-	class CrystalCannon : ModItem
+	internal class CrystalCannon : ModItem
 	{
 		public override void SetStaticDefaults()
 		{

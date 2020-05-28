@@ -3,7 +3,7 @@ using Terraria.ModLoader;
 
 namespace NoxiumMod.Projectiles.Wooden
 {
-	class PureWoodKnifeP : ModProjectile
+	internal class PureWoodKnifeP : ModProjectile
 	{
 		public override void SetDefaults()
 		{

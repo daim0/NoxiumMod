@@ -35,7 +35,6 @@ namespace NoxiumMod.Items.Weapons
 			recipe.AddIngredient(ItemID.CrimtaneBar, 10);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
-
 		}
 	}
 }

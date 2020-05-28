@@ -36,7 +36,7 @@ namespace NoxiumMod.Items.Plants
 
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			//a rectangle for this items width and height adjusted to the scale of the inventory. 
+			//a rectangle for this items width and height adjusted to the scale of the inventory.
 			//possibly devide width and height fiedls by 2 if position is the center
 			Rectangle inventoryItemRect = new Rectangle((int)position.X, (int)position.Y, (int)(item.width * scale), (int)(item.height * scale));
 
