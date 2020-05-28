@@ -15,8 +15,8 @@ namespace NoxiumMod.Items.Weapons.Chartreum
 		{
 			item.damage = 30;
 			item.ranged = true;
-			item.width = 4;
-			item.height = 20;
+			item.width = 96;
+			item.height = 30;
 			item.useTime = 36;
 			item.useAnimation = 36;
 			item.useStyle = 5;
@@ -31,5 +31,13 @@ namespace NoxiumMod.Items.Weapons.Chartreum
 			item.useAmmo = AmmoID.Bullet;
 			item.crit = 30;
 		}
-	}
+        public override void AddRecipes()
+        {
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ModContent.ItemType<Materials.Chartreum>(), 10);
+            recipe.SetResult(this);
+            recipe.AddRecipe();
+
+        }
+    }
 }

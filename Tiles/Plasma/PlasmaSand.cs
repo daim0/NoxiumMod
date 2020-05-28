@@ -5,6 +5,7 @@ using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 
 
 namespace NoxiumMod.Tiles.Plasma
@@ -18,13 +19,15 @@ namespace NoxiumMod.Tiles.Plasma
 			Main.tileMergeDirt[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileSand[Type] = true;
-			TileID.Sets.TouchDamageSands[Type] = 15;
+            Main.tileMerge[Type][TileType<PlasmaSandstone>()] = true;
+            TileID.Sets.TouchDamageSands[Type] = 15;
 			TileID.Sets.Conversion.Sand[Type] = true; // Allows Clentaminator solutions to convert this tile to their respective Sand tiles.
 			TileID.Sets.ForAdvancedCollision.ForSandshark[Type] = true; // Allows Sandshark enemies to "swim" in this sand.
 			TileID.Sets.Falling[Type] = true;
 			AddMapEntry(new Color(200, 200, 200));
 			drop = ModContent.ItemType<PlasmaSandItem>();
-		}
+            SetModTree(new PlasmaTree());
+        }
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
 		{
 			if (WorldGen.noTileActions)
@@ -85,7 +88,12 @@ namespace NoxiumMod.Tiles.Plasma
 			}
 			return true;
 		}
+        public override int SaplingGrowthType(ref int style)
+        {
+            style = 0;
+            return TileType<PlasmaSappling>();
+        }
 
-		public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
+        public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
 	}
 }

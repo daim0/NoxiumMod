@@ -14,7 +14,7 @@ namespace NoxiumMod.Items.Weapons.Periwum
 			item.damage = 50;
 			item.melee = true;
 			item.width = 58;
-			item.height = 60;
+			item.height = 62;
 			item.useTime = 20;
 			item.useAnimation = 20;
 			item.useStyle = 1;
@@ -96,5 +96,13 @@ namespace NoxiumMod.Items.Weapons.Periwum
 				}
 			}
 		}
-	}
+        public override void AddRecipes()
+        {
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ModContent.ItemType<Materials.Periwum>(), 10);
+            recipe.SetResult(this);
+            recipe.AddRecipe();
+
+        }
+    }
 }

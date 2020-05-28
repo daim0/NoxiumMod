@@ -1,8 +1,26 @@
+
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using NoxiumMod;
 using Terraria;
 using Terraria.ID;
+using Terraria.Graphics.Effects;
+using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
+using System.IO;
+using Terraria.DataStructures;
+using Terraria.GameInput;
 using Terraria.UI;
+using Terraria.GameContent.UI;
+using System.Linq;
+using NoxiumMod.UI;
+using Terraria.Graphics;
+
 
 namespace NoxiumMod
 {
@@ -10,36 +28,96 @@ namespace NoxiumMod
 	{
 		public static ModHotKey SeedHotkey;
 
-		public override void Load()
-		{
-			SeedHotkey = RegisterHotKey("Seed Fruit", "C");
-		}
+        private AhmBar AhmUI;
+        internal UserInterface AHMUiInterface;
+
+        //shake
+        public static float shakeAmount = 0;
+        public static int ShakeTimer;
+
+        public override void Load()
+        {
+            SeedHotkey = RegisterHotKey("Seed Fruit", "C");
+
+            if (!Main.dedServ)
+            {
+                AhmUI = new AhmBar();
+                AHMUiInterface = new UserInterface();
+                AHMUiInterface.SetState(AhmUI);
+            }
+
+            Mod yabhb = ModLoader.GetMod("FKBossHealthBar");
+
+            if (yabhb != null)
+            {
+				yabhb.Call("hbStart");
+                yabhb.Call("hbSetTexture", GetTexture("UI/AhmHealthStart"), GetTexture("UI/AhmHealthMid"),  GetTexture("UI/AhmHealthEnd"),  GetTexture("UI/AhmHealthFill"));
+                yabhb.Call("hbFinishSingle", NPCType("AncientHealingMachine"));
+            }
+        }
 
 		public override void Unload()
 		{
 			SeedHotkey = null;
 		}
 
-		public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
+        public override void UpdateUI(GameTime gameTime)
+        {
+            AHMUiInterface?.Update(gameTime);
+        }
+
+        public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
 		{
 			int mouseTextIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
+
 			if (mouseTextIndex != -1)
 			{
-				layers.Insert(mouseTextIndex, new LegacyGameInterfaceLayer(
-					"NoxiumMod: Vanilla Stack Reproduction",
-					delegate
-					{
-						Main.LocalPlayer.GetModPlayer<NoxiumPlayer>().SetSeedStackDelays();
-						return true;
-					},
-					InterfaceScaleType.UI)
-				);
+				layers.Insert(mouseTextIndex, new LegacyGameInterfaceLayer("NoxiumMod: Vanilla Stack Reproduction", delegate
+				{
+					Main.LocalPlayer.GetModPlayer<NoxiumPlayer>().SetSeedStackDelays();
+					return true;
+				}, InterfaceScaleType.UI));
+            }
+
+			int resourceBarIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Resource Bars"));
+
+			if (resourceBarIndex != -1)
+			{
+				layers.Insert(resourceBarIndex, new LegacyGameInterfaceLayer("NoxiumMod: AHM Bar", delegate 
+				{
+					AHMUiInterface.Draw(Main.spriteBatch, new GameTime());
+					return true;
+				}, InterfaceScaleType.UI));
 			}
 		}
 
-		public override void AddRecipes()
+        public static void ShakeScreen(float AmountOfShake, int TimeSeconds)
+        {
+            ShakeTimer = TimeSeconds * Main.frameRate;
+            shakeAmount = AmountOfShake;
+        }
+
+        public override void ModifyTransformMatrix(ref SpriteViewMatrix Transform)
+        {
+            Player player = Main.LocalPlayer;
+
+            //Cant shake main menu, :widepeeposad:
+			//We'll see about that - goodpro
+
+            if (!Main.gameMenu)
+            {
+                if (shakeAmount != 0 && ShakeTimer != 0)
+                {
+                    ShakeTimer--;
+                    Vector2 Shakey = new Vector2(player.Center.X + Main.rand.NextFloat(shakeAmount), player.Center.Y + Main.rand.NextFloat(shakeAmount)) - new Vector2(Main.screenWidth / 2, Main.screenHeight / 2);
+                    Main.screenPosition = Shakey;
+                }
+            }
+        }
+
+        public override void AddRecipes()
 		{
-			//ew. i hope 1.4 oops this shit
+			//ew
 			ModRecipe recipe = new ModRecipe(this);
 			recipe.AddIngredient(ItemID.StrangePlant3, 1);
 			recipe.AddIngredient(ItemID.BottledWater, 1);
@@ -137,6 +215,7 @@ namespace NoxiumMod
 			recipe.AddTile(TileID.DyeVat);
 			recipe.SetResult(ItemID.ShadowDye, 1);
 			recipe.AddRecipe();
+
 		}
 	}
 }
