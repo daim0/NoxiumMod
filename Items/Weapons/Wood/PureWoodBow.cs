@@ -14,14 +14,14 @@ namespace NoxiumMod.Items.Weapons.Wood
 			item.height = 36;
 			item.useTime = 27;
 			item.useAnimation = 27;
-			item.useStyle = 5;
+			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.noMelee = true;
 			item.knockBack = 1;
 			item.value = 5;
-			item.rare = 1;
+			item.rare = ItemRarityID.Blue;
 			item.UseSound = SoundID.Item5;
 			item.autoReuse = true;
-			item.shoot = 10;
+			item.shoot = ProjectileID.PurificationPowder;
 			item.shootSpeed = 6f;
 			item.useAmmo = AmmoID.Arrow;
 		}

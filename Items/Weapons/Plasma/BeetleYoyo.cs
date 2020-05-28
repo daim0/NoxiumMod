@@ -28,7 +28,7 @@ namespace NoxiumMod.Items.Weapons.Plasma
 		}
 		public override void SetDefaults()
 		{
-			item.useStyle = 5;
+			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.width = 40;
 			item.height = 24;
 			item.useAnimation = 25;
@@ -36,7 +36,7 @@ namespace NoxiumMod.Items.Weapons.Plasma
 			item.shootSpeed = 16f;
 			item.knockBack = 2.5f;
 			item.damage = 24;
-			item.rare = 0;
+			item.rare = ItemRarityID.White;
 
 			item.melee = true;
 			item.channel = true;

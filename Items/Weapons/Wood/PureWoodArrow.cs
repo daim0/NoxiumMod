@@ -17,7 +17,7 @@ namespace NoxiumMod.Items.Weapons.Wood
 			item.consumable = true;
 			item.knockBack = 1.5f;
 			item.value = 10;
-			item.rare = 1;
+			item.rare = ItemRarityID.Blue;
 			item.shoot = ProjectileType<PureWoodArrowP>();
 			item.shootSpeed = 3f;
 			item.ammo = AmmoID.Arrow;

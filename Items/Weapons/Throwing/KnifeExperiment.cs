@@ -13,13 +13,13 @@ namespace NoxiumMod.Items.Weapons.Throwing
 			item.shootSpeed = 10f;
 			item.damage = 10;
 			item.knockBack = 5f;
-			item.useStyle = 1;
+			item.useStyle = ItemUseStyleID.SwingThrow;
 			item.useAnimation = 13;
 			item.useTime = 13;
 			item.width = 12;
 			item.height = 28;
 			item.maxStack = 1;
-			item.rare = 2;
+			item.rare = ItemRarityID.Green;
 
 			item.noUseGraphic = true;
 			item.noMelee = true;
@@ -43,7 +43,7 @@ namespace NoxiumMod.Items.Weapons.Throwing
 			if (player.altFunctionUse == 2)
 			{
 				ActShoot = true;
-				item.shoot = 0;
+				item.shoot = ProjectileID.None;
 			}
 			else
 			{

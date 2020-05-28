@@ -19,7 +19,7 @@ namespace NoxiumMod.Items.Armor.Oculum
 			item.width = 22;
 			item.height = 12;
 			item.value = 10000;
-			item.rare = 2;
+			item.rare = ItemRarityID.Green;
 			item.defense = 4;
 		}
 		public override void UpdateEquip(Player player)

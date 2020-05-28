@@ -17,10 +17,10 @@ namespace NoxiumMod.Items.Weapons.Periwum
 			item.height = 62;
 			item.useTime = 20;
 			item.useAnimation = 20;
-			item.useStyle = 1;
+			item.useStyle = ItemUseStyleID.SwingThrow;
 			item.knockBack = 6;
 			item.value = Item.buyPrice(gold: 1);
-			item.rare = 2;
+			item.rare = ItemRarityID.Green;
 			item.UseSound = SoundID.Item1;
 			item.autoReuse = true;
 		}
@@ -45,14 +45,14 @@ namespace NoxiumMod.Items.Weapons.Periwum
 					item.noMelee = true;
 					item.noUseGraphic = true;
 					player.velocity.X += 13f;
-					item.useStyle = 5;
+					item.useStyle = ItemUseStyleID.HoldingOut;
 				}
 				if (player.direction == -1)
 				{
 					item.noMelee = true;
 					item.noUseGraphic = true;
 					player.velocity.X -= 13f;
-					item.useStyle = 5;
+					item.useStyle = ItemUseStyleID.HoldingOut;
 				}
 				player.GetModPlayer<NoxiumPlayer>().KatanaDash = true;
 				player.GetModPlayer<NoxiumPlayer>().dashTimer = 60;
@@ -61,7 +61,7 @@ namespace NoxiumMod.Items.Weapons.Periwum
 			{
 				item.noMelee = false;
 				item.noUseGraphic = false;
-				item.useStyle = 1;
+				item.useStyle = ItemUseStyleID.SwingThrow;
 			}
 
 			return base.CanUseItem(player);

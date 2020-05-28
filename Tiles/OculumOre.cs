@@ -25,7 +25,7 @@ namespace NoxiumMod.Tiles
 
 			dustType = 84;
 			drop = ItemType<Items.Placeable.OculumOreItem>();
-			soundType = 21;
+			soundType = SoundID.Tink;
 			soundStyle = 1;
 			//mineResist = 4f;
 			//minPick = 200;

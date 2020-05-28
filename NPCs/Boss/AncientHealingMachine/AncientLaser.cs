@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Enums;
 using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 {
@@ -61,7 +62,7 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 			}
 			if (projectile.localAI[0] == 0f)
 			{
-				Main.PlaySound(29, (int)projectile.position.X, (int)projectile.position.Y, 88, 1f, 0f);
+				Main.PlaySound(SoundID.Zombie, (int)projectile.position.X, (int)projectile.position.Y, 88, 1f, 0f);
 			}
 			float num = 1f;
 			projectile.localAI[0] += 1f;

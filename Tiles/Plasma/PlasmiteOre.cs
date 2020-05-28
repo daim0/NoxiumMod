@@ -25,7 +25,7 @@ namespace NoxiumMod.Tiles.Plasma
 
             dustType = 84;
             drop = ItemType<Items.Placeable.Plasma.PlasmiteOreItem>();
-            soundType = 21;
+            soundType = SoundID.Tink;
             soundStyle = 1;
             mineResist = 4f;
             minPick = 64;

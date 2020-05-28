@@ -158,7 +158,7 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 						npc.velocity.X = (float)(Math.Cos((double)num) * 20.0) * -1f;
 						npc.velocity.Y = (float)(Math.Sin((double)num) * 20.0) * -1f;
 						new Vector2((float)Math.Cos((double)npc.ai[0]), (float)Math.Sin((double)npc.ai[0]));
-						Main.PlaySound(2, (int)npc.position.X, (int)npc.position.Y, 20, 1f, 0f);
+						Main.PlaySound(SoundID.Item, (int)npc.position.X, (int)npc.position.Y, 20, 1f, 0f);
 						new Rectangle((int)npc.position.X, (int)(npc.position.Y + (float)((npc.height - npc.width) / 2)), npc.width, npc.width);
 						
 						int num2 = 25;
@@ -210,8 +210,8 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 						{
 							Vector2 vector = new Vector2(npc.Center.X, npc.Center.Y);
 							double num9 = num7 + num8 * (double)(j + j * j) / 2.0 + (double)(32f * (float)j);
-							Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Sin(num9) * 5.0), (float)(Math.Cos(num9) * 5.0), 576, npc.damage / 3, 1.4f, player.whoAmI, 0f, 0f);
-							Projectile.NewProjectile(vector.X, vector.Y, (float)(-(float)Math.Sin(num9) * 5.0), (float)(-(float)Math.Cos(num9) * 5.0), 576, npc.damage / 3, 1.4f, player.whoAmI, 0f, 0f);
+							Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Sin(num9) * 5.0), (float)(Math.Cos(num9) * 5.0), ProjectileID.NebulaLaser, npc.damage / 3, 1.4f, player.whoAmI, 0f, 0f);
+							Projectile.NewProjectile(vector.X, vector.Y, (float)(-(float)Math.Sin(num9) * 5.0), (float)(-(float)Math.Cos(num9) * 5.0), ProjectileID.NebulaLaser, npc.damage / 3, 1.4f, player.whoAmI, 0f, 0f);
 						}
 						TimerShoot = 70;
 					}

@@ -17,13 +17,13 @@ namespace NoxiumMod.Items.Weapons.Throwing
 			item.shootSpeed = 10f;
 			item.damage = 15;
 			item.knockBack = 5f;
-			item.useStyle = 1;
+			item.useStyle = ItemUseStyleID.SwingThrow;
 			item.useAnimation = 12;
 			item.useTime = 12;
 			item.width = 64;
 			item.height = 64;
 			item.maxStack = 1;
-			item.rare = 2;
+			item.rare = ItemRarityID.Green;
 
 			item.noUseGraphic = true;
 			item.noMelee = true;
@@ -32,7 +32,7 @@ namespace NoxiumMod.Items.Weapons.Throwing
 
 			item.UseSound = SoundID.Item1;
 			item.value = Item.sellPrice(silver: 100);
-			item.shoot = 1;
+			item.shoot = ProjectileID.WoodenArrowFriendly;
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

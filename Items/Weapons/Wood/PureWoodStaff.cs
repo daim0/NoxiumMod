@@ -16,11 +16,11 @@ namespace NoxiumMod.Items.Weapons.Wood
 			item.height = 42;
 			item.useTime = 37;
 			item.useAnimation = 37;
-			item.useStyle = 5;
+			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.noMelee = true;
 			item.knockBack = 3;
 			item.value = 10000;
-			item.rare = 2;
+			item.rare = ItemRarityID.Green;
 			item.UseSound = SoundID.Item20;
 			item.autoReuse = true;
 			item.shoot = ProjectileType<PureWoodStaffP>();

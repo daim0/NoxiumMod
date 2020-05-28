@@ -14,14 +14,14 @@ namespace NoxiumMod.Items.Weapons.Chartreum
 			item.height = 82;
 			item.useTime = 15;
 			item.useAnimation = 15;
-			item.useStyle = 5;
+			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.noMelee = true;
 			item.knockBack = 5;
 			item.value = 13;
-			item.rare = 4;
+			item.rare = ItemRarityID.LightRed;
 			item.UseSound = SoundID.Item5;
 			item.autoReuse = true;
-			item.shoot = 10;
+			item.shoot = ProjectileID.PurificationPowder;
 			item.shootSpeed = 16f;
 			item.useAmmo = AmmoID.Arrow;
 		}

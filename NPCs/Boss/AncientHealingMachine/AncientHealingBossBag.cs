@@ -1,6 +1,7 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
+using Terraria.ID;
 
 namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 {
@@ -18,7 +19,7 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
             item.consumable = true;
             item.width = 36;
             item.height = 32;
-            item.rare = 9;
+            item.rare = ItemRarityID.Cyan;
             item.expert = true;
            
         }

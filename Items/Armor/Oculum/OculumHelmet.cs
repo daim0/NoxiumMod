@@ -19,7 +19,7 @@ namespace NoxiumMod.Items.Armor.Oculum
 			item.width = 16;
 			item.height = 16;
 			item.value = 10000;
-			item.rare = 2;
+			item.rare = ItemRarityID.Green;
 			item.defense = 2;
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs)

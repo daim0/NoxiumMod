@@ -14,10 +14,10 @@ namespace NoxiumMod.Items.Weapons.Wood
 			item.height = 38;
 			item.useTime = 23;
 			item.useAnimation = 23;
-			item.useStyle = 1;
+			item.useStyle = ItemUseStyleID.SwingThrow;
 			item.knockBack = 6;
 			item.value = Item.buyPrice(gold: 1);
-			item.rare = 2;
+			item.rare = ItemRarityID.Green;
 			item.UseSound = SoundID.Item1;
 			item.autoReuse = true;
 		}

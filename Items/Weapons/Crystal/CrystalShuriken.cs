@@ -11,13 +11,13 @@ namespace NoxiumMod.Items.Weapons.Crystal
 			item.width = 78;
 			item.height = 78;
 			item.damage = 45;
-			item.useStyle = 1;
+			item.useStyle = ItemUseStyleID.SwingThrow;
 			item.useAnimation = 25;
 			item.useTime = 15;
 			item.shootSpeed = 15f;
 			item.knockBack = 5f;
 			item.scale = 1f;
-			item.rare = 5;
+			item.rare = ItemRarityID.Pink;
 			item.value = Item.sellPrice(silver: 300);
 
 			item.melee = true;

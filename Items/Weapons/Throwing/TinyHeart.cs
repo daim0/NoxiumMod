@@ -17,7 +17,7 @@ namespace NoxiumMod.Items.Weapons.Throwing
 			item.consumable = true;
 			item.width = 10;
 			item.height = 10;
-			item.rare = 1;
+			item.rare = ItemRarityID.Blue;
 			item.scale = 2f;
 		}
 		public override bool OnPickup(Player player)

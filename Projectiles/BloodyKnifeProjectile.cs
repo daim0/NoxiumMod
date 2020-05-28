@@ -1,6 +1,6 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
-
+using Terraria.ID;
 
 namespace NoxiumMod.Projectiles
 {
@@ -36,7 +36,7 @@ namespace NoxiumMod.Projectiles
 				{
 					int num421 = (int)(projectile.position.X + 4f + (float)Main.rand.Next(projectile.width - 6));
 					int num422 = (int)(projectile.position.Y + (float)projectile.height + 4f);
-					Projectile.NewProjectile(num421, num422, 0f, 4f, 245, projectile.damage, 0f, projectile.owner);
+					Projectile.NewProjectile(num421, num422, 0f, 4f, ProjectileID.BloodRain, projectile.damage, 0f, projectile.owner);
 				}
 			}
 		}

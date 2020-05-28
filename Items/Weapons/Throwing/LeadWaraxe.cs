@@ -13,13 +13,13 @@ namespace NoxiumMod.Items.Weapons.Throwing
             item.shootSpeed = 12f;
             item.damage = 16;
             item.knockBack = 5f;
-            item.useStyle = 1;
+            item.useStyle = ItemUseStyleID.SwingThrow;
             item.useAnimation = 32;
             item.useTime = 32;
             item.width = 50;
             item.height = 50;
             item.maxStack = 1;
-            item.rare = 2;
+            item.rare = ItemRarityID.Green;
 
             item.noUseGraphic = true;
             item.noMelee = true;

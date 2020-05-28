@@ -16,10 +16,10 @@ namespace NoxiumMod.Items.Weapons.Chartreum
 			item.height = 58;
 			item.useTime = 25;
 			item.useAnimation = 25;
-			item.useStyle = 1;
+			item.useStyle = ItemUseStyleID.SwingThrow;
 			item.knockBack = 5;
 			item.value = Item.buyPrice(gold: 1);
-			item.rare = 4;
+			item.rare = ItemRarityID.LightRed;
 			item.UseSound = SoundID.Item1;
 			item.autoReuse = true;
 			item.shoot = mod.ProjectileType("ChartreumBladeMainProj");

@@ -20,11 +20,11 @@ namespace NoxiumMod.Items.Weapons
 			item.height = 34;
 			item.useTime = 25;
 			item.useAnimation = 25;
-			item.useStyle = 5;
+			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.noMelee = true;
 			item.knockBack = 5;
 			item.value = 10000;
-			item.rare = 2;
+			item.rare = ItemRarityID.Green;
 			item.UseSound = SoundID.Item20;
 			item.autoReuse = true;
 			item.shoot = mod.ProjectileType("GrapeStaffProj");

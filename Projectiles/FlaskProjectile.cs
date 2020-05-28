@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace NoxiumMod.Projectiles
 {
@@ -24,7 +25,7 @@ namespace NoxiumMod.Projectiles
 		public override void Kill(int timeLeft)
 		{
 			{
-				Main.PlaySound(0, (int)projectile.position.X, (int)projectile.position.Y);
+				Main.PlaySound(SoundID.Dig, (int)projectile.position.X, (int)projectile.position.Y);
 				Vector2 usePos = projectile.position;
 				Collision.HitTiles(projectile.position, projectile.velocity, projectile.width, projectile.height);
 

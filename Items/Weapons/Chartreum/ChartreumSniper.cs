@@ -19,14 +19,14 @@ namespace NoxiumMod.Items.Weapons.Chartreum
 			item.height = 30;
 			item.useTime = 36;
 			item.useAnimation = 36;
-			item.useStyle = 5;
+			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.noMelee = true;
 			item.knockBack = 8;
 			item.value = 10000;
-			item.rare = 2;
+			item.rare = ItemRarityID.Green;
 			item.UseSound = SoundID.Item11;
 			item.autoReuse = true;
-			item.shoot = 10;
+			item.shoot = ProjectileID.PurificationPowder;
 			item.shootSpeed = 16f;
 			item.useAmmo = AmmoID.Bullet;
 			item.crit = 30;

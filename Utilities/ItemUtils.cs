@@ -33,7 +33,7 @@ namespace NoxiumMod.Utilities
 
 				if (Main.netMode == NetmodeID.MultiplayerClient)
 				{
-					NetMessage.SendData(21, -1, -1, null, spawnItem, 1f);  //send data with the 21 as the message type
+					NetMessage.SendData(MessageID.SyncItem, -1, -1, null, spawnItem, 1f);  //send data with the 21 as the message type
 					return;
 				}
 			}

@@ -12,7 +12,7 @@ namespace NoxiumMod.Items.Weapons.Wood
 		public override void SetDefaults()
 		{
 			item.damage = 7;
-			item.useStyle = 5;
+			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.useAnimation = 31;
 			item.useTime = 31;
 			item.shootSpeed = 3.3f;
@@ -20,7 +20,7 @@ namespace NoxiumMod.Items.Weapons.Wood
 			item.width = 48;
 			item.height = 48;
 			item.scale = 1f;
-			item.rare = 1;
+			item.rare = ItemRarityID.Blue;
 			item.value = Item.sellPrice(silver: 1);
 
 			item.melee = true;

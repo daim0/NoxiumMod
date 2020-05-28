@@ -51,9 +51,9 @@ namespace NoxiumMod.Items.Plants
 			//Copy vanillas way of holding a button to pick things up
 			if (noxiumPlayer.SeedStackSplit <= 1 && inventoryItemRect.Contains(mousePoint) && noxiumPlayer.SeedKeyDown)
 			{
-				if ((Main.mouseItem.type == ModContent.ItemType<StrawberrySeeds>() && Main.mouseItem.stack < Main.mouseItem.maxStack) || Main.mouseItem.type == 0)
+				if ((Main.mouseItem.type == ModContent.ItemType<StrawberrySeeds>() && Main.mouseItem.stack < Main.mouseItem.maxStack) || Main.mouseItem.type == ItemID.None)
 				{
-					if (Main.mouseItem.type == 0)
+					if (Main.mouseItem.type == ItemID.None)
 					{
 						Item newItem = new Item();
 						newItem.SetDefaults(ModContent.ItemType<StrawberrySeeds>());
@@ -73,7 +73,7 @@ namespace NoxiumMod.Items.Plants
 
 					Main.soundInstanceMenuTick.Stop();
 					Main.soundInstanceMenuTick = Main.soundMenuTick.CreateInstance();
-					Main.PlaySound(12);
+					Main.PlaySound(SoundID.MenuTick);
 
 					noxiumPlayer.SeedStackSplit = noxiumPlayer.SeedStackSplit == 0 ? 15 : noxiumPlayer.SeedStackDelay;
 				}

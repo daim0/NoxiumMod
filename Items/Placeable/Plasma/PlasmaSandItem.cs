@@ -1,6 +1,7 @@
 ﻿
 using NoxiumMod.Tiles.Plasma;
 using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace NoxiumMod.Items.Placeable.Plasma
 {
@@ -15,7 +16,7 @@ namespace NoxiumMod.Items.Placeable.Plasma
 			item.autoReuse = true;
 			item.useAnimation = 15;
 			item.useTime = 10;
-			item.useStyle = 1;
+			item.useStyle = ItemUseStyleID.SwingThrow;
 			item.consumable = true;
 			item.createTile = ModContent.TileType<PlasmaSand>();
 			//item.ammo = AmmoID.Sand; Using this Sand in the Sandgun would require PickAmmo code and changes to ExampleSandProjectile or a new ModProjectile.

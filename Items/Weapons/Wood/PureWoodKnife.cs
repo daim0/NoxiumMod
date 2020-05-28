@@ -14,13 +14,13 @@ namespace NoxiumMod.Items.Weapons.Wood
 			item.shootSpeed = 10f;
 			item.damage = 4;
 			item.knockBack = 2f;
-			item.useStyle = 1;
+			item.useStyle = ItemUseStyleID.SwingThrow;
 			item.useAnimation = 25;
 			item.useTime = 25;
 			item.width = 12;
 			item.height = 26;
 			item.maxStack = 999;
-			item.rare = 1;
+			item.rare = ItemRarityID.Blue;
 
 			item.consumable = true;
 			item.noUseGraphic = true;

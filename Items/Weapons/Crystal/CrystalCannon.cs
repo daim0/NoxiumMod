@@ -22,11 +22,11 @@ namespace NoxiumMod.Items.Weapons.Crystal
 			item.height = 16;
 			item.useTime = 25;
 			item.useAnimation = 25;
-			item.useStyle = 5;
+			item.useStyle = ItemUseStyleID.HoldingOut;
 			item.noMelee = true;
 			item.knockBack = 5f;
 			item.value = Item.buyPrice(0, 1, 69, 0); //nice
-			item.rare = 5;
+			item.rare = ItemRarityID.Pink;
 			item.UseSound = SoundID.Item38;
 			item.autoReuse = true;
 			item.shoot = mod.ProjectileType("CrystalCannonProj");

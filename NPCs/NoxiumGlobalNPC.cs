@@ -22,11 +22,11 @@ namespace NoxiumMod.NPCs
 			{
 				if (!NoxiumWorld.oculumOreSpawn)
 				{
-					if (Main.netMode == 2)
+					if (Main.netMode == NetmodeID.Server)
 					{
 						NetworkText networkText = NetworkText.FromKey("You sense visionary essence from below", new object[0]);
 						NetMessage.BroadcastChatMessage(networkText, new Color(70, 140, 80), -1);
-						NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
+						NetMessage.SendData(MessageID.WorldData, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
 					}
 					Main.NewText("You sense visionary essence from below", 70, 140, 80, false);
 

@@ -26,9 +26,9 @@ namespace NoxiumMod.Items.Weapons.Oculum
 			item.height = 34;
 			item.useTime = 28;
 			item.useAnimation = 28;
-			item.useStyle = 1;
+			item.useStyle = ItemUseStyleID.SwingThrow;
 			item.value = Item.buyPrice(0, 0, 29, 0);
-			item.rare = 1;
+			item.rare = ItemRarityID.Blue;
 			item.UseSound = SoundID.Item44;
 			item.noMelee = true;
 			item.summon = true;
