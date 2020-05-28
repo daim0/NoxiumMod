@@ -56,25 +56,17 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 		
 		public override void NPCLoot()
 		{
-			int choice = Main.rand.Next(3);
-			
 			if (!NPC.AnyNPCs(mod.NPCType("AncientHealingCrystalRight")))
 			{
-			
 				if(Main.expertMode)
-				{
 					npc.DropBossBags();
-				}
-				else
-				{
-					
-				}
 				
-				if (!NoxiumWorld.downedAHM) {
+				if (!NoxiumWorld.downedAHM) 
+				{
 					NoxiumWorld.downedAHM = true;
-					if (Main.netMode == NetmodeID.Server) {
+
+					if (Main.netMode == NetmodeID.Server) 
 						NetMessage.SendData(MessageID.WorldData); // Tells code stuff that the boss has been killed in this world
-					}
 				}
 			}
 		}
