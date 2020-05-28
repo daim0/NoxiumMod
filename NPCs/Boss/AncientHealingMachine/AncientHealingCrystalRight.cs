@@ -116,7 +116,7 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 							npc.velocity.Y = -2f;
 						}
 					}
-					if (npc.position.X + (float)(npc.width / 2) > player.position.X + (float)(player.width / 2) - 60f)
+					if (npc.position.X + npc.width / 2 > player.position.X + player.width / 2 - 60f)
 					{
 						if (npc.velocity.X > 0f)
 						{
@@ -128,7 +128,7 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 							npc.velocity.X = 2f;
 						}
 					}
-					if (npc.position.X + (float)(npc.width / 2) < player.position.X + (float)(player.width / 2) - 145f)
+					if (npc.position.X + npc.width / 2 < player.position.X + player.width / 2 - 145f)
 					{
 						if (npc.velocity.X < 0f)
 						{

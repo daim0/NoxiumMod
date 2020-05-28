@@ -29,7 +29,7 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 		public override void AI()
 		{
 			projectile.ai[1] += 1f;
-			projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) + 1.57f;
+			projectile.rotation = (float)Math.Atan2(projectile.velocity.Y, projectile.velocity.X) + 1.57f;
 			float num = 70f;
 			float scaleFactor = 15f;
 			float num2 = 50f;

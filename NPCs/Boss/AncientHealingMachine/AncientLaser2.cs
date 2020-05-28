@@ -52,7 +52,7 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 				Vector2 value = new Vector2(-75f, 32f);
 				Vector2 value2 = new Vector2(Main.npc[(int)projectile.ai[1]].Center.X + 75f, Main.npc[(int)projectile.ai[1]].Center.Y + 32f);
 				Vector2 value3 = Utils.Vector2FromElipse(Main.npc[(int)projectile.ai[1]].localAI[0].ToRotationVector2(), value * Main.npc[(int)projectile.ai[1]].localAI[1]);
-				projectile.position = value2 + value3 - new Vector2((float)projectile.width, (float)projectile.height) / 2f;
+				projectile.position = value2 + value3 - new Vector2(projectile.width, projectile.height) / 2f;
 			}
 			if (projectile.velocity.HasNaNs() || projectile.velocity == Vector2.Zero)
 			{
@@ -69,7 +69,7 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 				projectile.Kill();
 				return;
 			}
-			projectile.scale = (float)Math.Sin((double)(projectile.localAI[0] * 3.14159274f / 180f)) * 10f * num;
+			projectile.scale = (float)Math.Sin(projectile.localAI[0] * 3.14159274f / 180f) * 10f * num;
 			if (projectile.scale > num)
 			{
 				projectile.scale = num;
@@ -79,7 +79,7 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 			projectile.rotation = num2 - 1.57079637f;
 			projectile.velocity = num2.ToRotationVector2();
 			float num3 = 3f;
-			float num4 = (float)projectile.width;
+			float num4 = projectile.width;
 			Vector2 samplingPoint = projectile.Center;
 			if (vector != null)
 			{
@@ -107,7 +107,7 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 			}
 			
 			DelegateMethods.v3_1 = new Vector3(0.3f, 0.65f, 0.7f);
-			Utils.PlotTileLine(projectile.Center, projectile.Center + projectile.velocity * projectile.localAI[1], (float)projectile.width * projectile.scale, new Utils.PerLinePoint(DelegateMethods.CastLight));
+			Utils.PlotTileLine(projectile.Center, projectile.Center + projectile.velocity * projectile.localAI[1], projectile.width * projectile.scale, new Utils.PerLinePoint(DelegateMethods.CastLight));
 		}
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
@@ -146,22 +146,22 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 			Texture2D texture3 = texture2D;
 			Vector2 position = projectile.Center - Main.screenPosition;
 			spriteBatch2.Draw(texture3, position, null, color, projectile.rotation, texture2D.Size() / 2f, projectile.scale, SpriteEffects.None, 0f);
-			num -= (float)(texture2D.Height / 2 + texture2.Height) * projectile.scale;
+			num -= (texture2D.Height / 2 + texture2.Height) * projectile.scale;
 			Vector2 value = projectile.Center;
-			value += projectile.velocity * projectile.scale * (float)texture2D.Height / 2f;
+			value += projectile.velocity * projectile.scale * texture2D.Height / 2f;
 			if (num > 0f)
 			{
 				float num2 = 0f;
 				Rectangle value2 = new Rectangle(0, 16 * (projectile.timeLeft / 3 % 5), texture.Width, 16);
 				while (num2 + 1f < num)
 				{
-					if (num - num2 < (float)value2.Height)
+					if (num - num2 < value2.Height)
 					{
 						value2.Height = (int)(num - num2);
 					}
-					Main.spriteBatch.Draw(texture, value - Main.screenPosition, new Rectangle?(value2), color, projectile.rotation, new Vector2((float)(value2.Width / 2), 0f), projectile.scale, SpriteEffects.None, 0f);
-					num2 += (float)value2.Height * projectile.scale;
-					value += projectile.velocity * (float)value2.Height * projectile.scale;
+					Main.spriteBatch.Draw(texture, value - Main.screenPosition, new Rectangle?(value2), color, projectile.rotation, new Vector2(value2.Width / 2, 0f), projectile.scale, SpriteEffects.None, 0f);
+					num2 += value2.Height * projectile.scale;
+					value += projectile.velocity * value2.Height * projectile.scale;
 					value2.Y += 16;
 					if (value2.Y + value2.Height > texture.Height)
 					{
@@ -180,7 +180,7 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 		{
 			DelegateMethods.tilecut_0 = TileCuttingContext.AttackProjectile;
 			Vector2 velocity = projectile.velocity;
-			Utils.PlotTileLine(projectile.Center, projectile.Center + velocity * projectile.localAI[1], (float)projectile.width * projectile.scale, new Utils.PerLinePoint(DelegateMethods.CutTiles));
+			Utils.PlotTileLine(projectile.Center, projectile.Center + velocity * projectile.localAI[1], projectile.width * projectile.scale, new Utils.PerLinePoint(DelegateMethods.CutTiles));
 		}
 
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)

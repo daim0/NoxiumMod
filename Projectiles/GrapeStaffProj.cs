@@ -31,7 +31,7 @@ namespace NoxiumMod.Projectiles
 			{
 				projectile.velocity.Y = 32f;
 			}
-			projectile.rotation += 0.4f * (float)projectile.direction;
+			projectile.rotation += 0.4f * projectile.direction;
 		}
 
 		public override bool OnTileCollide(Vector2 oldVelocity)

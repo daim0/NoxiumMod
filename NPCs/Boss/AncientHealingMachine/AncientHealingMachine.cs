@@ -84,7 +84,7 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
                 if (State == State_Idle)
                 {
                     Move();
-					if (transformHP == 0 && (float)npc.life <= (float)npc.lifeMax * 0.5f)
+					if (transformHP == 0 && npc.life <= npc.lifeMax * 0.5f)
 					{
 						State = State_Transform;
 						Timer = 0;
@@ -115,7 +115,7 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
                 }
                 else if (State == State_LaserShot)
                 {
-                    if (transformHP == 0 && (float)npc.life <= (float)npc.lifeMax * 0.5f)
+                    if (transformHP == 0 && npc.life <= npc.lifeMax * 0.5f)
                     {
                         State = State_Transform;
                         Timer = 0;
@@ -130,8 +130,8 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 						npc.TargetClosest(false);
 						Vector2 vector = new Vector2(npc.position.X - 75 + (npc.width / 2), npc.position.Y + 32 + (npc.height / 2));
 						Vector2 vectorSuEma = new Vector2(npc.position.X + 75 + (npc.width / 2), npc.position.Y + 32 + (npc.height / 2));
-						Projectile.NewProjectile(vector.X, vector.Y, 0f, 0f, mod.ProjectileType("AncientLaser"), 50, 0f, Main.myPlayer, 5.25f / 425f, (float)npc.whoAmI);
-						Projectile.NewProjectile(vectorSuEma.X, vectorSuEma.Y, 0f, 0f, mod.ProjectileType("AncientLaser2"), 50, 0f, Main.myPlayer, -5.25f / 425f, (float)npc.whoAmI);
+						Projectile.NewProjectile(vector.X, vector.Y, 0f, 0f, mod.ProjectileType("AncientLaser"), 50, 0f, Main.myPlayer, 5.25f / 425f, npc.whoAmI);
+						Projectile.NewProjectile(vectorSuEma.X, vectorSuEma.Y, 0f, 0f, mod.ProjectileType("AncientLaser2"), 50, 0f, Main.myPlayer, -5.25f / 425f, npc.whoAmI);
 						TimerShoot = 4000;
 					}
 					
@@ -145,7 +145,7 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
                 }
                 else if (State == State_Dash)
                 {
-                    if (transformHP == 0 && (float)npc.life <= (float)npc.lifeMax * 0.5f)
+                    if (transformHP == 0 && npc.life <= npc.lifeMax * 0.5f)
                     {
                         State = State_Transform;
                         Timer = 0;
@@ -156,13 +156,13 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 					{
 						
 						npc.velocity = npc.velocity * 0.45f;
-						Vector2 vector = new Vector2(npc.position.X + (float)npc.width * 0.5f, npc.position.Y + (float)npc.height * 0.5f);
-						float num = (float)Math.Atan2((double)(vector.Y - (Main.player[npc.target].position.Y + (float)Main.player[npc.target].height * 0.5f)), (double)(vector.X - (Main.player[npc.target].position.X + (float)Main.player[npc.target].width * 0.5f)));
-						npc.velocity.X = (float)(Math.Cos((double)num) * 20.0) * -1f;
-						npc.velocity.Y = (float)(Math.Sin((double)num) * 20.0) * -1f;
-						new Vector2((float)Math.Cos((double)npc.ai[0]), (float)Math.Sin((double)npc.ai[0]));
+						Vector2 vector = new Vector2(npc.position.X + npc.width * 0.5f, npc.position.Y + npc.height * 0.5f);
+						float num = (float)Math.Atan2(vector.Y - (Main.player[npc.target].position.Y + Main.player[npc.target].height * 0.5f), vector.X - (Main.player[npc.target].position.X + Main.player[npc.target].width * 0.5f));
+						npc.velocity.X = (float)(Math.Cos(num) * 20.0) * -1f;
+						npc.velocity.Y = (float)(Math.Sin(num) * 20.0) * -1f;
+						new Vector2((float)Math.Cos(npc.ai[0]), (float)Math.Sin(npc.ai[0]));
 						Main.PlaySound(SoundID.Item, (int)npc.position.X, (int)npc.position.Y, 20, 1f, 0f);
-						new Rectangle((int)npc.position.X, (int)(npc.position.Y + (float)((npc.height - npc.width) / 2)), npc.width, npc.width);
+						new Rectangle((int)npc.position.X, (int)(npc.position.Y + (npc.height - npc.width) / 2), npc.width, npc.width);
 						
 						int num2 = 25;
 						for (int i = 1; i <= num2; i++)
@@ -192,7 +192,7 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
                 }
                 else if (State == State_Spin)
                 {
-                    if (transformHP == 0 && (float)npc.life <= (float)npc.lifeMax * 0.5f)
+                    if (transformHP == 0 && npc.life <= npc.lifeMax * 0.5f)
                     {
                         State = State_Transform;
                         Timer = 0;
@@ -207,12 +207,12 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 					TimerShoot--;
 					if(TimerShoot <= 10)
 					{
-						double num7 = Math.Atan2((double)npc.velocity.X, (double)npc.velocity.Y) - (double)(0.783f / 2f);
-						double num8 = (double)(0.783f / 8f);
+						double num7 = Math.Atan2(npc.velocity.X, npc.velocity.Y) - 0.783f / 2f;
+						double num8 = 0.783f / 8f;
 						for (int j = 0; j < 3; j++)
 						{
 							Vector2 vector = new Vector2(npc.Center.X, npc.Center.Y);
-							double num9 = num7 + num8 * (double)(j + j * j) / 2.0 + (double)(32f * (float)j);
+							double num9 = num7 + num8 * (j + j * j) / 2.0 + 32f * j;
 							Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Sin(num9) * 5.0), (float)(Math.Cos(num9) * 5.0), ProjectileID.NebulaLaser, npc.damage / 3, 1.4f, player.whoAmI, 0f, 0f);
 							Projectile.NewProjectile(vector.X, vector.Y, (float)(-(float)Math.Sin(num9) * 5.0), (float)(-(float)Math.Cos(num9) * 5.0), ProjectileID.NebulaLaser, npc.damage / 3, 1.4f, player.whoAmI, 0f, 0f);
 						}

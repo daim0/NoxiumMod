@@ -78,17 +78,17 @@ namespace NoxiumMod.Projectiles
 				projectile.alpha = 255;
 
 
-				projectile.position.X = projectile.position.X + (float)(projectile.width / 2);
+				projectile.position.X = projectile.position.X + projectile.width / 2;
 
-				projectile.position.Y = projectile.position.Y + (float)(projectile.height / 2);
+				projectile.position.Y = projectile.position.Y + projectile.height / 2;
 
 				projectile.width = 250;
 
 				projectile.height = 250;
 
-				projectile.position.X = projectile.position.X - (float)(projectile.width / 2);
+				projectile.position.X = projectile.position.X - projectile.width / 2;
 
-				projectile.position.Y = projectile.position.Y - (float)(projectile.height / 2);
+				projectile.position.Y = projectile.position.Y - projectile.height / 2;
 
 			}
 
@@ -121,7 +121,7 @@ namespace NoxiumMod.Projectiles
 
 					}
 
-					if ((double)projectile.velocity.X > -0.01 && (double)projectile.velocity.X < 0.01)
+					if (projectile.velocity.X > -0.01 && projectile.velocity.X < 0.01)
 
 					{
 
