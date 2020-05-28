@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 
 namespace NoxiumMod.Projectiles.PlasmaStuff
 {
+	// TODO what the fuck is this shit code. fukkkkkkkkkk
 	class PlasmaSandProjectile : ModProjectile
 	{
 		protected bool falling = true;

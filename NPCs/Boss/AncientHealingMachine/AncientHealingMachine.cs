@@ -8,6 +8,8 @@ using Terraria.ModLoader;
 namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 {
 	//TODO what the fuck is this abundance of dick
+
+#pragma warning disable IDE0044 // Add readonly modifier
 	internal class AncientHealingMachine : ModNPC
 	{
 		public override void SetStaticDefaults()
@@ -44,8 +46,7 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 
 		private int TimerShoot = 120;
 
-		[SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "<Pending>")]
-		private float transformHP = 0; //TODO why is this never assigned to?
+		private float transformHP = 0;
 
 		private float State
 		{
@@ -59,6 +60,7 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 		}
 		private int boolTimer;
 
+#pragma warning restore IDE0044 // Add readonly modifier
 		public void Move()
 		{
 			Player player = Main.player[npc.target];
