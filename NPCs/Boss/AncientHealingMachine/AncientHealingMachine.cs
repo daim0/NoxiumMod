@@ -126,7 +126,7 @@ namespace NoxiumMod.NPCs.Boss.AncientHealingMachine
 					TimerShoot--;
 					if (TimerShoot <= 30)
 					{
-						Player player = Main.player[npc.target];
+						//Player player = Main.player[npc.target];
 						npc.TargetClosest(false);
 						Vector2 vector = new Vector2(npc.position.X - 75 + (npc.width / 2), npc.position.Y + 32 + (npc.height / 2));
 						Vector2 vectorSuEma = new Vector2(npc.position.X + 75 + (npc.width / 2), npc.position.Y + 32 + (npc.height / 2));
