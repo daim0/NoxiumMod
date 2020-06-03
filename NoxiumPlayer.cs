@@ -4,110 +4,119 @@ using Terraria.GameInput;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+using System.Collections.Generic;
+using System.IO;
 
 namespace NoxiumMod
 {
-	public class NoxiumPlayer : ModPlayer
-	{
-		public bool fireMinion;
-		public bool KatanaDash { get; internal set; } = false;
-		public int dashTimer = 0;
+    public class NoxiumPlayer : ModPlayer
+    {
+        public bool fireMinion;
+        public bool KatanaDash { get; internal set; } = false;
+        public int dashTimer = 0;
 
-		public bool SeedKeyJustPressed = false;
+        public bool SeedKeyJustPressed = false;
 
-		public bool SeedKeyDown { get; private set; }
+        public bool SeedKeyDown { get; private set; }
 
-		public int SeedStackSplit { get; set; }
-		public int SeedStackCounter { get; private set; }
-		public int SeedStackDelay { get; private set; }
-		public int SeedSuperFastStack { get; private set; }
+        public int SeedStackSplit { get; set; }
+        public int SeedStackCounter { get; private set; }
+        public int SeedStackDelay { get; private set; }
+        public int SeedSuperFastStack { get; private set; }
 
-		public override void ResetEffects()
-		{
-			fireMinion = false;
-		}
+        public bool zonePlasma;
 
-		public override void ProcessTriggers(TriggersSet triggersSet)
-		{
-			//Note to everyone from goodpro - I spent like a week trying to figure out why seed stacking wasen't working and then jopojelly 
-			//saved my life telling me to not call the setting method in here, but in a new interface layer
-			//SetSeedStackDelays();
+        public bool PotionPet = false;
 
-			SeedKeyJustPressed = NoxiumMod.SeedHotkey.JustPressed;
-			SeedKeyDown = NoxiumMod.SeedHotkey.Current;
-		}
+        public bool SentientTetherMinion = false;
+        public override void ResetEffects()
+        {
+            fireMinion = false;
+            PotionPet = false;
+            SentientTetherMinion = false;
+        }
 
-		internal void SetSeedStackDelays()
-		{
-			if (!SeedKeyDown)
-				SeedStackSplit = 0;
+        public override void ProcessTriggers(TriggersSet triggersSet)
+        {
+            //Note to everyone from goodpro - I spent like a week trying to figure out why seed stacking wasen't working and then jopojelly 
+            //saved my life telling me to not call the setting method in here, but in a new interface layer
+            //SetSeedStackDelays();
 
-			if (SeedStackSplit > 0)
-				SeedStackSplit--;
+            SeedKeyJustPressed = NoxiumMod.SeedHotkey.JustPressed;
+            SeedKeyDown = NoxiumMod.SeedHotkey.Current;
+        }
 
-			if (SeedStackSplit == 0)
-			{
-				SeedStackCounter = 0;
-				SeedStackDelay = 7;
-				SeedSuperFastStack = 0;
-			}
-			else
-			{
-				SeedStackCounter++;
+        internal void SetSeedStackDelays()
+        {
+            if (!SeedKeyDown)
+                SeedStackSplit = 0;
 
-				int num;
-				switch (SeedStackDelay)
-				{
-					case 6:
-						num = 25;
-						break;
-					case 5:
-						num = 20;
-						break;
-					case 4:
-						num = 15;
-						break;
-					case 3:
-						num = 10;
-						break;
-					default:
-						num = 5;
-						break;
-				}
+            if (SeedStackSplit > 0)
+                SeedStackSplit--;
 
-				if (SeedStackCounter >= num)
-				{
-					SeedStackDelay--;
+            if (SeedStackSplit == 0)
+            {
+                SeedStackCounter = 0;
+                SeedStackDelay = 7;
+                SeedSuperFastStack = 0;
+            }
+            else
+            {
+                SeedStackCounter++;
 
-					if (SeedStackDelay < 2)
-					{
-						SeedStackDelay = 2;
-						SeedSuperFastStack++;
-					}
+                int num;
+                switch (SeedStackDelay)
+                {
+                    case 6:
+                        num = 25;
+                        break;
+                    case 5:
+                        num = 20;
+                        break;
+                    case 4:
+                        num = 15;
+                        break;
+                    case 3:
+                        num = 10;
+                        break;
+                    default:
+                        num = 5;
+                        break;
+                }
 
-					SeedStackCounter = 0;
-				}
-			}
-		}
+                if (SeedStackCounter >= num)
+                {
+                    SeedStackDelay--;
 
-		public override void PostUpdateMiscEffects()
-		{
-			if (KatanaDash)
-			{
-				Vector2 position = new Vector2(player.position.X, player.position.Y + (player.height / 2) - 8f);
-				int dust = Dust.NewDust(position, player.width, 49, 31, 0f, 0f, 100, Colors.RarityPurple, 1.4f); //Use DustID instead of 31
+                    if (SeedStackDelay < 2)
+                    {
+                        SeedStackDelay = 2;
+                        SeedSuperFastStack++;
+                    }
 
-				Main.dust[dust].velocity *= 0.1f;
-				Main.dust[dust].scale *= 1f + Main.rand.Next(20) * 0.01f;
-				Main.dust[dust].shader = GameShaders.Armor.GetSecondaryShader(player.cShoe, player);
+                    SeedStackCounter = 0;
+                }
+            }
+        }
 
-				dashTimer--;
+        public override void PostUpdateMiscEffects()
+        {
+            if (KatanaDash)
+            {
+                Vector2 position = new Vector2(player.position.X, player.position.Y + (player.height / 2) - 8f);
+                int dust = Dust.NewDust(position, player.width, 49, 31, 0f, 0f, 100, Colors.RarityPurple, 1.4f); //Use DustID instead of 31
 
-				if (dashTimer <= 0)
-					KatanaDash = false;
-			}
-		}
-		        public override void UpdateBiomes()
+                Main.dust[dust].velocity *= 0.1f;
+                Main.dust[dust].scale *= 1f + Main.rand.Next(20) * 0.01f;
+                Main.dust[dust].shader = GameShaders.Armor.GetSecondaryShader(player.cShoe, player);
+
+                dashTimer--;
+
+                if (dashTimer <= 0)
+                    KatanaDash = false;
+            }
+        }
+        public override void UpdateBiomes()
         {
             zonePlasma = NoxiumWorld.plasmaSandTiles > 50;
         }
@@ -134,5 +143,5 @@ namespace NoxiumMod
             BitsByte flags = reader.ReadByte();
             zonePlasma = flags[0];
         }
-	}
+    }
 }

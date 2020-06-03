@@ -8,101 +8,103 @@ using Terraria.ID;
 
 namespace NoxiumMod
 {
-	public class NoxiumWorld : ModWorld
-	{
-		public static bool oculumOreSpawn;
-		public static bool downedAHM;
+    public class NoxiumWorld : ModWorld
+    {
+        public static bool oculumOreSpawn;
+        public static bool downedAHM;
         public static bool ahmSpawned = false;
         static public bool ahmBarShown = false;
 
         public static int ahmTimer = 0;
         public static int ahmTimerCap = 12 * 60 * 60;
-        public override void Initialize()
-		{
-			oculumOreSpawn = false;
-			downedAHM = false;
-            ahmBarShown = false;
-		}
 
-		public override TagCompound Save()
-		{
-			List<string> list = new List<string>();
+        public static int plasmaSandTiles;
+        public override void Initialize()
+        {
+            oculumOreSpawn = false;
+            downedAHM = false;
+            ahmBarShown = false;
+        }
+
+        public override TagCompound Save()
+        {
+            List<string> list = new List<string>();
 
             if (oculumOreSpawn)
-				list.Add("oculumOreSpawn");
-            if(ahmSpawned)
+                list.Add("oculumOreSpawn");
+            if (ahmSpawned)
                 list.Add("ahmSpawned");
             if (downedAHM)
-				list.Add("downedAHM");
+                list.Add("downedAHM");
             if (ahmBarShown)
                 list.Add("ahmBarShown");
 
-			TagCompound tagCompound = new TagCompound
-			{
-				{ "spawned", list },
+            TagCompound tagCompound = new TagCompound
+            {
+                { "spawned", list },
                 { "ahmSpawned", list },
                 { "downed", list },
                 { "shown", list }
-			};
-			return tagCompound;
-		}
+            };
+            return tagCompound;
+        }
 
-		public override void Load(TagCompound tag)
-		{
-		    var spawned = tag.GetList<string>("spawned");
+        public override void Load(TagCompound tag)
+        {
+            var spawned = tag.GetList<string>("spawned");
             var ahmSpawnedV = tag.GetList<string>("ahmSpawned");
             var downed = tag.GetList<string>("downed");
             var shown = tag.GetList<string>("shown");
 
             oculumOreSpawn = spawned.Contains("oculumOreSpawn");
 
-			downedAHM = downed.Contains("downedAHM");
+            downedAHM = downed.Contains("downedAHM");
 
             ahmSpawned = ahmSpawnedV.Contains("spawned");
 
             ahmBarShown = shown.Contains("shown");
-		}
+        }
 
-		public override void LoadLegacy(BinaryReader reader)
-		{
-			int loadVersion = reader.ReadInt32();
+        public override void LoadLegacy(BinaryReader reader)
+        {
+            int loadVersion = reader.ReadInt32();
 
-			if (loadVersion == 0)
-			{
-				BitsByte flag = reader.ReadByte();
+            if (loadVersion == 0)
+            {
+                BitsByte flag = reader.ReadByte();
 
-				oculumOreSpawn = flag[0];
-				downedAHM = flag[1];
+                oculumOreSpawn = flag[0];
+                downedAHM = flag[1];
                 ahmSpawned = flag[2];
-                ahmBarShown = flag[3]; 
-			}
-		}
+                ahmBarShown = flag[3];
+            }
+        }
 
-		public override void NetSend(BinaryWriter writer)
-		{
-			BitsByte flag = new BitsByte();
+        public override void NetSend(BinaryWriter writer)
+        {
+            BitsByte flag = new BitsByte();
 
-			flag[0] = oculumOreSpawn;
-			flag[1] = downedAHM;
+            flag[0] = oculumOreSpawn;
+            flag[1] = downedAHM;
             flag[2] = ahmSpawned;
             flag[3] = ahmBarShown;
 
-			writer.Write(flag);
-		}
+            writer.Write(flag);
+        }
 
-		public override void NetReceive(BinaryReader reader)
-		{
-			BitsByte flag = reader.ReadByte();
+        public override void NetReceive(BinaryReader reader)
+        {
+            BitsByte flag = reader.ReadByte();
 
-			oculumOreSpawn = flag[0];
-			downedAHM = flag[1];
+            oculumOreSpawn = flag[0];
+            downedAHM = flag[1];
             ahmSpawned = flag[2];
             ahmBarShown = flag[3];
-		}
+        }
 
-		public override void PreUpdate()
-		{
-			/*
+        public override void PreUpdate()
+        {
+            /*
 			while (0 < Main.maxTilesX * Main.maxTilesY * (3E-05f * Main.worldRate))
 			{
 				int tileX = WorldGen.genRand.Next(10, Main.maxTilesX - 10); //a random x tile
@@ -150,7 +152,7 @@ namespace NoxiumMod
 					}
 				}
 			}*/
-		}
+        }
         public override void PostUpdate()
         {
             Player player = Main.LocalPlayer;
@@ -158,21 +160,22 @@ namespace NoxiumMod
             {
                 ahmTimer++;
                 ahmBarShown = true;
-                if(ahmTimer > ahmTimerCap)
+                if (ahmTimer > ahmTimerCap)
                 {
                     ahmTimer = ahmTimerCap;
                 }
-                if(ahmTimer == ahmTimerCap && !ahmSpawned)
+                if (ahmTimer == ahmTimerCap && !ahmSpawned)
                 {
                     NPC.SpawnOnPlayer(player.whoAmI, mod.NPCType("AncientHealingMachine"));
                     Main.PlaySound(SoundID.Roar, player.position, 0);
                 }
-            }else
+            }
+            else
             {
                 ahmBarShown = false;
             }
         }
-	        public override void ResetNearbyTileEffects()
+        public override void ResetNearbyTileEffects()
         {
             NoxiumPlayer modPlayer = Main.LocalPlayer.GetModPlayer<NoxiumPlayer>();
             plasmaSandTiles = 0;
