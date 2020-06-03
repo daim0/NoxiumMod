@@ -172,5 +172,14 @@ namespace NoxiumMod
                 ahmBarShown = false;
             }
         }
+	        public override void ResetNearbyTileEffects()
+        {
+            NoxiumPlayer modPlayer = Main.LocalPlayer.GetModPlayer<NoxiumPlayer>();
+            plasmaSandTiles = 0;
+        }
+        public override void TileCountsAvailable(int[] tileCounts)
+        {
+            plasmaSandTiles = tileCounts[ModContent.TileType<Tiles.Plasma.PlasmaSand>()];
+        }
     }
 }
