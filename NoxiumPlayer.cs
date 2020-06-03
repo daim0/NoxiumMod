@@ -107,5 +107,32 @@ namespace NoxiumMod
 					KatanaDash = false;
 			}
 		}
+		        public override void UpdateBiomes()
+        {
+            zonePlasma = NoxiumWorld.plasmaSandTiles > 50;
+        }
+        public override bool CustomBiomesMatch(Player other)
+        {
+            NoxiumPlayer modOther = other.GetModPlayer<NoxiumPlayer>();
+            return zonePlasma == modOther.zonePlasma;
+        }
+        public override void CopyCustomBiomesTo(Player other)
+        {
+            NoxiumPlayer modOther = other.GetModPlayer<NoxiumPlayer>();
+            modOther.zonePlasma = zonePlasma;
+        }
+
+        public override void SendCustomBiomes(BinaryWriter writer)
+        {
+            BitsByte flags = new BitsByte();
+            flags[0] = zonePlasma;
+            writer.Write(flags);
+        }
+
+        public override void ReceiveCustomBiomes(BinaryReader reader)
+        {
+            BitsByte flags = reader.ReadByte();
+            zonePlasma = flags[0];
+        }
 	}
 }
