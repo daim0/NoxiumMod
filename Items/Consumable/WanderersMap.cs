@@ -2,7 +2,6 @@
 using System;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.ID;
 
 namespace NoxiumMod.Items.Consumable
 {
@@ -13,9 +12,9 @@ namespace NoxiumMod.Items.Consumable
             item.width = 26;
             item.height = 32;
             item.value = 1000;
-            item.useStyle = ItemUseStyleID.HoldingUp;
+            item.useStyle = 4;
             item.consumable = true;
-            item.rare = ItemRarityID.Orange;
+            item.rare = 3;
         }
 
         public override bool UseItem(Player player)
