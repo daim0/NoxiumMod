@@ -2,14 +2,14 @@
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
-namespace NoxiumMod.Items.Placeable.Plasma
+namespace NoxiumMod.Items.Placeable
 {
-    class PlasmaTreeTest : ModItem
+    class PortalFrame : ModItem
     {
         public override void SetDefaults()
         {
-            item.width = 30;
-            item.height = 24;
+            item.width = 38;
+            item.height = 20;
             item.maxStack = 99;
             item.value = 750;
             item.useStyle = 1;
@@ -18,7 +18,7 @@ namespace NoxiumMod.Items.Placeable.Plasma
             item.useTime = 10;
             item.autoReuse = true;
             item.consumable = true;
-            item.createTile = TileType<Tiles.Plasma.HugeTree>();
+            item.createTile = TileType<Tiles.PortalFrameTile>();
             item.placeStyle = 0;
         }
     }

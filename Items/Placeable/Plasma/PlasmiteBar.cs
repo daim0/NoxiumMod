@@ -17,7 +17,7 @@ namespace NoxiumMod.Items.Placeable.Plasma
             item.height = 24;
             item.maxStack = 99;
             item.value = 750;
-            item.useStyle = ItemUseStyleID.SwingThrow;
+            item.useStyle = 1;
             item.useTurn = true;
             item.useAnimation = 15;
             item.useTime = 10;
