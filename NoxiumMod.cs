@@ -1,27 +1,40 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using NoxiumMod.UI;
+using NoxiumMod.UI.Dimensions;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using Terraria;
 using Terraria.Graphics;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI;
-
+using static Terraria.ModLoader.ModContent;
 
 namespace NoxiumMod
 {
 	public class NoxiumMod : Mod
 	{
+		public static NoxiumMod noxiumInstance;
+
 		public static ModHotKey SeedHotkey;
 
 		private AhmBar AhmUI;
 		internal UserInterface AHMUiInterface;
+
+		private DimensionalUI dimensionalUI;
+		internal UserInterface dimensionalInterface;
 
 		public static float shakeAmount = 0;
 		public static int ShakeTimer;
 
 		public override void Load()
 		{
+			noxiumInstance = GetInstance<NoxiumMod>();
+
 			SeedHotkey = RegisterHotKey("Seed Fruit", "C");
 
 			if (!Main.dedServ)
@@ -29,6 +42,26 @@ namespace NoxiumMod
 				AhmUI = new AhmBar();
 				AHMUiInterface = new UserInterface();
 				AHMUiInterface.SetState(AhmUI);
+
+				dimensionalUI = new DimensionalUI();
+				dimensionalUI.LoadUI();
+				dimensionalUI.Activate();
+
+				/* Examples:
+
+				dimensionalUI.RegisterDimension("The Cum Zone", ModContent.GetTexture("Terraria/Item_2"), () => Main.dayTime, () => Main.NewText("Welcome to the cum zone")); 
+				// Appears as 'The Cum Zone', shows a dirt block texture, only appears in the day, when clicked will say 'Welcome to the cum zone'.
+
+				dimensionalUI.RegisterDimension("Hell", ModContent.GetTexture("Terraria/Item_1"), () => !Main.dayTime, () => Main.NewText("Welcome to hell"));
+				// Appears as 'Hell', shows an iron pickaxe texture, only appears at night, when clicked will say 'Welcome to hell'.
+
+				Call("AddDimension", "The Cum Zone", ModContent.GetTexture("Terraria/Item_2"), (Func<bool>)(() => Main.dayTime), (Action)(() => Main.NewText("Welcome to the cum zone")));
+				// Example of a mod.Call to add a dimension.
+
+				*/
+
+
+				dimensionalInterface = new UserInterface();
 			}
 
 			Mod yabhb = ModLoader.GetMod("FKBossHealthBar");
@@ -43,12 +76,49 @@ namespace NoxiumMod
 
 		public override void Unload()
 		{
-			SeedHotkey = null;
+			Type[] types = noxiumInstance.Code.GetTypes(); // Automatically sets all static fields to null, so you don't have to worry about it, ever.
+			foreach (Type type in types)
+			{
+				foreach (FieldInfo item in from field in type.GetFields(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)
+										   where !field.FieldType.IsValueType && !field.IsLiteral
+										   select field)
+				{
+					if (item.FieldType.IsGenericType)
+					{
+						if (item.FieldType.GetGenericTypeDefinition() == typeof(List<>))
+						{
+							((IList)item.GetValue(null))?.Clear();
+						}
+						else if (item.FieldType.GetGenericTypeDefinition() == typeof(Dictionary<,>))
+						{
+							((IDictionary)item.GetValue(null))?.Clear();
+						}
+					}
+					else
+					{
+						item.SetValue(null, null);
+					}
+				}
+			}
+		}
+
+		public override object Call(params object[] args)
+		{
+			Array.Resize(ref args, 5);
+			if (args[0] is string callType)
+			{
+				if (callType == "AddDimension" && args[1] is string name && args[2] is Texture2D texture && args[3] is Func<bool> func && args[4] is Action action && !Main.dedServ)
+				{
+					dimensionalUI.RegisterDimension(name, texture, func, action);
+				}
+			}
+			return base.Call(args);
 		}
 
 		public override void UpdateUI(GameTime gameTime)
 		{
 			AHMUiInterface?.Update(gameTime);
+			dimensionalInterface?.Update(gameTime);
 		}
 
 		public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
@@ -73,6 +143,12 @@ namespace NoxiumMod
 					AHMUiInterface.Draw(Main.spriteBatch, new GameTime());
 					return true;
 				}, InterfaceScaleType.UI));
+
+				layers.Insert(resourceBarIndex, new LegacyGameInterfaceLayer("NoxiumMod: Dimension Selector", delegate
+				{
+					dimensionalInterface.Draw(Main.spriteBatch, new GameTime());
+					return true;
+				}, InterfaceScaleType.UI));
 			}
 		}
 
@@ -88,6 +164,7 @@ namespace NoxiumMod
 
 			//Cant shake main menu, :widepeeposad:
 			//We'll see about that - goodpro
+			//We certainly will - Oli
 
 			if (!Main.gameMenu)
 			{
@@ -200,7 +277,18 @@ namespace NoxiumMod
 			recipe.AddTile(TileID.DyeVat);
 			recipe.SetResult(ItemID.ShadowDye, 1);
 			recipe.AddRecipe();
+		}
 
+		public void ToggleDimensionalUI()
+		{
+			if (dimensionalInterface.CurrentState == null)
+			{
+				dimensionalUI.Enable();
+			}
+			else
+			{
+				dimensionalUI.Disable();
+			}
 		}
 	}
 }
