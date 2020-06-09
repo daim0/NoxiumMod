@@ -6,6 +6,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using System.Collections.Generic;
 using System.IO;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace NoxiumMod
 {
@@ -142,6 +143,14 @@ namespace NoxiumMod
         {
             BitsByte flags = reader.ReadByte();
             zonePlasma = flags[0];
+        }
+        public override Texture2D GetMapBackgroundImage()
+        {
+            if (zonePlasma)
+            {
+                return mod.GetTexture("PlasmaDesertMapBackground");
+            }
+            return null;
         }
     }
 }

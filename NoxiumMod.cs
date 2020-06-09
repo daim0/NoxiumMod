@@ -2,9 +2,11 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using NoxiumMod.UI;
 using NoxiumMod.UI.Dimensions;
+using NoxiumMod.Dimensions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using SubworldLibrary;
 using System.Linq;
 using System.Reflection;
 using Terraria;
@@ -47,7 +49,7 @@ namespace NoxiumMod
 				dimensionalUI.LoadUI();
 				dimensionalUI.Activate();
 
-				/* Examples:
+                /* Examples:
 
 				dimensionalUI.RegisterDimension("The Cum Zone", ModContent.GetTexture("Terraria/Item_2"), () => Main.dayTime, () => Main.NewText("Welcome to the cum zone")); 
 				// Appears as 'The Cum Zone', shows a dirt block texture, only appears in the day, when clicked will say 'Welcome to the cum zone'.
@@ -59,9 +61,11 @@ namespace NoxiumMod
 				// Example of a mod.Call to add a dimension.
 
 				*/
+                // Gaming
+                dimensionalUI.RegisterDimension("Plasma Desert", ModContent.GetTexture("NoxiumMod/PlasmaDesert"), () => true, () => Subworld.Enter<PlasmaDesert>());
+                dimensionalUI.RegisterDimension("The Cum Zone", ModContent.GetTexture("Terraria/Item_2"), () => true, () => Main.NewText("Welcome to the cum zone"));
 
-
-				dimensionalInterface = new UserInterface();
+                dimensionalInterface = new UserInterface();
 			}
 
 			Mod yabhb = ModLoader.GetMod("FKBossHealthBar");
@@ -180,6 +184,7 @@ namespace NoxiumMod
 		public override void AddRecipes()
 		{
 			//ew
+            // :( -Daim
 			ModRecipe recipe = new ModRecipe(this);
 			recipe.AddIngredient(ItemID.StrangePlant3, 1);
 			recipe.AddIngredient(ItemID.BottledWater, 1);

@@ -182,7 +182,7 @@ namespace NoxiumMod
         }
         public override void TileCountsAvailable(int[] tileCounts)
         {
-            plasmaSandTiles = tileCounts[ModContent.TileType<Tiles.Plasma.PlasmaSand>()];
+            plasmaSandTiles = tileCounts[ModContent.TileType<Tiles.Plasma.PlasmaSand>()] + tileCounts[ModContent.TileType<Tiles.Plasma.PlasmaSandNoFall>()];
         }
     }
 }
