@@ -76,14 +76,14 @@ namespace NoxiumMod.Items.Consumable
 			projectile.localAI[0] = Main.rand.Next(40, 60);//Starting position, make sure this is higher than itemsVisible
 		}
 
-		//Fun part :p, Control what goes into the loot box! This is per item
-		protected override void FillLootBox(WeightedRandom<int> WR)
-		{
-			WR.Add(ModContent.ItemType<DreadfulChalice>(), 1);
-			WR.Add(ModContent.ItemType<DireKunai>(), 1);
-			WR.Add(ModContent.ItemType<Nystagmus>(), 1);
-			WR.Add(ModContent.ItemType<SentientTetherRemote>(), 1);
-            WR.Add(ModContent.ItemType<HorizonStriderAegis>(), 1);
+        //Fun part :p, Control what goes into the loot box! This is per item
+        protected override void FillLootBox(WeightedRandom<LootBoxContents> WR)
+        {
+            WR.Add(new LootBoxContents(ModContent.ItemType<DreadfulChalice>(), 1), 1);
+			WR.Add(new LootBoxContents(ModContent.ItemType<DireKunai>(), 1), 1);
+			WR.Add(new LootBoxContents(ModContent.ItemType<Nystagmus>(), 1), 1);
+			WR.Add(new LootBoxContents(ModContent.ItemType<SentientTetherRemote>(), 1), 1);
+            WR.Add(new LootBoxContents(ModContent.ItemType<HorizonStriderAegis>(), 1), 1);
             loots.Add(WR.Get());
 		}
 
@@ -131,7 +131,7 @@ namespace NoxiumMod.Items.Consumable
                     if ((int)projectile.localAI[0] == f)
                         glowingcolors1 = Color.Red;
 
-                    Texture2D tex = Main.itemTexture[loots[f]];
+                    Texture2D tex = Main.itemTexture[loots[f].intid];
                     spriteBatch.Draw(tex, drawPos, null, glowingcolors1 * projectile.scale * alpha, 0, new Vector2(tex.Width / 2, tex.Height / 2), (0.5f + (0.5f * alpha)) * projectile.scale, SpriteEffects.None, 0f);
 
                 }
