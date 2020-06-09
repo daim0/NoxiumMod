@@ -21,7 +21,7 @@ namespace NoxiumMod.Tiles.Plasma
 
             dustType = 84;
             drop = ItemType<Items.Placeable.Plasma.PlasmaWoodItem>();
-            soundType = SoundID.Tink;
+            soundType = 21;
             soundStyle = 1;
         }
     }

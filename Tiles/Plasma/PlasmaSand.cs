@@ -24,7 +24,7 @@ namespace NoxiumMod.Tiles.Plasma
 			TileID.Sets.Conversion.Sand[Type] = true; // Allows Clentaminator solutions to convert this tile to their respective Sand tiles.
 			TileID.Sets.ForAdvancedCollision.ForSandshark[Type] = true; // Allows Sandshark enemies to "swim" in this sand.
 			TileID.Sets.Falling[Type] = true;
-			AddMapEntry(new Color(200, 200, 200));
+			AddMapEntry(new Color(109, 207, 184));
 			drop = ModContent.ItemType<PlasmaSandItem>();
             SetModTree(new PlasmaTree());
         }

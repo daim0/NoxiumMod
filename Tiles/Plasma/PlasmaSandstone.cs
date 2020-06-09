@@ -17,11 +17,11 @@ namespace NoxiumMod.Tiles.Plasma
 
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Plasma Sandstone");
-            AddMapEntry(new Color(172, 153, 185), name);
+            AddMapEntry(new Color(50, 122, 148), name);
 
             dustType = 84;
             drop = ItemType<Items.Placeable.Plasma.PlasmaSandstoneItem>();
-            soundType = SoundID.Tink;
+            soundType = 21;
             soundStyle = 1;
         }
     }
