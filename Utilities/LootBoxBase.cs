@@ -74,6 +74,19 @@ namespace NoxiumMod.Utilities
 		}
 	}
 
+	public class LootBoxContents
+	{
+		public int intid;
+		public int ammount;
+
+		public LootBoxContents(int intid,int ammount)
+		{
+			this.intid = intid;
+			this.ammount = ammount;
+		}
+
+	}
+
 	public class LootBoxOpen : ModProjectile
 	{
 		protected virtual int size => 48; //How Far each entry is spaced apart
@@ -81,7 +94,7 @@ namespace NoxiumMod.Utilities
 		protected virtual int maxItems => 1000; //Max Items of course, try not to set this any higher as it's unneeded stress
 		protected virtual int slowDownRate => 200; //This is how many frames it takes before the ticker comepletely stops when slowing down
 		protected virtual int itemsVisible => 10; //How many items would be visble left as well as right, so really it's twice this value
-		protected List<int> loots;//List of items, no changey
+		protected List<LootBoxContents> loots;//List of items, no changey
 		private int lastitem = 0;
 		//public virtual float trans => 1f;
 		public Player P;
@@ -113,12 +126,12 @@ namespace NoxiumMod.Utilities
 		}
 
 		//Fun part :p, Control what goes into the loot box! This is per item
-		protected virtual void FillLootBox(WeightedRandom<int> WR)
+		protected virtual void FillLootBox(WeightedRandom<LootBoxContents> WR)
 		{
-			WR.Add(ItemID.TwilightDye, 1);
-			WR.Add(ItemID.CoinGun, 0.1);
-			WR.Add(ItemID.AleThrowingGlove, 0.01);
-			WR.Add(ItemID.Handgun, 4);
+			WR.Add(new LootBoxContents(ItemID.TwilightDye,5), 1);
+			WR.Add(new LootBoxContents(ItemID.CoinGun,1), 0.1);
+			WR.Add(new LootBoxContents(ItemID.AleThrowingGlove,1), 0.01);
+			WR.Add(new LootBoxContents(ItemID.Handgun,1), 4);
 			loots.Add(WR.Get());
 		}
 
@@ -147,8 +160,8 @@ namespace NoxiumMod.Utilities
 
 			if (loots==null)
 			{
-				WeightedRandom<int> WR = new WeightedRandom<int>();
-				loots = new List<int>();
+				WeightedRandom<LootBoxContents> WR = new WeightedRandom<LootBoxContents>();
+				loots = new List<LootBoxContents>();
 				for (int i = 0; i < maxItems; i += 1)
 				{
 					FillLootBox(WR);
@@ -184,8 +197,9 @@ namespace NoxiumMod.Utilities
 				{
 					if (projectile.timeLeft == 200 && Main.netMode!=NetmodeID.Server)
 					{
-						player.QuickSpawnItem(loots[(int)projectile.localAI[0]]);
-						AwardItem(loots[(int)projectile.localAI[0]]);
+						LootBoxContents itemtype = loots[(int)projectile.localAI[0]];
+						player.QuickSpawnItem(itemtype.intid, itemtype.ammount);
+						AwardItem(itemtype.intid);
 					}
 
 					Vector2 mousePos = Main.MouseWorld;
@@ -231,7 +245,7 @@ namespace NoxiumMod.Utilities
 					if ((int)projectile.localAI[0] == f)
 						glowingcolors1 = Color.Red;
 
-					Texture2D tex = Main.itemTexture[loots[f]];
+					Texture2D tex = Main.itemTexture[loots[f].intid];
 					spriteBatch.Draw(tex, drawPos, null, glowingcolors1 * projectile.scale * alpha, 0, new Vector2(tex.Width / 2, tex.Height / 2), (0.5f + (0.5f * alpha)) * projectile.scale, SpriteEffects.None, 0f);
 					}
 				}

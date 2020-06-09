@@ -45,5 +45,30 @@ namespace NoxiumMod.Utilities
 
             return Point16.NegativeOne;
         }
+        public static void PlaceMultitile(Point16 position, int type, int style = 0)
+        {
+            TileObjectData data = TileObjectData.GetTileData(type, style); //magic numbers and uneccisary params begone!
+
+            if (position.X + data.Width > Main.maxTilesX || position.X < 0) return; //make sure we dont spawn outside of the world!
+            if (position.Y + data.Height > Main.maxTilesY || position.Y < 0) return;
+
+            int xVariants = 0;
+            int yVariants = 0;
+            if (data.StyleHorizontal) xVariants = Main.rand.Next(data.RandomStyleRange);
+            else yVariants = Main.rand.Next(data.RandomStyleRange);
+
+            for (int x = 0; x < data.Width; x++) //generate each column
+            {
+                for (int y = 0; y < data.Height; y++) //generate each row
+                {
+                    Tile tile = Framing.GetTileSafely(position.X + x, position.Y + y); //get the targeted tile
+                    tile.type = (ushort)type; //set the type of the tile to our multitile
+
+                    tile.frameX = (short)((x + data.Width * xVariants) * (data.CoordinateWidth + data.CoordinatePadding)); //set the X frame appropriately
+                    tile.frameY = (short)((y + data.Height * yVariants) * (data.CoordinateHeights[y] + data.CoordinatePadding)); //set the Y frame appropriately
+                    tile.active(true); //activate the tile
+                }
+            }
+        }
     }
 }
