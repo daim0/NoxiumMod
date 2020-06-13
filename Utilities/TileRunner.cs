@@ -60,20 +60,7 @@ namespace NoxiumMod.Utilities
                     {
                         if (Math.Abs(i - pos.X) + Math.Abs(j - pos.Y) >= strength * StrengthRange())
                             continue;
-                        Tile tile = Main.tile[i, j];
-                        if (type == 0)
-                        {
-                            tile.active(false);
-                            continue;
-                        }
-                        if (overRide || !tile.active())
-                            tile.type = type;
-                        if (addTile)
-                        {
-                            tile.active(true);
-                            tile.liquid = 0;
-                            tile.lava(false);
-                        }
+                        ChangeTile(Main.tile[i, j]);
                     }
                 }
 
@@ -90,6 +77,23 @@ namespace NoxiumMod.Utilities
                 speed = Vector2.Clamp(speed, new Vector2(-1, -1), new Vector2(1, 1));
 
                 PostUpdate();
+            }
+        }
+
+        public virtual void ChangeTile(Tile tile)
+        {
+            if (type == 0)
+            {
+                tile.active(false);
+                return;
+            }
+            if (overRide || !tile.active())
+                tile.type = type;
+            if (addTile)
+            {
+                tile.active(true);
+                tile.liquid = 0;
+                tile.lava(false);
             }
         }
 

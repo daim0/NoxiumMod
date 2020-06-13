@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.ID;
+using SubworldLibrary;
 
 
 namespace NoxiumMod
@@ -11,6 +12,7 @@ namespace NoxiumMod
     public class NoxiumWorld : ModWorld
     {
         public static bool oculumOreSpawn;
+
         public static bool downedAHM;
         public static bool ahmSpawned = false;
         static public bool ahmBarShown = false;
@@ -19,11 +21,14 @@ namespace NoxiumMod
         public static int ahmTimerCap = 12 * 60 * 60;
 
         public static int plasmaSandTiles;
+
+        public static bool desertDwellerSpawned = false;
         public override void Initialize()
         {
             oculumOreSpawn = false;
             downedAHM = false;
             ahmBarShown = false;
+            desertDwellerSpawned = false;
         }
 
         public override TagCompound Save()
@@ -38,13 +43,16 @@ namespace NoxiumMod
                 list.Add("downedAHM");
             if (ahmBarShown)
                 list.Add("ahmBarShown");
+            if (desertDwellerSpawned)
+                list.Add("DwellerSpawned");
 
             TagCompound tagCompound = new TagCompound
             {
                 { "spawned", list },
                 { "ahmSpawned", list },
                 { "downed", list },
-                { "shown", list }
+                { "shown", list },
+                { "dspawned", list }
             };
             return tagCompound;
         }
@@ -55,6 +63,7 @@ namespace NoxiumMod
             var ahmSpawnedV = tag.GetList<string>("ahmSpawned");
             var downed = tag.GetList<string>("downed");
             var shown = tag.GetList<string>("shown");
+            var dspawned = tag.GetList<string>("dspawned");
 
             oculumOreSpawn = spawned.Contains("oculumOreSpawn");
 
@@ -63,6 +72,8 @@ namespace NoxiumMod
             ahmSpawned = ahmSpawnedV.Contains("spawned");
 
             ahmBarShown = shown.Contains("shown");
+
+            desertDwellerSpawned = dspawned.Contains("dspawned");
         }
 
         public override void LoadLegacy(BinaryReader reader)
@@ -77,6 +88,7 @@ namespace NoxiumMod
                 downedAHM = flag[1];
                 ahmSpawned = flag[2];
                 ahmBarShown = flag[3];
+                desertDwellerSpawned = flag[4];
             }
         }
 
@@ -88,6 +100,7 @@ namespace NoxiumMod
             flag[1] = downedAHM;
             flag[2] = ahmSpawned;
             flag[3] = ahmBarShown;
+            flag[4] = desertDwellerSpawned;
 
             writer.Write(flag);
         }
@@ -100,6 +113,7 @@ namespace NoxiumMod
             downedAHM = flag[1];
             ahmSpawned = flag[2];
             ahmBarShown = flag[3];
+            desertDwellerSpawned = flag[4];
         }
 
         public override void PreUpdate()
@@ -152,6 +166,14 @@ namespace NoxiumMod
 					}
 				}
 			}*/
+            if(Subworld.IsActive<Dimensions.PlasmaDesert>())
+            {
+                if (++Liquid.skipCount > 1)
+                {
+                    Liquid.UpdateLiquid();
+                    Liquid.skipCount = 0;
+                }
+            }
         }
         public override void PostUpdate()
         {
