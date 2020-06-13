@@ -25,6 +25,8 @@ namespace NoxiumMod.Tiles.Plasma
             AddMapEntry(new Color(109, 207, 184));
             drop = ModContent.ItemType<PlasmaSandItem>();
             SetModTree(new PlasmaTree());
+
+            dustType = 63;
         }
     }
 }

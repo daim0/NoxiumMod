@@ -19,7 +19,7 @@ namespace NoxiumMod.Tiles.Plasma
             name.SetDefault("Plasma Sandstone");
             AddMapEntry(new Color(50, 122, 148), name);
 
-            dustType = 84;
+            dustType = 63;
             drop = ItemType<Items.Placeable.Plasma.PlasmaSandstoneItem>();
             soundType = 21;
             soundStyle = 1;
