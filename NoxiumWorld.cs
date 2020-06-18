@@ -12,17 +12,16 @@ namespace NoxiumMod
     public class NoxiumWorld : ModWorld
     {
         public static bool oculumOreSpawn;
-
         public static bool downedAHM;
-        public static bool ahmSpawned = false;
-        static public bool ahmBarShown = false;
+        public static bool ahmSpawned;
+        public static bool ahmBarShown;
+        public static bool desertDwellerSpawned;
 
-        public static int ahmTimer = 0;
+        public static int ahmTimer;
         public static int ahmTimerCap = 12 * 60 * 60;
-
         public static int plasmaSandTiles;
 
-        public static bool desertDwellerSpawned = false;
+        /* Bools have a default value of false when declared globally, so you dont need this.
         public override void Initialize()
         {
             oculumOreSpawn = false;
@@ -30,6 +29,7 @@ namespace NoxiumMod
             ahmBarShown = false;
             desertDwellerSpawned = false;
         }
+        */
 
         public override TagCompound Save()
         {
@@ -175,6 +175,7 @@ namespace NoxiumMod
                 }
             }
         }
+
         public override void PostUpdate()
         {
             Player player = Main.LocalPlayer;
@@ -197,11 +198,12 @@ namespace NoxiumMod
                 ahmBarShown = false;
             }
         }
+
         public override void ResetNearbyTileEffects()
         {
-            NoxiumPlayer modPlayer = Main.LocalPlayer.GetModPlayer<NoxiumPlayer>();
             plasmaSandTiles = 0;
         }
+
         public override void TileCountsAvailable(int[] tileCounts)
         {
             plasmaSandTiles = tileCounts[ModContent.TileType<Tiles.Plasma.PlasmaSand>()] + tileCounts[ModContent.TileType<Tiles.Plasma.PlasmaSandNoFall>()];
