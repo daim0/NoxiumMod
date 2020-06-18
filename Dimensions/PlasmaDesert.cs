@@ -348,6 +348,10 @@ namespace NoxiumMod.Dimensions
             Main.dayTime = true;
             Main.time = 27000;
             //NoxiumMod.noxiumInstance.ToggleDimensionalUI();
+            if(NoxiumMod.noxiumInstance.dimensionalInterface.CurrentState != null)
+            {
+                NoxiumMod.noxiumInstance.ToggleDimensionalUI();
+            }
         }
     }
 }
