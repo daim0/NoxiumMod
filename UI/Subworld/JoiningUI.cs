@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using ReLogic.Graphics;
 using Terraria.ModLoader;
 using static SubworldLibrary.SLWorld;
+using SubworldLibrary;
 
 namespace NoxiumMod.UI.Subworld
 {
@@ -40,7 +41,7 @@ namespace NoxiumMod.UI.Subworld
         {
             spriteBatch.Draw(Main.magicPixel, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), whiteColor);
 
-            spriteBatch.DrawString(Main.fontDeathText, "Joining" + dots, new Vector2(20, 20), blackColor);
+            spriteBatch.DrawString(Main.fontDeathText, "Joining "+ dots, new Vector2(20, 20), blackColor, 0f, Vector2.Zero, 1.3f, SpriteEffects.None, 0);
 
             float ratio = loadingSymbol.Width / (float)loadingSymbol.Height;
 
@@ -49,7 +50,7 @@ namespace NoxiumMod.UI.Subworld
 
             int extent = (int)((progress == null ? 0 : progress.Value) * 100);
 
-            Vector2 drawPos = new Vector2(20, Main.screenHeight - 50);
+            Vector2 drawPos = new Vector2(20, Main.screenHeight - 85);
 
             for (int i = 0; i < extent; i++)
             {
