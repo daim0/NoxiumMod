@@ -63,7 +63,7 @@ namespace NoxiumMod.Utilities
 			item.useTurn = true;
 			item.UseSound = SoundID.Item3;
 			item.consumable = true;
-			item.shoot = mod.ProjectileType("LootBoxOpen");
+			item.shoot = ModContent.ProjectileType<LootBoxOpen>();
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
@@ -84,7 +84,6 @@ namespace NoxiumMod.Utilities
 			this.intid = intid;
 			this.ammount = ammount;
 		}
-
 	}
 
 	public class LootBoxOpen : ModProjectile

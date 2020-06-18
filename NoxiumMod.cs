@@ -15,6 +15,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI;
 using static Terraria.ModLoader.ModContent;
+using NoxiumMod.UI.Subworld;
 
 namespace NoxiumMod
 {
@@ -48,6 +49,8 @@ namespace NoxiumMod
 				dimensionalUI = new DimensionalUI();
 				dimensionalUI.LoadUI();
 				dimensionalUI.Activate();
+
+				JoiningUI.LoadLoadingSymbol();
 
                 /* Examples:
 

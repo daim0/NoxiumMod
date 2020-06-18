@@ -9,7 +9,7 @@ using NoxiumMod.Projectiles.PlasmaStuff;
 
 namespace NoxiumMod.NPCs.Plasma
 {
-    class NPCBubble : ModNPC
+    public class NPCBubble : ModNPC
     {
         public override void SetStaticDefaults()
         {
@@ -77,7 +77,9 @@ namespace NoxiumMod.NPCs.Plasma
         public void ChooseBubble()
         {
             int choice = Main.rand.Next(0, 2);
-            Projectile.NewProjectile(new Vector2(npc.Center.X + (float)Main.rand.Next(-50, 50), npc.Center.Y + (float)Main.rand.Next(-50, 50)), new Vector2(npc.velocity.X + (float)Main.rand.Next(5, 10), npc.velocity.Y + (float)Main.rand.Next(5, 10)), choice == 0 ? ModContent.ProjectileType<MicroBubble>() : ModContent.ProjectileType<MicroBubble2>(), 0, 0f);
+            Projectile.NewProjectile(new Vector2(npc.Center.X + Main.rand.Next(-50, 50), npc.Center.Y + Main.rand.Next(-50, 50)),
+                new Vector2(npc.velocity.X + Main.rand.Next(5, 10), npc.velocity.Y + Main.rand.Next(5, 10)),
+                choice == 0 ? ModContent.ProjectileType<MicroBubble>() : ModContent.ProjectileType<MicroBubble2>(), 0, 0f);
             
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
@@ -85,8 +87,9 @@ namespace NoxiumMod.NPCs.Plasma
             if (spawnInfo.player.GetModPlayer<NoxiumPlayer>().zonePlasma && !NoxiumWorld.desertDwellerSpawned && NPC.CountNPCS(ModContent.NPCType<NPCBubble>()) < 1)
             {
                 return .3f;
-            }else 
-            return 0;
+            }
+            else 
+                return 0;
         }
     }
 }

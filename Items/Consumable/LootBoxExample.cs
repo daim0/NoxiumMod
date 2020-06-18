@@ -34,9 +34,9 @@ namespace NoxiumMod.Items.Consumable
 			item.width = 14;
 			item.height = 24;
 			item.maxStack = 30;
-			item.rare = 8;
+			item.rare = ItemRarityID.Yellow;
 			item.value = 1000;
-			item.useStyle = 2;
+			item.useStyle = ItemUseStyleID.EatingUsing;
 			item.useAnimation = 17;
 			item.useTime = 17;
 			item.useTurn = true;
