@@ -291,12 +291,12 @@ namespace NoxiumMod.UI.Computer
 		public void WriteToTurtle()
 		{
 			TurtleItem turtle = turtleSlot.item.modItem as TurtleItem;
-			turtle.Width = chosenWidth;
-			turtle.Height = chosenHeight;
-			turtle.Direction = chosenDirection;
-			turtle.PickaxePower = pickaxeSlot.item.pick;
-			turtle.PickaxeSpeed = pickaxeSlot.item.useTime;
-			turtle.PickaxeType = pickaxeSlot.item.type;
+			turtle.TurtleInfo.Width = chosenWidth;
+			turtle.TurtleInfo.Height = chosenHeight;
+			turtle.TurtleInfo.Direction = chosenDirection;
+			turtle.TurtleInfo.PickaxePower = pickaxeSlot.item.pick;
+			turtle.TurtleInfo.PickaxeSpeed = pickaxeSlot.item.useTime;
+			turtle.TurtleInfo.PickaxeType = pickaxeSlot.item.type;
 		}
 
 		public void ResetComputerState()
