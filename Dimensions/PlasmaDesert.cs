@@ -11,6 +11,9 @@ using Terraria.DataStructures;
 using NoxiumMod.Utilities;
 using Terraria.UI;
 using NoxiumMod.UI.Subworld;
+using NoxiumMod.Dimensions.Bubbles;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria.Utilities;
 
 namespace NoxiumMod.Dimensions
 {
@@ -34,8 +37,45 @@ namespace NoxiumMod.Dimensions
 
         public override UIState loadingUIState => new JoiningUI();
 
+        public static List<BubbleChain> bubbleChains;
+
+        private static List<Texture2D> possibleBubbleTextures;
+
+        private void UpdateBubbles()
+        {
+            for (int i = 0; i < bubbleChains.Count; i++)
+            {
+                BubbleChain chain = bubbleChains[i];
+                chain.Update(ref i);
+            }
+        }
+
+        private void DrawBubbles(SpriteBatch spriteBatch)
+        {
+            foreach (BubbleChain chain in bubbleChains)
+            {
+                chain.Draw(spriteBatch);
+            }
+        }
+
+        public static void LoadBubbleTextures()
+        {
+            possibleBubbleTextures = new List<Texture2D>();
+
+            for (int i = 1; i <= 8; i++)
+            {
+                possibleBubbleTextures.Add(ModContent.GetTexture($"NoxiumMod/Dimensions/BubbleTextures/Bubble{i}"));
+            }
+        }
+
         public PlasmaDesert()
         {
+            bubbleChains = new List<BubbleChain>();
+
+            NoxiumWorld.ShouldUpdateBubbles += UpdateBubbles;
+
+            NoxiumWorld.ShouldDrawBubbles += DrawBubbles;
+
             tasks = new List<GenPass>
             {
                 new SubworldGenPass(progress =>
@@ -192,32 +232,78 @@ namespace NoxiumMod.Dimensions
                         {
                             if (Main.rand.Next(15000) == 1)
                             {
-
                                 int ammount = Main.rand.Next(1, 12);
                                 for (int i = 5; i < ammount * 5; i += 5)
                                 {
                                     GenCloud.makeOvalFlatTop(new Vector2(x + i, y), Main.rand.Next(20, 25), Main.rand.Next(30, 35), ModContent.TileType<PlasmaSandNoFall>());
                                 }
-                                TileRunner ae = new TileRunner(new Vector2(x + ((ammount / 2) * 5 + 5), y + 30), new Vector2(0, -5), new Point16(0, 0), new Point16(0, 0), Main.rand.NextFloat(15, 20), Main.rand.Next(3, 6), (ushort)ModContent.TileType<PlasmaSandNoFall>(), true, true); ;
+                                TileRunner ae = new TileRunner(new Vector2(x + (ammount / 2 * 5 + 5), y + 30), new Vector2(0, -5), new Point16(0, 0), new Point16(0, 0), Main.rand.NextFloat(15, 20), Main.rand.Next(3, 6), (ushort)ModContent.TileType<PlasmaSandNoFall>(), true, true); ;
                                 ae.Start();
 
-                                Positions.Add(new Vector2(x, y));
+                                Positions.Add(new Vector2(x + (ammount / 2 * 5 + 5), y + 30));
                             }
                         }
                     }
-                    /* 
+
+
+
+                    int identity = 0;
+
+                    // Converts to world coordinates from tile coordinates.
+                    for (int i = 0; i < Positions.Count; i++)
+                    {
+                        Positions[i] *= 16;
+                    }
+
                     foreach (Vector2 pos in Positions)
                     {
-                        int distance = 200;
+                        int distance = 2240; // Maximum distance between islands, in world coordinates.
+
                         foreach (Vector2 pos2 in Positions)
                         {
-                            if (Vector2.Distance(pos, pos2) <= distance)
+                            if (pos != pos2 && Vector2.Distance(pos, pos2) <= distance) // Ensures it does not draw a spline to itself.
                             {
-                                // What?????
+                                for (int i = -1; i <= 1; i++)
+                                {
+                                    int direction = CalculateDirection(pos, pos2); // Returns either 1 or -1 to dictate the direction of the curve's peak.
+
+                                    int steepnessMult = 640 + (80 * i); // The scalar for the steepness of the curve.
+
+                                    Vector2 perpendicularToMidPoint = Vector2.Normalize(pos - pos2).RotatedBy(MathHelper.PiOver2 * -direction); // Gets a unit vector perpendicular to the vector between the 2 positions.
+                                    Vector2 actualMidPoint = Midpoint(pos, pos2) + (perpendicularToMidPoint * steepnessMult); // Creates a control point that sits on the peak of the curve.
+
+                                    BezierCurve curve = new BezierCurve(new Vector2[] { pos, actualMidPoint, pos2 }); // Creates a curve using the three points as controls.
+
+                                    // Calculates the required amount of points by dividing the distance between the start and end by the divisor. Lower divisor = more bubbles.
+                                    int points = (int)((pos - pos2).Length() / 60) + Main.rand.Next(-5, 6); // Adds some random variance to the range of points               
+
+                                    if (points <= 0)
+                                    {
+                                        points = 1;
+                                    }
+
+                                    List<Vector2> drawPoints = curve.GetPoints(points); // Collapses the curve into a set of points.
+
+                                    Bubble[] bubbles = new Bubble[points]; // Creates bubbles with random sizes at each of these points.
+
+                                    for (int j = 0; j < points; j++)
+                                    {
+                                        bubbles[j] = new Bubble(GetBubble(), drawPoints[j]) { identity = identity };
+
+                                        identity++;
+                                    }
+
+                                    BubbleChain chain = new BubbleChain(bubbles);
+
+                                    bubbleChains.Add(chain);
+                                }
                             }
                         }
                     }
-                    */
+
+
+
+
                 }),
                 new SubworldGenPass(progress =>
                 {
@@ -352,6 +438,35 @@ namespace NoxiumMod.Dimensions
             {
                 NoxiumMod.noxiumInstance.ToggleDimensionalUI();
             }
+        }
+
+        private Vector2 Midpoint(Vector2 point1, Vector2 point2)
+        {
+            float x = (point1.X + point2.X) / 2;
+            float y = (point1.Y + point2.Y) / 2;
+            return new Vector2(x, y);
+        }
+
+        private int CalculateDirection(Vector2 compareTo, Vector2 position)
+        {
+            if (compareTo.X < position.X) return 1;
+            else return -1;
+        }
+
+        private Texture2D GetBubble()
+        {
+            WeightedRandom<Texture2D> wr = new WeightedRandom<Texture2D>(Main.rand);
+
+            wr.Add(possibleBubbleTextures[0], 0.1f);
+            wr.Add(possibleBubbleTextures[1], 0.1f);
+            wr.Add(possibleBubbleTextures[2], 0.05f);
+            wr.Add(possibleBubbleTextures[3], 0.05f);
+            wr.Add(possibleBubbleTextures[4], 0.2f);
+            wr.Add(possibleBubbleTextures[5], 0.3f);
+            wr.Add(possibleBubbleTextures[6], 0.025f);
+            wr.Add(possibleBubbleTextures[7], 0.175f);
+
+            return wr.Get();
         }
     }
 }

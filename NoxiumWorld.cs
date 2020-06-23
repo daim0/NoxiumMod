@@ -5,7 +5,8 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.ID;
 using SubworldLibrary;
-
+using System;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace NoxiumMod
 {
@@ -30,6 +31,10 @@ namespace NoxiumMod
             desertDwellerSpawned = false;
         }
         */
+
+        public static event Action ShouldUpdateBubbles;
+
+        public static event Action<SpriteBatch> ShouldDrawBubbles;
 
         public override TagCompound Save()
         {
@@ -59,6 +64,28 @@ namespace NoxiumMod
 
         public override void Load(TagCompound tag)
         {
+            // Make the bubbles update just after the world is updated.
+            On.Terraria.WorldGen.UpdateWorld += (On.Terraria.WorldGen.orig_UpdateWorld orig) =>
+            {
+                orig();
+
+                if (Subworld.IsActive<Dimensions.PlasmaDesert>())
+                {
+                    ShouldUpdateBubbles.Invoke();
+                }
+            };
+
+            // Make the bubbles draw just after cached NPCs draw.
+            On.Terraria.Main.CacheNPCDraws += (On.Terraria.Main.orig_CacheNPCDraws orig, Main self) =>
+            {
+                if (Subworld.IsActive<Dimensions.PlasmaDesert>())
+                {
+                    ShouldDrawBubbles.Invoke(Main.spriteBatch);
+                }
+
+                orig(self);
+            };
+
             var spawned = tag.GetList<string>("spawned");
             var ahmSpawnedV = tag.GetList<string>("ahmSpawned");
             var downed = tag.GetList<string>("downed");
@@ -166,7 +193,7 @@ namespace NoxiumMod
 					}
 				}
 			}*/
-            if(Subworld.IsActive<Dimensions.PlasmaDesert>())
+            if (Subworld.IsActive<Dimensions.PlasmaDesert>())
             {
                 if (++Liquid.skipCount > 1)
                 {

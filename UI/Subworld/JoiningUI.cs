@@ -33,13 +33,15 @@ namespace NoxiumMod.UI.Subworld
             if(ModContent.GetInstance<Config>().NightMode)
             {
                 baseColor = blackColor;
+
                 secondaryColor = whiteColor;
-            } else
+            } 
+            else
             {
                 baseColor = whiteColor;
+
                 secondaryColor = blackColor;
             }
-
         }
 
         public override void Update(GameTime gameTime)
