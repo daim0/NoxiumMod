@@ -17,6 +17,7 @@ using Terraria.UI;
 using static Terraria.ModLoader.ModContent;
 using NoxiumMod.UI.Subworld;
 using NoxiumMod.Dimensions.Bubbles;
+using NoxiumMod.UI.Computer;
 
 namespace NoxiumMod
 {
@@ -31,6 +32,9 @@ namespace NoxiumMod
 
 		private DimensionalUI dimensionalUI;
 		internal UserInterface dimensionalInterface;
+
+		private ComputerUIState computerUI;
+		internal UserInterface computerInterface;
 
 		public static float shakeAmount = 0;
 		public static int ShakeTimer;
@@ -52,6 +56,10 @@ namespace NoxiumMod
 				dimensionalUI = new DimensionalUI();
 				dimensionalUI.LoadUI();
 				dimensionalUI.Activate();
+
+				computerInterface = new UserInterface();
+				computerUI = new ComputerUIState();
+				computerUI.Activate();
 
 				JoiningUI.LoadLoadingSymbol();
 
@@ -131,6 +139,7 @@ namespace NoxiumMod
 		{
 			AHMUiInterface?.Update(gameTime);
 			dimensionalInterface?.Update(gameTime);
+			computerInterface?.Update(gameTime);
 		}
 
 		public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
@@ -142,6 +151,12 @@ namespace NoxiumMod
 				layers.Insert(mouseTextIndex, new LegacyGameInterfaceLayer("NoxiumMod: Vanilla Stack Reproduction", delegate
 				{
 					Main.LocalPlayer.GetModPlayer<NoxiumPlayer>().SetSeedStackDelays();
+					return true;
+				}, InterfaceScaleType.UI));
+
+				layers.Insert(mouseTextIndex, new LegacyGameInterfaceLayer("NoxiumMod: Turtle UI", delegate
+				{
+					computerInterface.Draw(Main.spriteBatch, new GameTime());
 					return true;
 				}, InterfaceScaleType.UI));
 			}
@@ -301,6 +316,20 @@ namespace NoxiumMod
 			else
 			{
 				dimensionalUI.Disable();
+			}
+		}
+
+		public void ToggleComputerUI()
+		{
+			if (computerInterface.CurrentState == null)
+			{
+				Main.PlaySound(SoundID.MenuOpen);
+				computerInterface.SetState(computerUI);
+			}
+			else
+			{
+				Main.PlaySound(SoundID.MenuClose);
+				computerInterface.SetState(null);
 			}
 		}
 	}
