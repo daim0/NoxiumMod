@@ -30,16 +30,18 @@ namespace NoxiumMod.UI.Subworld
             loadingSymbol = ModContent.GetTexture("NoxiumMod/UI/Subworld/LoadingThing");
 
             //This is probably not the place to do this but fuck you Oli.
-            if(ModContent.GetInstance<Config>().NightMode)
-            {
-                baseColor = blackColor;
-                secondaryColor = whiteColor;
-            } else
-            {
-                baseColor = whiteColor;
-                secondaryColor = blackColor;
-            }
+            if(ModContent.GetInstance<Config>().NightMode)
+            {
+                baseColor = blackColor;
 
+                secondaryColor = whiteColor;
+            } 
+            else
+            {
+                baseColor = whiteColor;
+
+                secondaryColor = blackColor;
+            }
         }
 
         public override void Update(GameTime gameTime)

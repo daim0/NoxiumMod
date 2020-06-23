@@ -16,6 +16,7 @@ using Terraria.ModLoader;
 using Terraria.UI;
 using static Terraria.ModLoader.ModContent;
 using NoxiumMod.UI.Subworld;
+using NoxiumMod.Dimensions.Bubbles;
 
 namespace NoxiumMod
 {
@@ -38,6 +39,8 @@ namespace NoxiumMod
 		{
 			noxiumInstance = GetInstance<NoxiumMod>();
 
+			HitboxesGlobalItem.meleeHitbox = new Rectangle?[256];
+
 			SeedHotkey = RegisterHotKey("Seed Fruit", "C");
 
 			if (!Main.dedServ)
@@ -51,6 +54,8 @@ namespace NoxiumMod
 				dimensionalUI.Activate();
 
 				JoiningUI.LoadLoadingSymbol();
+
+				PlasmaDesert.LoadBubbleTextures();
 
                 /* Examples:
 
@@ -101,7 +106,7 @@ namespace NoxiumMod
 							((IDictionary)item.GetValue(null))?.Clear();
 						}
 					}
-					else
+					else if (!item.FieldType.ContainsGenericParameters)
 					{
 						item.SetValue(null, null);
 					}
