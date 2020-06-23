@@ -1,19 +1,19 @@
 ﻿using Microsoft.Xna.Framework;
+using NoxiumMod.Systems;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using static Terraria.ModLoader.ModContent;
 
 namespace NoxiumMod.Items.Other
 {
     public class TurtleItem : ModItem
     {
-        public ushort Width;
-        public ushort Height;
-        public byte Direction;
-        public int PickaxeType;
-        public int PickaxePower;
-        public int PickaxeSpeed;
+        public TurtleInfo TurtleInfo;
+
+        public bool TurtleProgrammed => TurtleInfo.PickaxePower != 0;
 
         public override bool CloneNewInstances => true;
 
@@ -28,22 +28,37 @@ namespace NoxiumMod.Items.Other
             item.width = 42;
             item.height = 26;
             item.maxStack = 1;
+            item.useTime = 10;
+            item.useAnimation = 10;
+            item.consumable = true;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.value = Item.buyPrice(silver: 10);
         }
+
+		public override bool UseItem(Player player)
+		{
+            if (TurtleProgrammed)
+            {
+                Projectile.NewProjectile(player.position, Vector2.Zero, ProjectileType<Projectiles.TurtleProjectile>(), 0, 0f);
+                return true;
+            }
+
+            return false;
+		}
 
 		public override void ModifyTooltips(List<TooltipLine> tooltips)
 		{
             // PickaxePower is only zero if the turtle hasn't been programmed
-            if (PickaxePower == 0)
+            if (!TurtleProgrammed)
                 return;
 
             TooltipLine tooltip = new TooltipLine(mod, "Turtle Info",
                 "\n" +
-                $"Turtle range width: {Width}\n" +
-                $"Turtle range height: {Height}\n" +
-                $"Turtle direction: {(Direction == 1 ? "right" : "left")}\n" +
-                $"Turtle mining power: {PickaxePower}%\n" +
-                $"Turtle mining speed: {PickaxeSpeed}");
+                $"Turtle range width: {TurtleInfo.Width}\n" +
+                $"Turtle range height: {TurtleInfo.Height}\n" +
+                $"Turtle direction: {(TurtleInfo.Direction == 1 ? "right" : "left")}\n" +
+                $"Turtle mining power: {TurtleInfo.PickaxePower}%\n" +
+                $"Turtle mining speed: {TurtleInfo.PickaxeSpeed}");
 
             tooltip.overrideColor = Color.SteelBlue;
 
@@ -54,23 +69,13 @@ namespace NoxiumMod.Items.Other
 		{
             return new TagCompound()
             {
-                { "Width", Width },
-                { "Height", Height },
-                { "Direction", Direction },
-                { "PickaxeType", PickaxeType },
-                { "PickaxePower", PickaxePower },
-                { "PickaxeSpeed", PickaxeSpeed }
+                {  "TurtleInfo", TurtleInfo }
             };
 		}
 
 		public override void Load(TagCompound tag)
 		{
-            Width = tag.Get<ushort>("Width");
-            Height = tag.Get<ushort>("Height");
-            Direction = tag.GetByte("Direction");
-            PickaxeType = tag.GetInt("PickaxeType");
-            PickaxePower = tag.GetInt("PickaxePower");
-            PickaxeSpeed = tag.GetInt("PickaxeSpeed");
+            TurtleInfo = tag.Get<TurtleInfo>("TurtleInfo");
 		}
 	}
 }
