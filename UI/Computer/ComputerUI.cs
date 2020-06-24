@@ -1,8 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using NoxiumMod.Items.Computer;
 using NoxiumMod.Items.Other;
-using NoxiumMod.Items.Placeable;
+using NoxiumMod.UI.Computer.Games;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -16,6 +18,9 @@ namespace NoxiumMod.UI.Computer
 	{
 		internal static Texture2D screenTexture;
 		internal static Texture2D fontTexture;
+		internal static Texture2D snakeTexture;
+		internal static Texture2D snakeFoodTexture;
+		internal static Texture2D floppySlotTexture;
 
 		internal static Dictionary<char, int> specialCharIndices;
 
@@ -28,19 +33,44 @@ namespace NoxiumMod.UI.Computer
 		internal int screenHeight;
 		internal bool gaming = false;
 
-		private bool focused;
+		private static bool focused;
 
 		internal ComputerItemSlot pickaxeSlot;
 		internal ComputerItemSlot turtleSlot;
+		internal ComputerItemSlot floppySlot;
 
 		internal ushort chosenWidth;
 		internal ushort chosenHeight;
 		internal byte chosenDirection; // to goodpro: this is not an enum because i am lazy. fix it if you want tho
 
+		private ComputerGame activeGame;
+
+		private bool DoingBarrelRoll
+		{
+			get => NoxiumMod.noxiumInstance.doingBarrelRoll;
+			set => NoxiumMod.noxiumInstance.doingBarrelRoll = value;
+		}
+
+		public static void PleaseForTheLoveOfGodDontOpenChatWhenIPressEnter()
+		{
+			On.Terraria.Main.DoUpdate_Enter_ToggleChat += (orig) =>
+			{
+				if (focused)
+				{
+					return;
+				}
+				orig();
+			};
+		}
+
 		public override void OnInitialize()
 		{
 			screenTexture = NoxiumMod.noxiumInstance.GetTexture("UI/Computer/ComputerScreen");
 			fontTexture = NoxiumMod.noxiumInstance.GetTexture("UI/Computer/ComputerFont");
+			floppySlotTexture = NoxiumMod.noxiumInstance.GetTexture("UI/Computer/ComputerFloppySlot");
+
+			snakeTexture = NoxiumMod.noxiumInstance.GetTexture("UI/Computer/Games/SnakeSegment");
+			snakeFoodTexture = NoxiumMod.noxiumInstance.GetTexture("UI/Computer/Games/SnakeFood");
 
 			screenWidth = screenTexture.Width;
 			screenHeight = screenTexture.Height / 10;
@@ -67,15 +97,20 @@ namespace NoxiumMod.UI.Computer
 			turtleSlot.Left.Set(Width.Pixels + 10f, 0f);
 			turtleSlot.Top.Set(50f, 0f);
 
+			floppySlot = new ComputerItemSlot(item => item.modItem is FloppyDisk, floppySlotTexture);
+			floppySlot.Left.Set(Width.Pixels + 10f, 0f);
+			floppySlot.Top.Set(100f, 0f);
+
 			Append(pickaxeSlot);
 			Append(turtleSlot);
+			Append(floppySlot);
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
 			// btw, this only seems to work if i put it in Draw, not Update
 			// blame vanilla
-			if (focused)
+			if (focused && activeGame == null)
 			{
 				PlayerInput.WritingText = true;
 				Main.instance.HandleIME();
@@ -94,13 +129,22 @@ namespace NoxiumMod.UI.Computer
 			}
 
 			spriteBatch.Draw(screenTexture, GetDimensions().Position(), new Rectangle(0, screenFrame * screenHeight, screenWidth, screenHeight), Color.White);
-			DrawFontText(spriteBatch, new Vector2(22, 22), ">" + input + (showLittleGuy && focused ? "_" : ""));
 
-			for (int i = 0; i < outputLines.Length; i++)
-				DrawFontText(spriteBatch, new Vector2(22, i * 22 + 40), outputLines[i]);
+			if (activeGame == null)
+			{
+				DrawFontText(spriteBatch, new Vector2(22, 22), ">" + input + (showLittleGuy && focused ? "_" : ""));
+
+				for (int i = 0; i < outputLines.Length; i++)
+					DrawFontText(spriteBatch, new Vector2(22, i * 22 + 40), outputLines[i]);
+			}
+			else
+			{
+				activeGame.Draw(spriteBatch, GetDimensions().ToRectangle());
+			}
 
 			pickaxeSlot.Draw(spriteBatch);
 			turtleSlot.Draw(spriteBatch);
+			floppySlot.Draw(spriteBatch);
 		}
 
 		public void DrawFontText(SpriteBatch spriteBatch, Vector2 offsetPosition, string text)
@@ -123,34 +167,62 @@ namespace NoxiumMod.UI.Computer
 			if (!ContainsPoint(Main.MouseScreen) && Main.mouseLeft)
 				Unfocus();
 
-			littleGuyTimer++;
-
-			if (littleGuyTimer % 30 == 0)
+			if (activeGame == null)
 			{
-				showLittleGuy = !showLittleGuy;
+				littleGuyTimer++;
 
-				if (gaming)
+				if (littleGuyTimer % 30 == 0)
 				{
-					// maybe clean this up later
-					if (screenFrame + 1 > 9)
-						screenFrame = 0;
-					else
-						screenFrame++;
+					showLittleGuy = !showLittleGuy;
 
-					if (turtleSlot.slotFrame + 1 > 9)
-						turtleSlot.slotFrame = 0;
-					else
-						turtleSlot.slotFrame++;
+					if (gaming)
+					{
+						// maybe clean this up later
+						if (screenFrame + 1 > 9)
+							screenFrame = 0;
+						else
+							screenFrame++;
 
-					if (pickaxeSlot.slotFrame + 1 > 9)
-						pickaxeSlot.slotFrame = 0;
-					else
-						pickaxeSlot.slotFrame++;
+						if (turtleSlot.slotFrame + 1 > 9)
+							turtleSlot.slotFrame = 0;
+						else
+							turtleSlot.slotFrame++;
+
+						if (pickaxeSlot.slotFrame + 1 > 9)
+							pickaxeSlot.slotFrame = 0;
+						else
+							pickaxeSlot.slotFrame++;
+					}
 				}
+			}
+			else
+			{
+				if (floppySlot.Empty && activeGame != null)
+				{
+					activeGame = null;
+
+					PrintError("disk was removed");
+
+					return;
+				}
+
+				activeGame.Update(this, GetDimensions().ToRectangle());
 			}
 		}
 
-		public override void Click(UIMouseEvent evt) => Focus();
+		public void StopVideoGame()
+		{
+			Unfocus();
+			activeGame = null;
+		}
+
+		public override void Click(UIMouseEvent evt)
+		{
+			if (activeGame == null)
+			{
+				Focus();
+			}
+		}
 
 		public void HandleCommand()
 		{
@@ -169,6 +241,13 @@ namespace NoxiumMod.UI.Computer
 
 				for (int i = 1; i < words.Length; i++)
 					args[i - 1] = words[i];
+			}
+
+			if (input == "do a barrel roll" && !DoingBarrelRoll)
+			{
+				DoingBarrelRoll = true;
+				PrintScreen("doing...");
+				return;
 			}
 
 			switch (command)
@@ -266,6 +345,20 @@ namespace NoxiumMod.UI.Computer
 				case "doom":
 					PrintScreen("no. i dont think i will");
 					Main.LocalPlayer.KillMe(PlayerDeathReason.ByCustomReason(Main.LocalPlayer.name + " tried to do the forbidden"), 389348, 1);
+					break;
+
+				case "play":
+					if (floppySlot.Empty)
+					{
+						PrintError("no game inserted");
+					}
+					else
+					{
+						activeGame = (ComputerGame)Activator.CreateInstance((floppySlot.item.modItem as FloppyDisk).GameType);
+						activeGame.OnBegin(GetDimensions().ToRectangle());
+
+						Unfocus();
+					}
 					break;
 
 				default:

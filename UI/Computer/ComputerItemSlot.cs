@@ -11,6 +11,7 @@ namespace NoxiumMod.UI.Computer
 	{
 		internal Item item;
 		internal Func<Item, bool> validItemFunc;
+		internal Texture2D overrideTex;
 		internal static Texture2D slotTexture;
 
 		internal int slotWidth;
@@ -19,9 +20,10 @@ namespace NoxiumMod.UI.Computer
 
 		internal bool Empty => item.IsAir;
 
-		public ComputerItemSlot(Func<Item, bool> validItemFunc = null)
+		public ComputerItemSlot(Func<Item, bool> validItemFunc = null, Texture2D overrideTex = null)
 		{
 			this.validItemFunc = validItemFunc;
+			this.overrideTex = overrideTex;
 
 			item = new Item();
 			item.SetDefaults(0);
@@ -53,8 +55,10 @@ namespace NoxiumMod.UI.Computer
 			Texture2D itemTexture = Main.itemTexture[item.type];
 			Vector2 itemDrawPosition = GetDimensions().Center() - itemTexture.Size() / 2;
 
-			spriteBatch.Draw(slotTexture, GetDimensions().Position(), new Rectangle(0, slotHeight * slotFrame, slotWidth, slotHeight), Color.White);
-			spriteBatch.Draw(itemTexture, itemDrawPosition, null, Color.White);
+			spriteBatch.Draw(overrideTex ?? slotTexture, GetDimensions().Position(), new Rectangle(0, slotHeight * slotFrame, slotWidth, slotHeight), Color.White);
+
+			spriteBatch.Draw(itemTexture, itemDrawPosition + (overrideTex == null ? Vector2.Zero : Vector2.UnitY * 4), null, Color.White);
+
 			Main.inventoryScale = oldScale;
 		}
 	}
