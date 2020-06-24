@@ -6,16 +6,18 @@ namespace NoxiumMod.UI.Computer
 {
 	public class ComputerUIState : UIState
 	{
-		private ComputerUI computer;
+		public ComputerUI computer;
 
 		private Vector2 offset;
 		private bool dragging;
 
 		public override void OnInitialize()
 		{
-			computer = new ComputerUI();
-			computer.HAlign = 0.5f;
-			computer.VAlign = 0.3f;
+			computer = new ComputerUI
+			{
+				HAlign = 0.5f,
+				VAlign = 0.3f
+			};
 			Append(computer);
 		}
 

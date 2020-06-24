@@ -18,6 +18,7 @@ using static Terraria.ModLoader.ModContent;
 using NoxiumMod.UI.Subworld;
 using NoxiumMod.Dimensions.Bubbles;
 using NoxiumMod.UI.Computer;
+using System.Runtime.Remoting.Messaging;
 
 namespace NoxiumMod
 {
@@ -33,15 +34,36 @@ namespace NoxiumMod
 		private DimensionalUI dimensionalUI;
 		internal UserInterface dimensionalInterface;
 
-		private ComputerUIState computerUI;
+		internal ComputerUIState computerUI; // gotta access this in games
 		internal UserInterface computerInterface;
 
 		public static float shakeAmount = 0;
 		public static int ShakeTimer;
 
+		public bool doingBarrelRoll;
+
+		private float barrelRollRotation;
+
+		private FieldInfo vanillaScreenMatrix;
+		private FieldInfo vanillaUIMatrix;
+
 		public override void Load()
 		{
 			noxiumInstance = GetInstance<NoxiumMod>();
+
+			vanillaScreenMatrix = typeof(SpriteViewMatrix).GetField("_transformationMatrix", BindingFlags.NonPublic | BindingFlags.Instance);
+			vanillaUIMatrix = typeof(Main).GetField("_uiScaleMatrix", BindingFlags.NonPublic | BindingFlags.Static);
+
+			On.Terraria.Graphics.SpriteViewMatrix.ShouldRebuild += (On.Terraria.Graphics.SpriteViewMatrix.orig_ShouldRebuild orig, SpriteViewMatrix self) =>
+			{
+				if (doingBarrelRoll)
+				{
+					return false;
+				}
+				return orig(self);
+			};
+
+			ComputerUI.PleaseForTheLoveOfGodDontOpenChatWhenIPressEnter();
 
 			HitboxesGlobalItem.meleeHitbox = new Rectangle?[256];
 
@@ -92,6 +114,11 @@ namespace NoxiumMod
 				yabhb.Call("hbSetTexture", GetTexture("UI/AhmHealthStart"), GetTexture("UI/AhmHealthMid"), GetTexture("UI/AhmHealthEnd"), GetTexture("UI/AhmHealthFill"));
 				yabhb.Call("hbFinishSingle", NPCType("AncientHealingMachine"));
 			}
+		}
+
+		private bool SpriteViewMatrix_ShouldRebuild(On.Terraria.Graphics.SpriteViewMatrix.orig_ShouldRebuild orig, SpriteViewMatrix self)
+		{
+			throw new NotImplementedException();
 		}
 
 		public override void Unload()
@@ -202,11 +229,35 @@ namespace NoxiumMod
 					Main.screenPosition = Shakey;
 				}
 			}
+
+			if (doingBarrelRoll)
+			{
+				barrelRollRotation += 1.75f;
+
+				if (barrelRollRotation >= 360)
+				{
+					barrelRollRotation = 0;
+
+					vanillaScreenMatrix.SetValue(Transform, Matrix.CreateRotationZ(0));
+					vanillaUIMatrix.SetValue(Main.instance, Matrix.CreateRotationZ(0));
+
+					doingBarrelRoll = false;
+
+					return;
+				}
+
+				Matrix rotation = Matrix.CreateRotationZ(MathHelper.ToRadians(barrelRollRotation));
+				Matrix translation = Matrix.CreateTranslation(new Vector3(Main.screenWidth / 2, Main.screenHeight / 2, 0));
+				Matrix translation2 = Matrix.CreateTranslation(new Vector3(Main.screenWidth / -2, Main.screenHeight / -2, 0));
+
+				vanillaScreenMatrix.SetValue(Transform, translation2 * rotation * translation);
+				vanillaUIMatrix.SetValue(Main.instance, translation2 * rotation * translation);
+			}
 		}
 
 		public override void AddRecipes()
 		{
-			//ew
+			// ew
             // :( -Daim
 			ModRecipe recipe = new ModRecipe(this);
 			recipe.AddIngredient(ItemID.StrangePlant3, 1);
