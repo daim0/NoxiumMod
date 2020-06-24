@@ -116,11 +116,6 @@ namespace NoxiumMod
 			}
 		}
 
-		private bool SpriteViewMatrix_ShouldRebuild(On.Terraria.Graphics.SpriteViewMatrix.orig_ShouldRebuild orig, SpriteViewMatrix self)
-		{
-			throw new NotImplementedException();
-		}
-
 		public override void Unload()
 		{
 			Type[] types = noxiumInstance.Code.GetTypes(); // Automatically sets all static fields to null, so you don't have to worry about it, ever.
@@ -152,6 +147,7 @@ namespace NoxiumMod
 		public override object Call(params object[] args)
 		{
 			Array.Resize(ref args, 5);
+
 			if (args[0] is string callType)
 			{
 				if (callType == "AddDimension" && args[1] is string name && args[2] is Texture2D texture && args[3] is Func<bool> func && args[4] is Action action && !Main.dedServ)
@@ -159,6 +155,7 @@ namespace NoxiumMod
 					dimensionalUI.RegisterDimension(name, texture, func, action);
 				}
 			}
+
 			return base.Call(args);
 		}
 

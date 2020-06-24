@@ -4,16 +4,19 @@ using Terraria.GameInput;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework.Graphics;
+using SubworldLibrary;
+using NoxiumMod.Dimensions;
 
 namespace NoxiumMod
 {
     public class NoxiumPlayer : ModPlayer
     {
         public bool fireMinion;
+
         public bool KatanaDash { get; internal set; } = false;
+
         public int dashTimer = 0;
 
         public bool SeedKeyJustPressed = false;
@@ -21,8 +24,11 @@ namespace NoxiumMod
         public bool SeedKeyDown { get; private set; }
 
         public int SeedStackSplit { get; set; }
+
         public int SeedStackCounter { get; private set; }
+
         public int SeedStackDelay { get; private set; }
+
         public int SeedSuperFastStack { get; private set; }
 
         public bool zonePlasma;
@@ -30,6 +36,7 @@ namespace NoxiumMod
         public bool PotionPet = false;
 
         public bool SentientTetherMinion = false;
+
         public override void ResetEffects()
         {
             fireMinion = false;
@@ -117,15 +124,18 @@ namespace NoxiumMod
                     KatanaDash = false;
             }
         }
+
         public override void UpdateBiomes()
         {
-            zonePlasma = NoxiumWorld.plasmaSandTiles > 50;
+            zonePlasma = NoxiumWorld.plasmaSandTiles > 50 || Subworld.IsActive<PlasmaDesert>();
         }
+
         public override bool CustomBiomesMatch(Player other)
         {
             NoxiumPlayer modOther = other.GetModPlayer<NoxiumPlayer>();
             return zonePlasma == modOther.zonePlasma;
         }
+
         public override void CopyCustomBiomesTo(Player other)
         {
             NoxiumPlayer modOther = other.GetModPlayer<NoxiumPlayer>();
@@ -144,6 +154,7 @@ namespace NoxiumMod
             BitsByte flags = reader.ReadByte();
             zonePlasma = flags[0];
         }
+
         public override Texture2D GetMapBackgroundImage()
         {
             if (zonePlasma)

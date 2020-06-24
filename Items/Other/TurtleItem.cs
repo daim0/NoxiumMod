@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using NoxiumMod.Systems;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -69,7 +70,7 @@ namespace NoxiumMod.Items.Other
 		{
             return new TagCompound()
             {
-                {  "TurtleInfo", TurtleInfo }
+                ["TurtleInfo"] = TurtleInfo 
             };
 		}
 
@@ -77,5 +78,28 @@ namespace NoxiumMod.Items.Other
 		{
             TurtleInfo = tag.Get<TurtleInfo>("TurtleInfo");
 		}
-	}
+
+        public override void NetSend(BinaryWriter writer)
+        {
+            writer.Write(TurtleInfo.Width);
+            writer.Write(TurtleInfo.Height);
+            writer.Write(TurtleInfo.Direction);
+            writer.Write(TurtleInfo.PickaxePower);
+            writer.Write(TurtleInfo.PickaxeSpeed);
+        }
+
+        public override void NetRecieve(BinaryReader reader)
+        {
+            TurtleInfo tInfo = new TurtleInfo // The reason I have to create a new object is because it's a struct, and so we're operating on a copy of the object rather than a reference.
+            {
+                Width = reader.ReadUInt16(),
+                Height = reader.ReadUInt16(),
+                Direction = reader.ReadByte(),
+                PickaxePower = reader.ReadInt32(),
+                PickaxeSpeed = reader.ReadInt32()
+            };
+
+            TurtleInfo = tInfo;
+        }
+    }
 }

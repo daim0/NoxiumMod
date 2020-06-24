@@ -101,10 +101,9 @@ namespace NoxiumMod.UI.Computer.Games
 
                     if (ball.position.X > actualBounds.X + (actualBounds.Width / 2))
 
-                        AIPaddle(actualBounds);
+                    AIPaddle(actualBounds);
 
                     Rectangle yourGoal = new Rectangle(actualBounds.X, actualBounds.Y, 8, 150);
-
                     Rectangle aiGoal = new Rectangle(actualBounds.X + actualBounds.Width - 8, actualBounds.Y, 8, 150);
 
                     if (ball.Hitbox.Intersects(yourGoal))
