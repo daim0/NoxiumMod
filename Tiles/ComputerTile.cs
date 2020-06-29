@@ -14,7 +14,7 @@ namespace NoxiumMod.Tiles
 			Main.tileFrameImportant[Type] = true;
 			Main.tileWaterDeath[Type] = true;
 
-			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x1);
+			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
 			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.Table | AnchorType.SolidTile, TileObjectData.newTile.Width, 0);
 			TileObjectData.addTile(Type);
 		}

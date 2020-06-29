@@ -1,26 +1,34 @@
 ﻿using Microsoft.Xna.Framework;
-using NoxiumMod.Systems;
+using NoxiumMod.Projectiles;
+using NoxiumMod.Projectiles.Turtles;
+using NoxiumMod.Systems.Turtles;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using static Terraria.ModLoader.ModContent;
 
-namespace NoxiumMod.Items.Other
+namespace NoxiumMod.Items.Turtles
 {
-    public class TurtleItem : ModItem
+    public abstract class TurtleItem : ModItem
     {
-        public TurtleInfo TurtleInfo;
+        // stop TurtleItem from autoloading but still allow its children
+        public override bool Autoload(ref string name) => GetType() != typeof(TurtleItem);
+
+		public TurtleInfo TurtleInfo;
 
         public bool TurtleProgrammed => TurtleInfo.PickaxePower != 0;
 
         public override bool CloneNewInstances => true;
 
+		public abstract int MaxArea
+		{
+            get;
+		}
+
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Turtle");
-            Tooltip.SetDefault("Can be programmed to mine entire quarries at a computer");
+            Tooltip.SetDefault("Can be programmed to mine entire quarries at a computer\nThis turtle size can only mine up to " + MaxArea + " blocks per run");
         }
 
         public override void SetDefaults()
@@ -35,16 +43,15 @@ namespace NoxiumMod.Items.Other
             item.value = Item.buyPrice(silver: 10);
         }
 
-		public override bool UseItem(Player player)
+        public override bool CanUseItem(Player player) => TurtleProgrammed;
+
+		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-            if (TurtleProgrammed)
-            {
-                Projectile.NewProjectile(player.position, Vector2.Zero, ProjectileType<Projectiles.TurtleProjectile>(), 0, 0f);
-                return true;
-            }
+            int projectileIndex = Projectile.NewProjectile(player.BottomLeft, Vector2.Zero, item.shoot, 0, 0f);
+            (Main.projectile[projectileIndex].modProjectile as TurtleProjectile).Turtle = TurtleInfo;
 
             return false;
-		}
+        }
 
 		public override void ModifyTooltips(List<TooltipLine> tooltips)
 		{
@@ -56,7 +63,7 @@ namespace NoxiumMod.Items.Other
                 "\n" +
                 $"Turtle range width: {TurtleInfo.Width}\n" +
                 $"Turtle range height: {TurtleInfo.Height}\n" +
-                $"Turtle direction: {(TurtleInfo.Direction == 1 ? "right" : "left")}\n" +
+                $"Turtle direction: {(TurtleInfo.Direction == TurtleDirection.Right ? "right" : "left")}\n" +
                 $"Turtle mining power: {TurtleInfo.PickaxePower}%\n" +
                 $"Turtle mining speed: {TurtleInfo.PickaxeSpeed}");
 
@@ -69,7 +76,7 @@ namespace NoxiumMod.Items.Other
 		{
             return new TagCompound()
             {
-                {  "TurtleInfo", TurtleInfo }
+                { "TurtleInfo", TurtleInfo }
             };
 		}
 

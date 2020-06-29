@@ -1,20 +1,20 @@
 ﻿using System;
 using Terraria.ModLoader.IO;
 
-namespace NoxiumMod.Systems
+namespace NoxiumMod.Systems.Turtles
 {
 	public struct TurtleInfo : TagSerializable
 	{
         public ushort Width;
         public ushort Height;
-        public byte Direction;
+        public TurtleDirection Direction;
         public int PickaxeType;
         public int PickaxePower;
         public int PickaxeSpeed;
 
         public static readonly Func<TagCompound, TurtleInfo> DESERIALIZER = Load;
 
-        public TurtleInfo(ushort width, ushort height, byte direction, int pickaxeType, int pickaxePower, int pickaxeSpeed)
+        public TurtleInfo(ushort width, ushort height, TurtleDirection direction, int pickaxeType, int pickaxePower, int pickaxeSpeed)
 		{
             Width = width;
             Height = height;
@@ -30,7 +30,7 @@ namespace NoxiumMod.Systems
             {
                 { "Width", Width },
                 { "Height", Height },
-                { "Direction", Direction },
+                { "Direction", (short)Direction },
                 { "PickaxeType", PickaxeType },
                 { "PickaxePower", PickaxePower },
                 { "PickaxeSpeed", PickaxeSpeed }
@@ -42,7 +42,7 @@ namespace NoxiumMod.Systems
             return new TurtleInfo(
                 tag.Get<ushort>("Width"),
                 tag.Get<ushort>("Height"),
-                tag.GetByte("Direction"),
+                (TurtleDirection)tag.GetShort("Direction"),
                 tag.GetInt("PickaxeType"),
                 tag.GetInt("PickaxePower"),
                 tag.GetInt("PickaxeSpeed")

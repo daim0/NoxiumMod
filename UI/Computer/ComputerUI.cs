@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using NoxiumMod.Items.Computer;
 using NoxiumMod.Items.Other;
+using NoxiumMod.Systems.Turtles;
 using NoxiumMod.UI.Computer.Games;
 using System;
 using System.Collections.Generic;
@@ -22,26 +23,26 @@ namespace NoxiumMod.UI.Computer
 		internal static Texture2D snakeFoodTexture;
 		internal static Texture2D floppySlotTexture;
 
-		internal static Dictionary<char, int> specialCharIndices;
+		private static Dictionary<char, int> specialCharIndices;
 
-		internal string input;
-		internal string[] outputLines;
-		internal uint littleGuyTimer;
-		internal bool showLittleGuy;
-		internal int screenFrame;
-		internal int screenWidth;
-		internal int screenHeight;
-		internal bool gaming = false;
+		private string input;
+		private string[] outputLines;
+		private uint littleGuyTimer;
+		private bool showLittleGuy;
+		private int screenFrame;
+		private int screenWidth;
+		private int screenHeight;
+		private bool gaming = false;
 
 		private static bool focused;
 
-		internal ComputerItemSlot pickaxeSlot;
-		internal ComputerItemSlot turtleSlot;
-		internal ComputerItemSlot floppySlot;
+		private ComputerItemSlot pickaxeSlot;
+		private ComputerItemSlot turtleSlot;
+		private ComputerItemSlot floppySlot;
 
-		internal ushort chosenWidth;
-		internal ushort chosenHeight;
-		internal byte chosenDirection; // to goodpro: this is not an enum because i am lazy. fix it if you want tho
+		private ushort chosenWidth;
+		private ushort chosenHeight;
+		private TurtleDirection chosenDirection;
 
 		private ComputerGame activeGame;
 
@@ -93,7 +94,7 @@ namespace NoxiumMod.UI.Computer
 			pickaxeSlot = new ComputerItemSlot(item => item.pick > 0);
 			pickaxeSlot.Left.Set(Width.Pixels + 10f, 0f);
 
-			turtleSlot = new ComputerItemSlot(item => item.type == ModContent.ItemType<TurtleItem>());
+			turtleSlot = new ComputerItemSlot(item => item.modItem is TurtleItem);
 			turtleSlot.Left.Set(Width.Pixels + 10f, 0f);
 			turtleSlot.Top.Set(50f, 0f);
 
@@ -250,6 +251,8 @@ namespace NoxiumMod.UI.Computer
 				return;
 			}
 
+			TurtleItem turtleItem = turtleSlot.item.modItem as TurtleItem;
+
 			switch (command)
 			{
 				case "hello":
@@ -297,12 +300,12 @@ namespace NoxiumMod.UI.Computer
 					break;
 
 				case "left":
-					chosenDirection = 1;
+					chosenDirection = TurtleDirection.Left;
 					PrintScreen("set turtle direction to >\nleft");
 					break;
 
 				case "right":
-					chosenDirection = 2;
+					chosenDirection = TurtleDirection.Right;
 					PrintScreen("set turtle direction to >\nright");
 					break;
 
@@ -313,7 +316,7 @@ namespace NoxiumMod.UI.Computer
 						break;
 					}
 
-					if (pickaxeSlot.Empty)
+					if (pickaxeSlot.Empty && !turtleItem.TurtleProgrammed)
 					{
 						PrintError("no pickaxe found");
 						break;
@@ -325,13 +328,19 @@ namespace NoxiumMod.UI.Computer
 						break;
 					}
 
+					if (chosenWidth * chosenHeight > turtleItem.MaxArea)
+					{
+						PrintError("mining area exceeds\nturtle size capacity");
+						break;
+					}
+
 					if (chosenDirection == 0)
 					{
 						PrintError("no direction specified");
 						break;
 					}
 
-					WriteToTurtle();
+					SaveToTurtle();
 					pickaxeSlot.item.TurnToAir();
 					ResetComputerState();
 
@@ -381,15 +390,19 @@ namespace NoxiumMod.UI.Computer
 
 		public void PrintError(string text) => PrintScreen("error\n" + text);
 
-		public void WriteToTurtle()
+		public void SaveToTurtle()
 		{
 			TurtleItem turtle = turtleSlot.item.modItem as TurtleItem;
 			turtle.TurtleInfo.Width = chosenWidth;
 			turtle.TurtleInfo.Height = chosenHeight;
 			turtle.TurtleInfo.Direction = chosenDirection;
-			turtle.TurtleInfo.PickaxePower = pickaxeSlot.item.pick;
-			turtle.TurtleInfo.PickaxeSpeed = pickaxeSlot.item.useTime;
-			turtle.TurtleInfo.PickaxeType = pickaxeSlot.item.type;
+
+			if (!pickaxeSlot.Empty)
+			{
+				turtle.TurtleInfo.PickaxePower = pickaxeSlot.item.pick;
+				turtle.TurtleInfo.PickaxeSpeed = pickaxeSlot.item.useTime;
+				turtle.TurtleInfo.PickaxeType = pickaxeSlot.item.type;
+			}
 		}
 
 		public void ResetComputerState()
