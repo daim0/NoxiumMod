@@ -1,5 +1,6 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
+using NoxiumMod.Projectiles.Summons;
 
 namespace NoxiumMod.Items.Buffs
 {
@@ -15,19 +16,15 @@ namespace NoxiumMod.Items.Buffs
 
         public override void Update(Player player, ref int buffIndex)
         {
-            if (player.ownedProjectileCounts[mod.ProjectileType("Crawlerock")] > 0)
+            if (player.ownedProjectileCounts[ModContent.ProjectileType<SentientTether>()] > 0)
             {
-                player.GetModPlayer<NoxiumPlayer>().SentientTetherMinion = false;
+                player.buffTime[buffIndex] = 18000;
             }
-
-            if (!player.GetModPlayer<NoxiumPlayer>().SentientTetherMinion)
+            else
             {
                 player.DelBuff(buffIndex);
                 buffIndex--;
-                return;
             }
-
-            player.buffTime[buffIndex] = 18000;
         }
     }
 }
