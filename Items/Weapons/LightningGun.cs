@@ -1,4 +1,5 @@
-﻿using NoxiumMod.Projectiles;
+﻿using Microsoft.Xna.Framework;
+using NoxiumMod.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -16,8 +17,8 @@ namespace NoxiumMod.Items.Weapons
             item.channel = true; //Channel so that you can hold the weapon [Important]
             item.mana = 5;
             item.rare = ItemRarityID.Pink;
-            item.width = 28;
-            item.height = 30;
+            item.width = 60;
+            item.height = 24;
             item.useTime = 20;
             item.UseSound = SoundID.Item13;
             item.useStyle = ItemUseStyleID.HoldingOut;
@@ -25,6 +26,10 @@ namespace NoxiumMod.Items.Weapons
             item.useAnimation = 20;
             item.shoot = ProjectileType<LightningGunProj>();
             item.value = Item.sellPrice(silver: 3);
+        }
+        public override Vector2? HoldoutOffset()
+        {
+            return new Vector2(-15,0);
         }
     }
 }

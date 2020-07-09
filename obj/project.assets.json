@@ -31,19 +31,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\olive\\.nuget\\packages\\": {}
+    "C:\\Users\\Usuario\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\olive\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\NoxiumMod\\NoxiumMod.csproj",
+      "projectUniqueName": "C:\\Users\\Usuario\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\NoxiumMod\\NoxiumMod.csproj",
       "projectName": "NoxiumMod",
-      "projectPath": "C:\\Users\\olive\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\NoxiumMod\\NoxiumMod.csproj",
-      "packagesPath": "C:\\Users\\olive\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\olive\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\NoxiumMod\\obj\\",
+      "projectPath": "C:\\Users\\Usuario\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\NoxiumMod\\NoxiumMod.csproj",
+      "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Usuario\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\NoxiumMod\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\olive\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -72,7 +72,7 @@
             "version": "[0.1.*, )"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.300\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
       }
     }
   }
