@@ -203,9 +203,9 @@ namespace NoxiumMod
 			}
 		}
 
-		public static void ShakeScreen(float AmountOfShake, int TimeSeconds)
+		public static void ShakeScreen(float AmountOfShake, int Time)
 		{
-			ShakeTimer = TimeSeconds * Main.frameRate;
+			ShakeTimer = Time;
 			shakeAmount = AmountOfShake;
 		}
 
