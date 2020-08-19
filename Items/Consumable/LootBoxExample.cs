@@ -84,6 +84,8 @@ namespace NoxiumMod.Items.Consumable
 			WR.Add(new LootBoxContents(ModContent.ItemType<Nystagmus>(), 1), 1);
 			WR.Add(new LootBoxContents(ModContent.ItemType<SentientTetherRemote>(), 1), 1);
             WR.Add(new LootBoxContents(ModContent.ItemType<HorizonStriderAegis>(), 1), 1);
+            WR.Add(new LootBoxContents(ModContent.ItemType<HorizonStriderCrown>(), 1), 1);
+            WR.Add(new LootBoxContents(ModContent.ItemType<HorizonStriderGreaves>(), 1), 1);
             loots.Add(WR.Get());
 		}
 
@@ -136,14 +138,9 @@ namespace NoxiumMod.Items.Consumable
 
                 }
             }
-
             spriteBatch.Draw(ticker, projectile.Center + (new Vector2(0, -28 - 64) * projectile.scale) - Main.screenPosition, null, Color.White * projectile.scale, tickeffect * 0.04f, new Vector2(ticker.Width / 2f, 8), new Vector2(1, 1) * projectile.scale, SpriteEffects.None, 0f);
             spriteBatch.Draw(ticker, projectile.Center + (new Vector2(0, 22 - 64) * projectile.scale) - Main.screenPosition, null, Color.White * projectile.scale, (float)Math.PI - (tickeffect * 0.04f), new Vector2(ticker.Width / 2f, 8), new Vector2(1, 1) * projectile.scale, SpriteEffects.FlipHorizontally, 0f);
             return false;
         }
-
     }
-
-
-
 }

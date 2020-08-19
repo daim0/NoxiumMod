@@ -1,10 +1,11 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
+using static Terraria.ModLoader.ModContent;
 
 namespace NoxiumMod.Items.Armor.HorizonStrider
 {
+    [AutoloadEquip(EquipType.Body)]
     class HorizonStriderAegis : ModItem
     {
         public override void SetDefaults()
@@ -12,8 +13,8 @@ namespace NoxiumMod.Items.Armor.HorizonStrider
             item.width = 22;
             item.height = 20;
             item.value = 1000;
-            item.useStyle = 4;
             item.rare = 3;
+            item.defense = 20;
         }
     }
 }
