@@ -16,7 +16,7 @@ namespace NoxiumMod.Tiles.Plasma
 
         public override int DropWood()
         {
-            return ItemType<Items.Placeable.OculumSlate>();
+            return 1;
         }
 
         public override Texture2D GetTexture()
