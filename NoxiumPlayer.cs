@@ -338,7 +338,7 @@ namespace NoxiumMod
                 int drawX = (int)((drawInfo.position.X + drawPlayer.bodyPosition.X + (drawPlayer.direction == -1 ? 20 : 0)) - Main.screenPosition.X);
                 int drawY = (int)(((drawPlayer.bodyPosition.Y + 95) + drawPlayer.MountedCenter.Y) - Main.screenPosition.Y);//gravDir 
                 DrawData data = new DrawData(texture, new Vector2(drawX, drawY), new Rectangle(0, drawPlayer.wingFrame * texture.Height / 4, texture.Width, texture.Height / 4), color, (float)drawPlayer.fullRotation, new Vector2(texture.Width / 2, texture.Height / 2), 1f, (drawPlayer.direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None) | (drawPlayer.gravDir > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically), 0);
-                data.shader = (int)drawPlayer.dye[1].dye;
+                data.shader = (int)drawPlayer.cWings;
                 Main.playerDrawData.Add(data);
             }
         });
