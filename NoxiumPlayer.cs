@@ -8,6 +8,9 @@ using System.IO;
 using Microsoft.Xna.Framework.Graphics;
 using SubworldLibrary;
 using NoxiumMod.Dimensions;
+using System;
+using Terraria.DataStructures;
+using System.Collections.Generic;
 
 namespace NoxiumMod
 {
@@ -37,11 +40,46 @@ namespace NoxiumMod
 
         public bool SentientTetherMinion = false;
 
+        public string[] armorglowmasks = new string[6];
+        public Func<Player, int, Color>[] armorglowcolor = {delegate (Player player,int index)
+        {
+            return Color.White;
+        },
+            delegate (Player player,int index)
+        {
+            return Color.White;
+        },
+            delegate (Player player,int index)
+        {
+            return Color.White;
+        },
+            delegate (Player player,int index)
+        {
+            return Color.White;
+        },
+            delegate (Player player,int index)
+        {
+            return Color.White;
+        },
+            delegate (Player player,int index)
+        {
+            return Color.White;
+        }
+        };
+
         public override void ResetEffects()
         {
             fireMinion = false;
             PotionPet = false;
             SentientTetherMinion = false;
+            for (int i = 0; i < armorglowmasks.Length; i += 1)
+            {
+                armorglowmasks[i] = null;
+                armorglowcolor[i] = delegate (Player player, int index)
+                {
+                    return Color.White;
+                };
+            }   
         }
 
         public override void ProcessTriggers(TriggersSet triggersSet)
@@ -162,6 +200,166 @@ namespace NoxiumMod
                 return mod.GetTexture("PlasmaDesertMapBackground");
             }
             return null;
+        }
+
+        // Armor glowmasks system from SGAMod, by IDGCaptainRussia
+        public static readonly PlayerLayer HeadGlowmask = new PlayerLayer("NoxiumMod", "HeadGlowmask", PlayerLayer.Body, delegate (PlayerDrawInfo drawInfo)
+        {
+            Player drawPlayer = drawInfo.drawPlayer;
+            NoxiumMod mod = ModContent.GetInstance<NoxiumMod>();
+            NoxiumPlayer modply = drawPlayer.GetModPlayer<NoxiumPlayer>();
+            Color GlowColor = modply.armorglowcolor[0](drawPlayer, 0);
+
+            Color color = (Color.Lerp(drawInfo.bodyColor, GlowColor, drawPlayer.stealth * ((float)drawInfo.bodyColor.A / 255f)));
+
+            if (drawPlayer.immune && !drawPlayer.immuneNoBlink && drawPlayer.immuneTime > 0)
+                color = drawInfo.bodyColor * drawInfo.bodyColor.A;
+
+            if (modply.armorglowmasks[0] != null && !drawPlayer.mount.Active)
+            {
+                Texture2D texture = ModContent.GetTexture(modply.armorglowmasks[0]);
+
+                int drawX = (int)((drawInfo.position.X + drawPlayer.bodyPosition.X + 10) - Main.screenPosition.X);
+                int drawY = (int)(((drawPlayer.bodyPosition.Y - 3) + drawPlayer.MountedCenter.Y) - Main.screenPosition.Y);//gravDir 
+                DrawData data = new DrawData(texture, new Vector2(drawX, drawY), new Rectangle(0, drawPlayer.bodyFrame.Y, drawPlayer.bodyFrame.Width, drawPlayer.bodyFrame.Height), color, (float)drawPlayer.fullRotation, new Vector2(drawPlayer.bodyFrame.Width / 2, drawPlayer.bodyFrame.Height / 2), 1f, (drawPlayer.direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None) | (drawPlayer.gravDir > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically), 0);
+                data.shader = (int)drawPlayer.dye[0].dye;
+                Main.playerDrawData.Add(data);
+            }
+        });
+        public static readonly PlayerLayer ChestplateGlowmask = new PlayerLayer("NoxiumMod", "ChestplateGlowmask", PlayerLayer.Body, delegate (PlayerDrawInfo drawInfo)
+        {
+            Player drawPlayer = drawInfo.drawPlayer;
+            NoxiumMod mod = ModContent.GetInstance<NoxiumMod>();
+            NoxiumPlayer modply = drawPlayer.GetModPlayer<NoxiumPlayer>();
+            Color GlowColor = modply.armorglowcolor[1](drawPlayer, 1);
+
+            Color color = (Color.Lerp(drawInfo.bodyColor, GlowColor, drawPlayer.stealth * ((float)drawInfo.bodyColor.A / 255f)));
+
+            if (drawPlayer.immune && !drawPlayer.immuneNoBlink && drawPlayer.immuneTime > 0)
+                color = drawInfo.bodyColor * drawInfo.bodyColor.A;
+
+            if (modply.armorglowmasks[1] != null && !drawPlayer.mount.Active)
+            {
+                Texture2D texture = ModContent.GetTexture(modply.armorglowmasks[1]);
+
+                int drawX = (int)((drawInfo.position.X + drawPlayer.bodyPosition.X + 10) - Main.screenPosition.X);
+                int drawY = (int)(((drawPlayer.bodyPosition.Y - 3) + drawPlayer.MountedCenter.Y) - Main.screenPosition.Y);//gravDir 
+                DrawData data = new DrawData(texture, new Vector2(drawX, drawY), new Rectangle(0, drawPlayer.bodyFrame.Y, drawPlayer.bodyFrame.Width, drawPlayer.bodyFrame.Height), color, (float)drawPlayer.fullRotation, new Vector2(drawPlayer.bodyFrame.Width / 2, drawPlayer.bodyFrame.Height / 2), 1f, (drawPlayer.direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None) | (drawPlayer.gravDir > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically), 0);
+                data.shader = (int)drawPlayer.dye[1].dye;
+                Main.playerDrawData.Add(data);
+            }
+        });
+
+        public static readonly PlayerLayer ArmsGlowmask = new PlayerLayer("NoxiumMod", "ArmsGlowmask", PlayerLayer.Arms, delegate (PlayerDrawInfo drawInfo)
+        {
+            Player drawPlayer = drawInfo.drawPlayer;
+            NoxiumMod mod = ModContent.GetInstance<NoxiumMod>();
+            NoxiumPlayer modply = drawPlayer.GetModPlayer<NoxiumPlayer>();
+            Color GlowColor = modply.armorglowcolor[2](drawPlayer, 2);
+
+            //better version, from Qwerty's Mod
+            Color color = (Color.Lerp(drawInfo.bodyColor, GlowColor, drawPlayer.stealth * ((float)drawInfo.bodyColor.A / 255f)));
+
+            if (drawPlayer.immune && !drawPlayer.immuneNoBlink && drawPlayer.immuneTime > 0)
+                color = drawInfo.bodyColor * drawInfo.bodyColor.A;
+
+            if (modply.armorglowmasks[2] != null && !drawPlayer.mount.Active)
+            {
+                Texture2D texture = ModContent.GetTexture(modply.armorglowmasks[2]);
+                int drawX = (int)((drawInfo.position.X + drawPlayer.bodyPosition.X + 10) - Main.screenPosition.X);
+                int drawY = (int)(((drawPlayer.bodyPosition.Y - 3) + drawPlayer.MountedCenter.Y) - Main.screenPosition.Y);//gravDir 
+                DrawData data = new DrawData(texture, new Vector2(drawX, drawY), new Rectangle(0, drawPlayer.bodyFrame.Y, drawPlayer.bodyFrame.Width, drawPlayer.bodyFrame.Height), color, (float)drawPlayer.fullRotation, new Vector2(drawPlayer.bodyFrame.Width / 2, drawPlayer.bodyFrame.Height / 2), 1f, (drawPlayer.direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None) | (drawPlayer.gravDir > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically), 0);
+                data.shader = (int)drawPlayer.dye[1].dye;
+                Main.playerDrawData.Add(data);
+            }
+        });
+
+        public static readonly PlayerLayer LegsGlowmask = new PlayerLayer("NoxiumMod", "LegsGlowmask", PlayerLayer.Legs, delegate (PlayerDrawInfo drawInfo)
+        {
+            Player drawPlayer = drawInfo.drawPlayer;
+            NoxiumMod mod = ModContent.GetInstance<NoxiumMod>();
+            NoxiumPlayer modply = drawPlayer.GetModPlayer<NoxiumPlayer>();
+            Color GlowColor = modply.armorglowcolor[3](drawPlayer, 3);
+
+            Color color = (Color.Lerp(drawInfo.bodyColor, GlowColor, drawPlayer.stealth * ((float)drawInfo.bodyColor.A / 255f)));
+
+            if (drawPlayer.immune && !drawPlayer.immuneNoBlink && drawPlayer.immuneTime > 0)
+                color = drawInfo.bodyColor * drawInfo.bodyColor.A;
+
+            if (modply.armorglowmasks[3] != null && !drawPlayer.mount.Active)
+            {
+                Texture2D texture = ModContent.GetTexture(modply.armorglowmasks[3]);
+
+                int drawX = (int)((drawInfo.position.X + drawPlayer.bodyPosition.X + 10) - Main.screenPosition.X);
+                int drawY = (int)(((drawPlayer.bodyPosition.Y - 3) + drawPlayer.MountedCenter.Y) - Main.screenPosition.Y);//gravDir 
+                DrawData data = new DrawData(texture, new Vector2(drawX, drawY), new Rectangle(0, drawPlayer.legFrame.Y, drawPlayer.legFrame.Width, drawPlayer.legFrame.Height), color, (float)drawPlayer.fullRotation, new Vector2(drawPlayer.bodyFrame.Width / 2, drawPlayer.bodyFrame.Height / 2), 1f, (drawPlayer.direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None) | (drawPlayer.gravDir > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically), 0);
+                data.shader = (int)drawPlayer.dye[2].dye;
+                Main.playerDrawData.Add(data);
+            }
+        });
+        public static readonly PlayerLayer ShoeGlowmask = new PlayerLayer("NoxiumMod", "ShoeGlowmask", PlayerLayer.ShoeAcc, delegate (PlayerDrawInfo drawInfo)
+        {
+            Player drawPlayer = drawInfo.drawPlayer;
+            NoxiumMod mod = ModContent.GetInstance<NoxiumMod>();
+            NoxiumPlayer modply = drawPlayer.GetModPlayer<NoxiumPlayer>();
+            Color GlowColor = modply.armorglowcolor[4](drawPlayer, 4);
+
+            Color color = (Color.Lerp(drawInfo.bodyColor, GlowColor, drawPlayer.stealth * ((float)drawInfo.bodyColor.A / 255f)));
+
+            if (drawPlayer.immune && !drawPlayer.immuneNoBlink && drawPlayer.immuneTime > 0)
+                color = drawInfo.bodyColor * drawInfo.bodyColor.A;
+
+            if (modply.armorglowmasks[4] != null && !drawPlayer.mount.Active)
+            {
+                Texture2D texture = ModContent.GetTexture(modply.armorglowmasks[4]);
+
+                int drawX = (int)((drawInfo.position.X + drawPlayer.bodyPosition.X + 10) - Main.screenPosition.X);
+                int drawY = (int)(((drawPlayer.bodyPosition.Y - 3) + drawPlayer.MountedCenter.Y) - Main.screenPosition.Y);//gravDir 
+                DrawData data = new DrawData(texture, new Vector2(drawX, drawY), new Rectangle(0, drawPlayer.legFrame.Y, drawPlayer.legFrame.Width, drawPlayer.legFrame.Height), color, (float)drawPlayer.fullRotation, new Vector2(drawPlayer.bodyFrame.Width / 2, drawPlayer.bodyFrame.Height / 2), 1f, (drawPlayer.direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None) | (drawPlayer.gravDir > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically), 0);
+                Main.playerDrawData.Add(data);
+            }
+        });
+        public static readonly PlayerLayer WingGlowmask = new PlayerLayer("NoxiumMod", "WingGlowmask", PlayerLayer.Wings, delegate (PlayerDrawInfo drawInfo)
+        {
+            Player drawPlayer = drawInfo.drawPlayer;
+            NoxiumMod mod = ModContent.GetInstance<NoxiumMod>();
+            NoxiumPlayer modply = drawPlayer.GetModPlayer<NoxiumPlayer>();
+            Color GlowColor = modply.armorglowcolor[5](drawPlayer, 5);
+
+            Color color = (Color.Lerp(drawInfo.bodyColor, GlowColor, drawPlayer.stealth * ((float)drawInfo.bodyColor.A / 255f)));
+
+            if (drawPlayer.immune && !drawPlayer.immuneNoBlink && drawPlayer.immuneTime > 0)
+                color = drawInfo.bodyColor * drawInfo.bodyColor.A;
+
+            if (modply.armorglowmasks[5] != null && !drawPlayer.mount.Active)
+            {
+                Texture2D texture = ModContent.GetTexture(modply.armorglowmasks[5]);
+
+                int drawX = (int)((drawInfo.position.X + drawPlayer.bodyPosition.X + (drawPlayer.direction == -1 ? 20 : 0)) - Main.screenPosition.X);
+                int drawY = (int)(((drawPlayer.bodyPosition.Y + 95) + drawPlayer.MountedCenter.Y) - Main.screenPosition.Y);//gravDir 
+                DrawData data = new DrawData(texture, new Vector2(drawX, drawY), new Rectangle(0, drawPlayer.wingFrame * texture.Height / 4, texture.Width, texture.Height / 4), color, (float)drawPlayer.fullRotation, new Vector2(texture.Width / 2, texture.Height / 2), 1f, (drawPlayer.direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None) | (drawPlayer.gravDir > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically), 0);
+                data.shader = (int)drawPlayer.dye[1].dye;
+                Main.playerDrawData.Add(data);
+            }
+        });
+
+        public override void ModifyDrawLayers(List<PlayerLayer> layers)
+        {
+            NoxiumPlayer noxiumP = player.GetModPlayer<NoxiumPlayer>();
+
+            string[] stringsz = { "Head", "Body", "Arms", "Legs", "ShoeAcc", "Wings" };
+            PlayerLayer[] thelayer = { HeadGlowmask, ChestplateGlowmask, ArmsGlowmask, LegsGlowmask, ShoeGlowmask, WingGlowmask };
+
+            for (int i = 0; i < armorglowmasks.Length; i += 1)
+            {
+                if (noxiumP.armorglowmasks[i] != null)
+                {
+                    int layer = layers.FindIndex(PlayerLayer => PlayerLayer.Name.Equals(stringsz[i])) + 1;
+                    thelayer[i].visible = true;
+                    layers.Insert(layer, thelayer[i]);
+                }
+
+            }
         }
     }
 }

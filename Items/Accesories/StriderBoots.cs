@@ -135,5 +135,13 @@ namespace NoxiumMod.Items.Accesories
                 0f
             );
         }
+        public override void UpdateVanity(Player player, EquipType type)
+        {
+            NoxiumPlayer sgaplayer = player.GetModPlayer(mod, typeof(NoxiumPlayer).Name) as NoxiumPlayer;
+            if (!Main.dedServ)
+            {
+                sgaplayer.armorglowmasks[4] = "NoxiumMod/Items/Accesories/StriderBoots_Shoes_Glow";
+            }
+        }
     }
 }

@@ -1,10 +1,8 @@
-﻿using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
+﻿using Terraria.ModLoader;
 
 namespace NoxiumMod.Items.Accesories
 {
-    class DreadfulChalice : ModItem
+    internal class DreadfulChalice : ModItem
     {
         public override void SetDefaults()
         {
