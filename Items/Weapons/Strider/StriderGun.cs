@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -17,7 +18,7 @@ namespace NoxiumMod.Items.Weapons.Strider
             item.useTime = 14;
             item.width = 44;
             item.height = 30;
-            item.mana = 7;
+            item.mana = 3;
             item.UseSound = SoundID.Item12;
             item.knockBack = 0.75f;
             item.damage = 19;
@@ -27,6 +28,12 @@ namespace NoxiumMod.Items.Weapons.Strider
             item.magic = true;
             item.value = 20000;
             item.shoot = ModContent.ProjectileType<Projectiles.StriderGunP>();
+            if (!Main.dedServ)
+            {
+                item.GetGlobalItem<ItemUseGlow>().glowTexture = mod.GetTexture("Items/Weapons/Strider/StriderGun_Glow");
+                item.GetGlobalItem<ItemUseGlow>().glowOffsetX = -2;
+
+            }
         }
         private int ShotCount;
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
@@ -66,9 +73,8 @@ namespace NoxiumMod.Items.Weapons.Strider
                     Vector2 vector = new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle));
                     Dust dust = Dust.NewDustPerfect(player.Center + (vector * 10), 230, vector * 3f);
                     dust.noGravity = true;
-
                 }
-                Main.PlaySound(SoundID.DD2_LightningBugZap);
+                Main.PlaySound(SoundID.DD2_LightningBugZap, player.Center);
                 ShotCount = 0;
                 return false;
             }
@@ -77,6 +83,26 @@ namespace NoxiumMod.Items.Weapons.Strider
         public override Vector2? HoldoutOffset()
         {
             return new Vector2(-2, 0);
+        }
+        public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
+        {
+            Texture2D texture = mod.GetTexture("Items/Weapons/Strider/StriderGun_Glow");
+            spriteBatch.Draw
+            (
+                texture,
+                new Vector2
+                (
+                    item.position.X - Main.screenPosition.X + item.width * 0.5f,
+                    item.position.Y - Main.screenPosition.Y + item.height - texture.Height * 0.5f + 2f
+                ),
+                new Rectangle(0, 0, texture.Width, texture.Height),
+                Color.White,
+                rotation,
+                texture.Size() * 0.5f,
+                scale,
+                SpriteEffects.None,
+                0f
+            );
         }
     }
 }

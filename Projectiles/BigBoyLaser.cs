@@ -163,9 +163,9 @@ namespace NoxiumMod.Projectiles
             int dir = projectile.direction;
             player.ChangeDir(dir); // Set player direction to where we are shooting
             player.heldProj = projectile.whoAmI; // Update player's held projectile
-            player.itemTime = 2; // Set item time to 2 frames while we are used
-            player.itemAnimation = 2; // Set item animation time to 2 frames while we are used
-            player.itemRotation = (float)Math.Atan2(projectile.velocity.Y * dir, projectile.velocity.X * dir); // Set the item rotation to where we are shooting
+            //player.itemTime = 2; // Set item time to 2 frames while we are used
+            //player.itemAnimation = 2; // Set item animation time to 2 frames while we are used
+            //player.itemRotation = (float)Math.Atan2(projectile.velocity.Y * dir, projectile.velocity.X * dir); // Set the item rotation to where we are shooting
         }
 
         public override bool ShouldUpdatePosition() => false;

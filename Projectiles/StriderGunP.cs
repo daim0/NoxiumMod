@@ -3,6 +3,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
 using System;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace NoxiumMod.Projectiles
 {
@@ -42,6 +43,14 @@ namespace NoxiumMod.Projectiles
                 dust.velocity.Y = -Math.Abs(dust.velocity.Y);
             }
             return true;
+        }
+        Texture2D sprite = ModContent.GetTexture("NoxiumMod/Projectiles/StriderGunP");
+        public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
+        {
+            spriteBatch.Draw(sprite, new Vector2(projectile.Center.X - Main.screenPosition.X, projectile.Center.Y - Main.screenPosition.Y),
+                        new Rectangle(0, 0, sprite.Width, sprite.Height), Color.Lerp(new Color(1f, 1f, 1f, 1f), new Color(0, 0, 0, 0), (float)projectile.alpha / 255f), projectile.rotation,
+                        new Vector2(projectile.width * 0.5f, projectile.height * 0.5f), projectile.scale, SpriteEffects.None, 0f);
+            return false;
         }
     }
 }
