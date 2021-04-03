@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "6oGC7SoFqnBC3BHRY49MkV3FwZgcKLewi3Vp/B0NS8icVCqhUVaXQTT9Gc+/Lny37AwIqT0y5GMwsUurAzjVwA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Trivaxy\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\NoxiumMod\\NoxiumMod.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Trivaxy\\.nuget\\packages\\tmodloader.codeassist\\0.1.2\\tmodloader.codeassist.0.1.2.nupkg.sha512"
+  ],
+  "logs": []
+}
