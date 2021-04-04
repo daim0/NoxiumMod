@@ -1,2 +1,5 @@
 .vs
 Properties/
+.editorconfig
+bin/
+obj/

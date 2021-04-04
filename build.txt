@@ -1,0 +1,4 @@
+﻿displayName = Noxium
+author = Daim & Trivaxy
+version = 0.1
+modReferences = SubworldLibrary
