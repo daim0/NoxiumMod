@@ -1,6 +1,7 @@
 ﻿using NoxiumMod.Tiles.EnchantedForest;
 using NoxiumMod.Utilities;
 using SubworldLibrary;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
@@ -22,7 +23,7 @@ namespace NoxiumMod.Subworlds.EnchantedForest
 		{
 			new SubworldGenPass(PrepareGeneration),
 			new SubworldGenPass(GenerateTerrain),
-			new SubworldGenPass(FrameAllTiles),
+			new SubworldGenPass(FrameTiles),
 		};
 
 		private void PrepareGeneration(GenerationProgress progress)
@@ -35,44 +36,61 @@ namespace NoxiumMod.Subworlds.EnchantedForest
 		{
 			progress.Message = "Generating terrain...";
 
-			int maxDisplacement = 60;
+			int maxPrimaryDisplacement = 60;
+			int maxMountainDisplacement = 220;
 			int terrainBaseLine = (int)(height / 3.5f);
 			int minDirtDepth = 21;
 			int maxDirtDepth = 32;
 
-			FastNoiseLite noise = new FastNoiseLite(WorldGen._genRandSeed);
-			noise.SetNoiseType(FastNoiseLite.NoiseType.Perlin);
-			noise.SetFractalType(FastNoiseLite.FractalType.FBm);
-			noise.SetFractalOctaves(4);
-			noise.SetFrequency(0.0032f);
-			noise.SetFractalLacunarity(2.5f);
+			FastNoiseLite primaryNoise = new FastNoiseLite(WorldGen._genRandSeed);
+			primaryNoise.SetNoiseType(FastNoiseLite.NoiseType.Perlin);
+			primaryNoise.SetFractalType(FastNoiseLite.FractalType.FBm);
+			primaryNoise.SetFractalOctaves(3);
+			primaryNoise.SetFrequency(0.0032f);
+			primaryNoise.SetFractalLacunarity(2.25f);
+
+			FastNoiseLite mountainNoise = new FastNoiseLite(WorldGen._genRandSeed);
+			mountainNoise.SetNoiseType(FastNoiseLite.NoiseType.Perlin);
+			mountainNoise.SetFrequency(0.0005f);
 
 			for (int i = 0; i < width; i++)
 			{
 				progress.Value = i / (float)width;
 
-				float noiseValue = noise.GetNoise(i, 0);
-				int displacement = (int)(noiseValue * maxDisplacement) + terrainBaseLine;
+				float primaryNoiseValue = primaryNoise.GetNoise(i, 0);
+				int primaryDisplacement = (int)(primaryNoiseValue * maxPrimaryDisplacement) + terrainBaseLine;
 
-				Generation.FillRectangle(i, displacement, 1, height - displacement, TileID.Stone);
-				WorldGen.PlaceTile(i, displacement, ModContent.TileType<EnchantedGrassTile>(), true, true);
+				float mountainNoiseValue = mountainNoise.GetNoise(i, 0);
+				int mountainDisplacement = (int)(Math.Abs(mountainNoiseValue) * maxMountainDisplacement);
 
-				int dirtDepth = (int)(noise.GetNoise(i * 3, i * 10) * (maxDirtDepth - minDirtDepth)) + minDirtDepth;
-				Generation.FillRectangle(i, displacement + 1, 1, dirtDepth, TileID.Dirt);
+				int finalDisplacement = primaryDisplacement + mountainDisplacement;
 
-				if (i > 1 && i < width - 1 && WorldGen.genRand.NextBool(2))
-					WorldGen.GrowTree(i, displacement);
+				Generation.FillRectangle(i, finalDisplacement, 1, height - finalDisplacement, TileID.Stone);
+				WorldGen.PlaceTile(i, finalDisplacement, ModContent.TileType<EnchantedGrassTile>(), true, true);
+
+				int dirtDepth = (int)(primaryNoise.GetNoise(i * 3, i * 10) * (maxDirtDepth - minDirtDepth)) + minDirtDepth;
+				Generation.FillRectangle(i, finalDisplacement + 1, 1, dirtDepth, TileID.Dirt);
+
+				if (i > 1 && i < width - 1)
+				{
+					// TODO: make the grass connect nicer
+
+					if (WorldGen.genRand.NextBool(2))
+						WorldGen.GrowTree(i, finalDisplacement);
+				}
 			}
 		}
 
-		private void FrameAllTiles(GenerationProgress progress)
+		private void FrameTiles(GenerationProgress progress)
 		{
 			progress.Message = "Framing tiles...";
 
-			for (int j = 0; j < Main.maxTilesY; j++)
+			for (int j = (int)(height * 0.7f); j < height; j++)
 			{
 				for (int i = 0; i < Main.maxTilesX; i++)
 				{
+					progress.Value = j / (float)Main.maxTilesY;
+
 					if (Main.tile[i, j].active())
 						WorldGen.SquareTileFrame(i, j);
 				}
