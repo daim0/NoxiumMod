@@ -29,7 +29,7 @@ namespace NoxiumMod.Tiles.EnchantedForest
 
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
 		{
-			if (fail)
+			if (fail && Main.LocalPlayer.inventory[Main.LocalPlayer.selectedItem].hammer == 0)
 				Main.tile[i, j].type = TileID.Dirt;
 		}
 	}
