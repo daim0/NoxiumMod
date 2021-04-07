@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -31,6 +32,14 @@ namespace NoxiumMod.Tiles.EnchantedForest
 		{
 			if (fail && Main.LocalPlayer.inventory[Main.LocalPlayer.selectedItem].hammer == 0)
 				Main.tile[i, j].type = TileID.Dirt;
+		}
+
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+		{
+			float sin = (float)Math.Sin(Main.GlobalTime * 1.2f + i / 6);
+			r = 0.05f * sin;
+			g = 0.2f * sin;
+			b = 0.5f + sin * 0.2f;
 		}
 	}
 }
