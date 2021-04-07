@@ -4,11 +4,19 @@ using Terraria.ModLoader;
 
 namespace NoxiumMod.Subworlds.EnchantedForest
 {
-	public class EnchantedForestSurfaceBgStyle : ModSurfaceBgStyle, IOffsetable
+	public class EnchantedForestSurfaceBgStyle : ModSurfaceBgStyle, IOffsetableBg
 	{
-		public int XOffset => 0;
+		public int CloseXOffset => 0;
 
-		public int YOffset => -1000;
+		public int CloseYOffset => -950;
+
+		public int MiddleXOffset => 0;
+
+		public int MiddleYOffset => -500;
+
+		public int FarXOffset => 0;
+
+		public int FarYOffset => -500;
 
 		public override bool ChooseBgStyle() => Subworld.IsActive<EnchantedForestSubworld>();
 
