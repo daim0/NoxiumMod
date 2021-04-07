@@ -30,6 +30,8 @@ namespace NoxiumMod
 		{
 			foreach (IDisposable hook in disposedHooks)
 				hook.Dispose();
+
+			disposedHooks = null;
 		}
 
 		private static void EditDrawCloseBackground()
