@@ -15,6 +15,8 @@ namespace NoxiumMod
 
 		public override void Load()
 		{
+			NoxiumDetours.ApplyDetours();
+
 			if (!Main.dedServ)
 			{
 				dimensionSelectionUI = new DimensionSelectionUI();
@@ -23,6 +25,11 @@ namespace NoxiumMod
 
 				dimensionalInterface = new UserInterface();
 			}
+		}
+
+		public override void Unload()
+		{
+			NoxiumDetours.UnloadDetours();
 		}
 
 		public override void UpdateUI(GameTime gameTime)
