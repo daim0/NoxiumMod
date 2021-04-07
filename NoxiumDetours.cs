@@ -12,12 +12,14 @@ namespace NoxiumMod
 {
 	public static class NoxiumDetours
 	{
-		private static List<IDisposable> disposedHooks = new List<IDisposable>();
+		private static List<IDisposable> disposedHooks;
 
 		private static ILog Logger => ModContent.GetInstance<NoxiumMod>().Logger;
 
 		public static void ApplyDetours()
 		{
+			disposedHooks = new List<IDisposable>();
+
 			MonoModHooks.RequestNativeAccess();
 
 			EditDrawCloseBackground();
