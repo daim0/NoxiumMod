@@ -3,3 +3,4 @@ Properties/
 .editorconfig
 bin/
 obj/
+*.cache
