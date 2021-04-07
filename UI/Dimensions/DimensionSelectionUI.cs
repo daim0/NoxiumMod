@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using NoxiumMod.Subworlds.EnchantedForest;
 using ReLogic.Graphics;
+using SubworldLibrary;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -184,6 +186,11 @@ namespace NoxiumMod.UI.Dimensions
 			currentLeftArrowTex = leftArrowTex;
 			currentRightArrowTex = rightArrowTex;
 
+			RegisterDimensions();
+		}
+
+		public void RegisterDimensions()
+		{
 			RegisterDimension(defaultText, defaultDimensionTexture, () =>
 			{
 				for (int i = 0; i < dimensions.Count; i++)
@@ -192,6 +199,12 @@ namespace NoxiumMod.UI.Dimensions
 
 				return true;
 			}, delegate { /* Do nothing when clicked */ }); // The 'no dimensions found' dimension is registered here.
+
+			RegisterDimension(
+				"Enchanted Forest",
+				ModContent.GetTexture("NoxiumMod/Subworlds/EnchantedForest/EnchantedForestLogo"),
+				() => true,
+				() => Subworld.Enter<EnchantedForestSubworld>());
 		}
 
 		public void Enable()
