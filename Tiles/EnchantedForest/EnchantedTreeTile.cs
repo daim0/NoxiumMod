@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using NoxiumMod.Gores;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -9,8 +10,7 @@ namespace NoxiumMod.Tiles.EnchantedForest
 		// TODO: do this
 		public override int CreateDust() => 0;
 
-		// TODO: do this
-		public override int GrowthFXGore() => 0;
+		public override int GrowthFXGore() => ModContent.GetInstance<NoxiumMod>().GetGoreSlot<EnchantedTreeFX>();
 
 		// TODO: do this?
 		public override int DropWood() => ItemID.Wood;
