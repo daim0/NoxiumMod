@@ -1,7 +1,7 @@
 using Terraria;
 using Terraria.ModLoader;
 
-//This is a note left by goodpro712 - daimgamer has ensalved me send help
+// im free - metacinnabar
 namespace NoxiumMod.Items.Armor.Chartreum
 {
 	[AutoloadEquip(EquipType.Legs)]
